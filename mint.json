@@ -5,6 +5,9 @@
     "dark": "/logo/dark.svg",
     "light": "/logo/light.svg"
   },
+  "openapi": [
+    "https://raw.githubusercontent.com/LukeHagar/plex-api-spec/main/plex-media-server-spec-dereferenced.yaml"
+  ],
   "favicon": "/favicon.svg",
   "colors": {
     "primary": "#0D9373",
