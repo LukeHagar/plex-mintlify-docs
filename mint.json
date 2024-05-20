@@ -16,6 +16,11 @@
       "to": "#07C983"
     }
   },
+  "analytics": {
+    "plausible": {
+        "domain": "events.plygrnd.org"
+    }
+},
   "topbarLinks": [
     {
       "name": "Support",
