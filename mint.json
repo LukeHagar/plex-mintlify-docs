@@ -1,11 +1,11 @@
 {
   "$schema": "https://mintlify.com/schema.json",
-  "name": "Starter Kit",
+  "name": "Plex Developer Documentation",
   "logo": {
     "dark": "/logo/dark.svg",
     "light": "/logo/light.svg"
   },
-  "openapi": "https://raw.githubusercontent.com/LukeHagar/plex-api-spec/main/plex-media-server-spec-dereferenced.yaml",
+  "openapi": ["./plex-spec.yaml"],
   "favicon": "/favicon.svg",
   "colors": {
     "primary": "#0D9373",
@@ -16,82 +16,162 @@
       "to": "#07C983"
     }
   },
-  "analytics": {
-    "plausible": {
-        "domain": "events.plygrnd.org"
-    }
-},
-  "topbarLinks": [
-    {
-      "name": "Support",
-      "url": "mailto:hi@mintlify.com"
-    }
-  ],
+
   "topbarCtaButton": {
-    "name": "Dashboard",
-    "url": "https://dashboard.mintlify.com"
+    "name": "Suggest an edit",
+    "url": "https://github.com/LukeHagar/plex-api-spec"
   },
-  "tabs": [
-    {
-      "name": "API Reference",
-      "url": "api-reference"
-    }
-  ],
+
   "anchors": [
     {
-      "name": "Documentation",
-      "icon": "book-open-cover",
-      "url": "https://mintlify.com/docs"
-    },
-    {
       "name": "Community",
-      "icon": "slack",
-      "url": "https://mintlify.com/community"
-    },
-    {
-      "name": "Blog",
-      "icon": "newspaper",
-      "url": "https://mintlify.com/blog"
+      "icon": "discord",
+      "url": "https://discord.gg/CYuDKV9uK3"
     }
   ],
+
   "navigation": [
-    {
-      "group": "Get Started",
-      "pages": [
-        "introduction",
-        "quickstart",
-        "development"
-      ]
-    },
-    {
-      "group": "Essentials",
-      "pages": [
-        "essentials/markdown",
-        "essentials/code",
-        "essentials/images",
-        "essentials/settings",
-        "essentials/navigation",
-        "essentials/reusable-snippets"
-      ]
-    },
     {
       "group": "API Documentation",
       "pages": [
-        "api-reference/introduction"
-      ]
-    },
-    {
-      "group": "Endpoint Examples",
-      "pages": [
-        "api-reference/endpoint/get",
-        "api-reference/endpoint/create",
-        "api-reference/endpoint/delete"
+        {
+          "group": "Server",
+          "pages": [
+            "api-reference/server/server-capabilities",
+            "api-reference/server/get-server-preferences",
+            "api-reference/server/get-available-clients",
+            "api-reference/server/get-devices",
+            "api-reference/server/get-server-identity",
+            "api-reference/server/get-myplex-account",
+            "api-reference/server/get-a-resized-photo",
+            "api-reference/server/get-server-list"
+          ]
+        },
+        {
+          "group": "Media",
+          "pages": [
+            "api-reference/media/mark-media-played",
+            "api-reference/media/mark-media-unplayed",
+            "api-reference/media/update-media-play-progress"
+          ]
+        },
+        {
+          "group": "Video",
+          "pages": [
+            "api-reference/video/get-the-timeline-for-a-media-item",
+            "api-reference/video/start-universal-transcode"
+          ]
+        },
+        {
+          "group": "Activities",
+          "pages": [
+            "api-reference/activities/get-server-activities",
+            "api-reference/activities/cancel-server-activities"
+          ]
+        },
+        {
+          "group": "Butler",
+          "pages": [
+            "api-reference/butler/get-butler-tasks",
+            "api-reference/butler/start-all-butler-tasks",
+            "api-reference/butler/stop-all-butler-tasks",
+            "api-reference/butler/start-a-single-butler-task",
+            "api-reference/butler/stop-a-single-butler-task"
+          ]
+        },
+        {
+          "group": "Hubs",
+          "pages": [
+            "api-reference/hubs/get-global-hubs",
+            "api-reference/hubs/get-library-specific-hubs"
+          ]
+        },
+        {
+          "group": "Search",
+          "pages": [
+            "api-reference/search/perform-a-search",
+            "api-reference/search/perform-a-voice-search",
+            "api-reference/search/get-search-results"
+          ]
+        },
+        {
+          "group": "Library",
+          "pages": [
+            "api-reference/library/get-hash-value",
+            "api-reference/library/get-recently-added",
+            "api-reference/library/get-all-libraries",
+            "api-reference/library/get-library-details",
+            "api-reference/library/delete-library-section",
+            "api-reference/library/get-library-items",
+            "api-reference/library/refresh-library",
+            "api-reference/library/search-library",
+            "api-reference/library/get-items-metadata",
+            "api-reference/library/get-items-children",
+            "api-reference/library/get-on-deck"
+          ]
+        },
+        {
+          "group": "Log",
+          "pages": [
+            "api-reference/log/logging-a-single-line-message",
+            "api-reference/log/logging-a-multi-line-message",
+            "api-reference/log/enabling-papertrail"
+          ]
+        },
+        {
+          "group": "Plex",
+          "pages": [
+            "api-reference/plex/get-a-pin",
+            "api-reference/plex/get-access-token"
+          ]
+        },
+        {
+          "group": "Playlists",
+          "pages": [
+            "api-reference/playlists/get-all-playlists",
+            "api-reference/playlists/create-a-playlist",
+            "api-reference/playlists/retrieve-playlist",
+            "api-reference/playlists/update-a-playlist",
+            "api-reference/playlists/deletes-a-playlist",
+            "api-reference/playlists/retrieve-playlist-contents",
+            "api-reference/playlists/adding-to-a-playlist",
+            "api-reference/playlists/delete-playlist-contents",
+            "api-reference/playlists/upload-playlist"
+          ]
+        },
+        {
+          "group": "Authentication",
+          "pages": [
+            "api-reference/authentication/get-a-transient-token",
+            "api-reference/authentication/get-source-connection-information"
+          ]
+        },
+        {
+          "group": "Statistics",
+          "pages": ["api-reference/statistics/get-media-statistics"]
+        },
+        {
+          "group": "Sessions",
+          "pages": [
+            "api-reference/sessions/get-active-sessions",
+            "api-reference/sessions/get-session-history",
+            "api-reference/sessions/get-transcode-sessions",
+            "api-reference/sessions/stop-a-transcode-session"
+          ]
+        },
+        {
+          "group": "Updater",
+          "pages": [
+            "api-reference/updater/querying-status-of-updates",
+            "api-reference/updater/checking-for-updates",
+            "api-reference/updater/apply-updates"
+          ]
+        }
       ]
     }
   ],
   "footerSocials": {
-    "twitter": "https://twitter.com/mintlify",
-    "github": "https://github.com/mintlify",
-    "linkedin": "https://www.linkedin.com/company/mintsearch"
+    "github": "https://github.com/lukehagar",
+    "linkedin": "https://www.linkedin.com/in/lukehagar/"
   }
 }
