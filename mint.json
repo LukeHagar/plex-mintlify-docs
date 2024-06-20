@@ -1,10 +1,6 @@
 {
   "$schema": "https://mintlify.com/schema.json",
   "name": "Plex Developer Documentation",
-  "logo": {
-    "dark": "/logo/dark.svg",
-    "light": "/logo/light.svg"
-  },
   "openapi": ["./plex-spec.yaml"],
   "favicon": "/favicon.svg",
   "colors": {
