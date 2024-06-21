@@ -1,16 +1,12 @@
 {
   "$schema": "https://mintlify.com/schema.json",
   "name": "Plex API Documentation",
-  "openapi": ["./plex-spec.yaml"],
+  "openapi": "https://raw.githubusercontent.com/LukeHagar/plex-api-spec/main/plex-media-server-spec-dereferenced.yaml",
   "favicon": "/favicon.svg",
   "colors": {
-    "primary": "#03045e",
-    "light": "#0077b6",
-    "dark": "#00b4d8",
-    "anchors": {
-      "from": "#90e0ef",
-      "to": "#caf0f8"
-    }
+    "primary": "#219ebc",
+    "light": "#8ecae6",
+    "dark": "#219ebc"
   },
 
   "topbarCtaButton": {
@@ -26,14 +22,19 @@
     }
   ],
 
+
   "navigation": [
+    {
+      "group": "Getting Started",
+      "pages": ["Intro", "API-Specification", "SDKs"]
+    },
     {
       "group": "API Documentation",
       "pages": [
         {
           "group": "Server",
           "pages": [
-            "api-reference/server/server-capabilities",
+            "api-reference/server/get-server-capabilities",
             "api-reference/server/get-server-preferences",
             "api-reference/server/get-available-clients",
             "api-reference/server/get-devices",
@@ -76,6 +77,14 @@
           ]
         },
         {
+          "group": "Plex",
+          "pages": [
+            "api-reference/plex/get-plex-home-data",
+            "api-reference/plex/get-a-pin",
+            "api-reference/plex/get-access-token"
+          ]
+        },
+        {
           "group": "Hubs",
           "pages": [
             "api-reference/hubs/get-global-hubs",
@@ -103,6 +112,7 @@
             "api-reference/library/search-library",
             "api-reference/library/get-items-metadata",
             "api-reference/library/get-items-children",
+            "api-reference/library/get-top-watched-content",
             "api-reference/library/get-on-deck"
           ]
         },
@@ -112,13 +122,6 @@
             "api-reference/log/logging-a-single-line-message",
             "api-reference/log/logging-a-multi-line-message",
             "api-reference/log/enabling-papertrail"
-          ]
-        },
-        {
-          "group": "Plex",
-          "pages": [
-            "api-reference/plex/get-a-pin",
-            "api-reference/plex/get-access-token"
           ]
         },
         {
@@ -144,7 +147,11 @@
         },
         {
           "group": "Statistics",
-          "pages": ["api-reference/statistics/get-media-statistics"]
+          "pages": [
+            "api-reference/statistics/get-media-statistics",
+            "api-reference/statistics/get-resources-statistics",
+            "api-reference/statistics/get-bandwidth-statistics"
+          ]
         },
         {
           "group": "Sessions",
@@ -161,6 +168,12 @@
             "api-reference/updater/querying-status-of-updates",
             "api-reference/updater/checking-for-updates",
             "api-reference/updater/apply-updates"
+          ]
+        },
+        {
+          "group": "Watchlist",
+          "pages": [
+            "api-reference/watchlist/get-user-watchlist"
           ]
         }
       ]

@@ -6,13 +6,13 @@ info:
   version: 0.0.3
   contact:
     name: Luke Hagar
-    url: "https://www.LukeHagar.com"
+    url: 'https://www.LukeHagar.com'
     email: Lukeslakemail@gmail.com
   license:
     name: MIT
     identifier: MIT
 servers:
-  - url: "{protocol}://{ip}:{port}"
+  - url: '{protocol}://{ip}:{port}'
     description: The full address of your Plex Server
     variables:
       protocol:
@@ -23,7 +23,7 @@ servers:
       ip:
         default: 10.10.10.47
       port:
-        default: "32400"
+        default: '32400'
 x-speakeasy-globals:
   parameters:
     - name: X-Plex-Client-Identifier
@@ -50,11 +50,11 @@ paths:
     get:
       tags:
         - Server
-      summary: Server Capabilities
-      description: Server Capabilities
+      summary: Get Server Capabilities
+      description: Get Server Capabilities
       operationId: getServerCapabilities
       responses:
-        "200":
+        '200':
           description: The Server Capabilities
           content:
             application/json:
@@ -175,9 +175,9 @@ paths:
                               type: string
                             title:
                               type: string
-        "400":
-          description: "Bad Request - A parameter was not specified, or was specified incorrectly."
-        "401":
+        '400':
+          description: 'Bad Request - A parameter was not specified, or was specified incorrectly.'
+        '401':
           description: Unauthorized - Returned if the X-Plex-Token is missing from the header or query.
           content:
             application/json:
@@ -198,7 +198,7 @@ paths:
                         status:
                           type: number
                           example: 401
-  "/:/prefs":
+  '/:/prefs':
     get:
       tags:
         - Server
@@ -206,7 +206,7 @@ paths:
       description: Get Server Preferences
       operationId: getServerPreferences
       responses:
-        "200":
+        '200':
           description: Server Preferences
           content:
             application/json:
@@ -230,10 +230,10 @@ paths:
                               example: EnableDatabaseTrace
                             label:
                               type: string
-                              example: ""
+                              example: ''
                             summary:
                               type: string
-                              example: ""
+                              example: ''
                             type:
                               type: string
                               example: bool
@@ -251,13 +251,13 @@ paths:
                               example: false
                             group:
                               type: string
-                              example: ""
+                              example: ''
                             enumValues:
                               type: string
-                              example: "1:admin only|2:everyone"
-        "400":
-          description: "Bad Request - A parameter was not specified, or was specified incorrectly."
-        "401":
+                              example: '1:admin only|2:everyone'
+        '400':
+          description: 'Bad Request - A parameter was not specified, or was specified incorrectly.'
+        '401':
           description: Unauthorized - Returned if the X-Plex-Token is missing from the header or query.
           content:
             application/json:
@@ -278,7 +278,7 @@ paths:
                         status:
                           type: number
                           example: 401
-  "/:/scrobble":
+  '/:/scrobble':
     get:
       tags:
         - Media
@@ -294,11 +294,11 @@ paths:
             example: 59398
           required: true
       responses:
-        "200":
+        '200':
           description: Media is marked Played
-        "400":
-          description: "Bad Request - A parameter was not specified, or was specified incorrectly."
-        "401":
+        '400':
+          description: 'Bad Request - A parameter was not specified, or was specified incorrectly.'
+        '401':
           description: Unauthorized - Returned if the X-Plex-Token is missing from the header or query.
           content:
             application/json:
@@ -319,7 +319,7 @@ paths:
                         status:
                           type: number
                           example: 401
-  "/:/unscrobble":
+  '/:/unscrobble':
     get:
       tags:
         - Media
@@ -335,11 +335,11 @@ paths:
             example: 59398
           required: true
       responses:
-        "200":
+        '200':
           description: Media is marked Unplayed
-        "400":
-          description: "Bad Request - A parameter was not specified, or was specified incorrectly."
-        "401":
+        '400':
+          description: 'Bad Request - A parameter was not specified, or was specified incorrectly.'
+        '401':
           description: Unauthorized - Returned if the X-Plex-Token is missing from the header or query.
           content:
             application/json:
@@ -360,7 +360,7 @@ paths:
                         status:
                           type: number
                           example: 401
-  "/:/progress":
+  '/:/progress':
     post:
       tags:
         - Media
@@ -376,7 +376,7 @@ paths:
             type: string
           required: true
         - name: time
-          description: "The time, in milliseconds, used to set the media playback progress."
+          description: 'The time, in milliseconds, used to set the media playback progress.'
           in: query
           schema:
             type: number
@@ -390,11 +390,11 @@ paths:
           example: played
           required: true
       responses:
-        "200":
+        '200':
           description: Success - The request was successful.
-        "400":
-          description: "Bad Request - A parameter was not specified, or was specified incorrectly."
-        "401":
+        '400':
+          description: 'Bad Request - A parameter was not specified, or was specified incorrectly.'
+        '401':
           description: Unauthorized - Returned if the X-Plex-Token is missing from the header or query.
           content:
             application/json:
@@ -415,7 +415,7 @@ paths:
                         status:
                           type: number
                           example: 401
-  "/:/timeline":
+  '/:/timeline':
     get:
       tags:
         - Video
@@ -475,7 +475,7 @@ paths:
           in: query
           schema:
             type: string
-          example: "home:hub.continueWatching"
+          example: 'home:hub.continueWatching'
         - name: playQueueItemID
           description: The play queue item ID of the media item
           required: true
@@ -498,11 +498,11 @@ paths:
             type: number
           example: 1
       responses:
-        "200":
+        '200':
           description: The timeline for the media item
-        "400":
-          description: "Bad Request - A parameter was not specified, or was specified incorrectly."
-        "401":
+        '400':
+          description: 'Bad Request - A parameter was not specified, or was specified incorrectly.'
+        '401':
           description: Unauthorized - Returned if the X-Plex-Token is missing from the header or query.
           content:
             application/json:
@@ -531,7 +531,7 @@ paths:
       description: Get Server Activities
       operationId: getServerActivities
       responses:
-        "200":
+        '200':
           description: The Server Activities
           content:
             application/json:
@@ -567,9 +567,9 @@ paths:
                               properties:
                                 librarySectionID:
                                   type: string
-        "400":
-          description: "Bad Request - A parameter was not specified, or was specified incorrectly."
-        "401":
+        '400':
+          description: 'Bad Request - A parameter was not specified, or was specified incorrectly.'
+        '401':
           description: Unauthorized - Returned if the X-Plex-Token is missing from the header or query.
           content:
             application/json:
@@ -590,7 +590,7 @@ paths:
                         status:
                           type: number
                           example: 401
-  "/activities/{activityUUID}":
+  '/activities/{activityUUID}':
     delete:
       tags:
         - Activities
@@ -606,11 +606,11 @@ paths:
           example: 25b71ed5-0f9d-461c-baa7-d404e9e10d3e
           required: true
       responses:
-        "200":
+        '200':
           description: The Server Activity was canceled
-        "400":
-          description: "Bad Request - A parameter was not specified, or was specified incorrectly."
-        "401":
+        '400':
+          description: 'Bad Request - A parameter was not specified, or was specified incorrectly.'
+        '401':
           description: Unauthorized - Returned if the X-Plex-Token is missing from the header or query.
           content:
             application/json:
@@ -639,7 +639,7 @@ paths:
       description: Returns a list of butler tasks
       operationId: getButlerTasks
       responses:
-        "200":
+        '200':
           description: All butler tasks
           content:
             application/json:
@@ -670,9 +670,9 @@ paths:
                             description:
                               type: string
                               example: Create a backup copy of the server's database in the configured backup directory
-        "400":
-          description: "Bad Request - A parameter was not specified, or was specified incorrectly."
-        "401":
+        '400':
+          description: 'Bad Request - A parameter was not specified, or was specified incorrectly.'
+        '401':
           description: Unauthorized - Returned if the X-Plex-Token is missing from the header or query.
           content:
             application/json:
@@ -705,11 +705,11 @@ paths:
         4. If we are outside the configured window, the task will start immediately.
       operationId: startAllTasks
       responses:
-        "200":
+        '200':
           description: All tasks were started
-        "400":
-          description: "Bad Request - A parameter was not specified, or was specified incorrectly."
-        "401":
+        '400':
+          description: 'Bad Request - A parameter was not specified, or was specified incorrectly.'
+        '401':
           description: Unauthorized - Returned if the X-Plex-Token is missing from the header or query.
           content:
             application/json:
@@ -738,11 +738,11 @@ paths:
         This endpoint will stop all currently running tasks and remove any scheduled tasks from the queue.
       operationId: stopAllTasks
       responses:
-        "200":
+        '200':
           description: All tasks were stopped
-        "400":
-          description: "Bad Request - A parameter was not specified, or was specified incorrectly."
-        "401":
+        '400':
+          description: 'Bad Request - A parameter was not specified, or was specified incorrectly.'
+        '401':
           description: Unauthorized - Returned if the X-Plex-Token is missing from the header or query.
           content:
             application/json:
@@ -763,7 +763,7 @@ paths:
                         status:
                           type: number
                           example: 401
-  "/butler/{taskName}":
+  '/butler/{taskName}':
     post:
       tags:
         - Butler
@@ -798,13 +798,13 @@ paths:
               - UpgradeMediaAnalysis
           required: true
       responses:
-        "200":
+        '200':
           description: The task was started successfully
-        "202":
+        '202':
           description: The task was already running.
-        "400":
-          description: "Bad Request - A parameter was not specified, or was specified incorrectly."
-        "401":
+        '400':
+          description: 'Bad Request - A parameter was not specified, or was specified incorrectly.'
+        '401':
           description: Unauthorized - Returned if the X-Plex-Token is missing from the header or query.
           content:
             application/json:
@@ -855,11 +855,11 @@ paths:
               - UpgradeMediaAnalysis
           required: true
       responses:
-        "200":
+        '200':
           description: The task was stopped
-        "400":
-          description: "Bad Request - A parameter was not specified, or was specified incorrectly."
-        "401":
+        '400':
+          description: 'Bad Request - A parameter was not specified, or was specified incorrectly.'
+        '401':
           description: Unauthorized - Returned if the X-Plex-Token is missing from the header or query.
           content:
             application/json:
@@ -880,7 +880,7 @@ paths:
                         status:
                           type: number
                           example: 401
-        "404":
+        '404':
           description: The task was not running
   /clients:
     get:
@@ -890,7 +890,7 @@ paths:
       description: Get Available Clients
       operationId: getAvailableClients
       responses:
-        "200":
+        '200':
           description: Available Clients
           content:
             application/json:
@@ -925,7 +925,7 @@ paths:
                               example: A2E901F8-E016-43A7-ADFB-EF8CA8A4AC05
                             version:
                               type: string
-                              example: "8.17"
+                              example: '8.17'
                             protocol:
                               type: string
                               example: plex
@@ -940,10 +940,10 @@ paths:
                               example: 2
                             protocolCapabilities:
                               type: string
-                              example: "playback,playqueues,timeline,provider-playback"
-        "400":
-          description: "Bad Request - A parameter was not specified, or was specified incorrectly."
-        "401":
+                              example: 'playback,playqueues,timeline,provider-playback'
+        '400':
+          description: 'Bad Request - A parameter was not specified, or was specified incorrectly.'
+        '401':
           description: Unauthorized - Returned if the X-Plex-Token is missing from the header or query.
           content:
             application/json:
@@ -972,7 +972,7 @@ paths:
       description: Get Devices
       operationId: getDevices
       responses:
-        "200":
+        '200':
           description: Devices
           content:
             application/json:
@@ -1007,9 +1007,63 @@ paths:
                             createdAt:
                               type: number
                               example: 1654131230
-        "400":
-          description: "Bad Request - A parameter was not specified, or was specified incorrectly."
-        "401":
+        '400':
+          description: 'Bad Request - A parameter was not specified, or was specified incorrectly.'
+        '401':
+          description: Unauthorized - Returned if the X-Plex-Token is missing from the header or query.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        code:
+                          type: number
+                          example: 1001
+                        message:
+                          type: string
+                          example: User could not be authenticated
+                        status:
+                          type: number
+                          example: 401
+  /home:
+    get:
+      tags:
+        - Plex
+      summary: Get Plex Home Data
+      description: 'Retrieves the home data for the authenticated user, including details like home ID, name, guest access information, and subscription status.'
+      operationId: getHomeData
+      responses:
+        '200':
+          description: Home Data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: number
+                    example: 1841489
+                  name:
+                    type: string
+                    example: Blindkitty38's home
+                  guestUserID:
+                    type: number
+                    example: 58815432
+                  guestUserUUID:
+                    type: string
+                    example: f3df4e01bfca0787
+                  guestEnabled:
+                    type: boolean
+                  subscription:
+                    type: boolean
+        '400':
+          description: 'Bad Request - A parameter was not specified, or was specified incorrectly.'
+        '401':
           description: Unauthorized - Returned if the X-Plex-Token is missing from the header or query.
           content:
             application/json:
@@ -1054,7 +1108,7 @@ paths:
               - 1
           required: false
       responses:
-        "200":
+        '200':
           description: returns global hubs
           content:
             application/json:
@@ -1081,10 +1135,10 @@ paths:
                           properties:
                             hubKey:
                               type: string
-                              example: "/library/metadata/50768,65523,58188,57341,57302,57070"
+                              example: '/library/metadata/50768,65523,58188,57341,57302,57070'
                             key:
                               type: string
-                              example: "/playlists/all?type=15&sort=lastViewedAt:desc&playlistType=video,audio"
+                              example: '/playlists/all?type=15&sort=lastViewedAt:desc&playlistType=video,audio'
                             title:
                               type: string
                               example: Recent Playlists
@@ -1117,13 +1171,13 @@ paths:
                                 properties:
                                   ratingKey:
                                     type: string
-                                    example: "57070"
+                                    example: '57070'
                                   key:
                                     type: string
                                     example: /playlists/57070/items
                                   guid:
                                     type: string
-                                    example: "com.plexapp.agents.none://9fee6c5b-3143-4923-813e-57bd0190056c"
+                                    example: 'com.plexapp.agents.none://9fee6c5b-3143-4923-813e-57bd0190056c'
                                   type:
                                     type: string
                                     example: playlist
@@ -1135,7 +1189,7 @@ paths:
                                     example: Tracks
                                   summary:
                                     type: string
-                                    example: ""
+                                    example: ''
                                   smart:
                                     type: boolean
                                     example: false
@@ -1147,7 +1201,7 @@ paths:
                                     example: /playlists/57070/composite/1668787730
                                   icon:
                                     type: string
-                                    example: "playlist://image.smart"
+                                    example: 'playlist://image.smart'
                                   viewCount:
                                     type: integer
                                     format: int32
@@ -1172,9 +1226,9 @@ paths:
                                     type: integer
                                     format: int32
                                     example: 1668787730
-        "400":
-          description: "Bad Request - A parameter was not specified, or was specified incorrectly."
-        "401":
+        '400':
+          description: 'Bad Request - A parameter was not specified, or was specified incorrectly.'
+        '401':
           description: Unauthorized - Returned if the X-Plex-Token is missing from the header or query.
           content:
             application/json:
@@ -1225,7 +1279,7 @@ paths:
               - dylan
           required: true
         - name: sectionId
-          description: "This gives context to the search, and can result in re-ordering of search result hubs"
+          description: 'This gives context to the search, and can result in re-ordering of search result hubs'
           in: query
           schema:
             type: number
@@ -1238,11 +1292,11 @@ paths:
             example: 5
             default: 3
       responses:
-        "200":
+        '200':
           description: The search results
-        "400":
-          description: "Bad Request - A parameter was not specified, or was specified incorrectly."
-        "401":
+        '400':
+          description: 'Bad Request - A parameter was not specified, or was specified incorrectly.'
+        '401':
           description: Unauthorized - Returned if the X-Plex-Token is missing from the header or query.
           content:
             application/json:
@@ -1284,7 +1338,7 @@ paths:
               - dead+poop
           required: true
         - name: sectionId
-          description: "This gives context to the search, and can result in re-ordering of search result hubs"
+          description: 'This gives context to the search, and can result in re-ordering of search result hubs'
           in: query
           schema:
             type: number
@@ -1298,11 +1352,11 @@ paths:
             default: 3
           required: false
       responses:
-        "200":
+        '200':
           description: The search results
-        "400":
-          description: "Bad Request - A parameter was not specified, or was specified incorrectly."
-        "401":
+        '400':
+          description: 'Bad Request - A parameter was not specified, or was specified incorrectly.'
+        '401':
           description: Unauthorized - Returned if the X-Plex-Token is missing from the header or query.
           content:
             application/json:
@@ -1323,7 +1377,7 @@ paths:
                         status:
                           type: number
                           example: 401
-  "/hubs/sections/{sectionId}":
+  '/hubs/sections/{sectionId}':
     get:
       tags:
         - Hubs
@@ -1354,7 +1408,7 @@ paths:
               - 1
           required: false
       responses:
-        "200":
+        '200':
           description: The hubs specific to the library
           content:
             application/json:
@@ -1391,7 +1445,7 @@ paths:
                           properties:
                             key:
                               type: string
-                              example: "/library/sections/1/all?sort=lastViewedAt:desc&unwatched=0&viewOffset=0"
+                              example: '/library/sections/1/all?sort=lastViewedAt:desc&unwatched=0&viewOffset=0'
                             title:
                               type: string
                               example: Recently Played Movies
@@ -1416,7 +1470,7 @@ paths:
                               example: shelf
                             hubKey:
                               type: string
-                              example: "/library/metadata/66485,66098,57249,11449,5858,14944"
+                              example: '/library/metadata/66485,66098,57249,11449,5858,14944'
                             Metadata:
                               type: array
                               items:
@@ -1424,13 +1478,13 @@ paths:
                                 properties:
                                   ratingKey:
                                     type: string
-                                    example: "14944"
+                                    example: '14944'
                                   key:
                                     type: string
                                     example: /library/metadata/14944
                                   guid:
                                     type: string
-                                    example: "plex://movie/5d77686eeb5d26001f1eb339"
+                                    example: 'plex://movie/5d77686eeb5d26001f1eb339'
                                   studio:
                                     type: string
                                     example: Walt Disney Animation Studios
@@ -1455,7 +1509,7 @@ paths:
                                     example: PG
                                   summary:
                                     type: string
-                                    example: "The magically long-haired Rapunzel has spent her entire life in a tower, but now that a runaway thief has stumbled upon her, she is about to discover the world for the first time, and who she really is."
+                                    example: 'The magically long-haired Rapunzel has spent her entire life in a tower, but now that a runaway thief has stumbled upon her, she is about to discover the world for the first time, and who she really is.'
                                   rating:
                                     type: number
                                     example: 8.9
@@ -1501,13 +1555,13 @@ paths:
                                     example: 1705739847
                                   audienceRatingImage:
                                     type: string
-                                    example: "rottentomatoes://image.rating.upright"
+                                    example: 'rottentomatoes://image.rating.upright'
                                   primaryExtraKey:
                                     type: string
                                     example: /library/metadata/14952
                                   ratingImage:
                                     type: string
-                                    example: "rottentomatoes://image.rating.ripe"
+                                    example: 'rottentomatoes://image.rating.ripe'
                                   Media:
                                     type: array
                                     items:
@@ -1548,7 +1602,7 @@ paths:
                                           example: h264
                                         videoResolution:
                                           type: string
-                                          example: "1080"
+                                          example: '1080'
                                         container:
                                           type: string
                                           example: mp4
@@ -1659,9 +1713,9 @@ paths:
                             random:
                               type: boolean
                               example: true
-        "400":
-          description: "Bad Request - A parameter was not specified, or was specified incorrectly."
-        "401":
+        '400':
+          description: 'Bad Request - A parameter was not specified, or was specified incorrectly.'
+        '401':
           description: Unauthorized - Returned if the X-Plex-Token is missing from the header or query.
           content:
             application/json:
@@ -1690,7 +1744,7 @@ paths:
       description: Get Server Identity
       operationId: getServerIdentity
       responses:
-        "200":
+        '200':
           description: The Server Identity information
           content:
             application/json:
@@ -1711,9 +1765,9 @@ paths:
                       version:
                         type: string
                         example: 1.31.3.6868-28fc46b27
-        "400":
-          description: "Bad Request - A parameter was not specified, or was specified incorrectly."
-        "401":
+        '400':
+          description: 'Bad Request - A parameter was not specified, or was specified incorrectly.'
+        '401':
           description: Unauthorized - Returned if the X-Plex-Token is missing from the header or query.
           content:
             application/json:
@@ -1743,7 +1797,7 @@ paths:
       operationId: getFileHash
       parameters:
         - name: url
-          description: "This is the path to the local file, must be prefixed by `file://`"
+          description: 'This is the path to the local file, must be prefixed by `file://`'
           in: query
           schema:
             type: string
@@ -1756,11 +1810,11 @@ paths:
             type: number
           required: false
       responses:
-        "200":
+        '200':
           description: The hash of the file
-        "400":
-          description: "Bad Request - A parameter was not specified, or was specified incorrectly."
-        "401":
+        '400':
+          description: 'Bad Request - A parameter was not specified, or was specified incorrectly.'
+        '401':
           description: Unauthorized - Returned if the X-Plex-Token is missing from the header or query.
           content:
             application/json:
@@ -1790,7 +1844,7 @@ paths:
         This endpoint will return the recently added content.
       operationId: getRecentlyAdded
       responses:
-        "200":
+        '200':
           description: The recently added content
           content:
             application/json:
@@ -1840,7 +1894,7 @@ paths:
                               example: /library/metadata/59398
                             guid:
                               type: string
-                              example: "plex://movie/5e161a83bea6ac004126e148"
+                              example: 'plex://movie/5e161a83bea6ac004126e148'
                             studio:
                               type: string
                               example: Marvel Studios
@@ -1849,7 +1903,7 @@ paths:
                               example: movie
                             title:
                               type: string
-                              example: "Ant-Man and the Wasp: Quantumania"
+                              example: 'Ant-Man and the Wasp: Quantumania'
                             contentRating:
                               type: string
                               example: PG-13
@@ -1889,7 +1943,7 @@ paths:
                               example: 1681888010
                             audienceRatingImage:
                               type: string
-                              example: "rottentomatoes://image.rating.upright"
+                              example: 'rottentomatoes://image.rating.upright'
                             chapterSource:
                               type: string
                               example: media
@@ -1898,7 +1952,7 @@ paths:
                               example: /library/metadata/59399
                             ratingImage:
                               type: string
-                              example: "rottentomatoes://image.rating.rotten"
+                              example: 'rottentomatoes://image.rating.rotten'
                             Media:
                               type: array
                               items:
@@ -2021,9 +2075,9 @@ paths:
                                   tag:
                                     type: string
                                     example: Paul Rudd
-        "400":
-          description: "Bad Request - A parameter was not specified, or was specified incorrectly."
-        "401":
+        '400':
+          description: 'Bad Request - A parameter was not specified, or was specified incorrectly.'
+        '401':
           description: Unauthorized - Returned if the X-Plex-Token is missing from the header or query.
           content:
             application/json:
@@ -2058,7 +2112,7 @@ paths:
         Libraries have features beyond just being a collection of media; for starters, they include information about supported types, filters and sorts. 
         This allows a client to provide a rich interface around the media (e.g. allow sorting movies by release year).
       responses:
-        "200":
+        '200':
           description: The libraries available on the Server
           content:
             application/json:
@@ -2088,7 +2142,7 @@ paths:
                               example: true
                             art:
                               type: string
-                              example: "/:/resources/movie-fanart.jpg"
+                              example: '/:/resources/movie-fanart.jpg'
                             composite:
                               type: string
                               example: /library/sections/1/composite/1705615584
@@ -2100,10 +2154,10 @@ paths:
                               example: false
                             thumb:
                               type: string
-                              example: "/:/resources/movie.png"
+                              example: '/:/resources/movie.png'
                             key:
                               type: string
-                              example: "1"
+                              example: '1'
                             type:
                               type: string
                               example: movie
@@ -2160,9 +2214,9 @@ paths:
                                   path:
                                     type: string
                                     example: /movies
-        "400":
-          description: "Bad Request - A parameter was not specified, or was specified incorrectly."
-        "401":
+        '400':
+          description: 'Bad Request - A parameter was not specified, or was specified incorrectly.'
+        '401':
           description: Unauthorized - Returned if the X-Plex-Token is missing from the header or query.
           content:
             application/json:
@@ -2183,7 +2237,7 @@ paths:
                         status:
                           type: number
                           example: 401
-  "/library/sections/{sectionId}":
+  '/library/sections/{sectionId}':
     get:
       tags:
         - Library
@@ -2250,7 +2304,7 @@ paths:
             default: 0
           required: false
       responses:
-        "200":
+        '200':
           description: The details of the library
           content:
             application/json:
@@ -2269,7 +2323,7 @@ paths:
                         example: false
                       art:
                         type: string
-                        example: "/:/resources/movie-fanart.jpg"
+                        example: '/:/resources/movie-fanart.jpg'
                       content:
                         type: string
                         example: secondary
@@ -2289,7 +2343,7 @@ paths:
                         example: 1701731894
                       thumb:
                         type: string
-                        example: "/:/resources/movie.png"
+                        example: '/:/resources/movie.png'
                       title1:
                         type: string
                         example: Movies
@@ -2370,7 +2424,7 @@ paths:
                                     example: desc
                                   descKey:
                                     type: string
-                                    example: "random:desc"
+                                    example: 'random:desc'
                                   firstCharacterKey:
                                     type: string
                                     example: /library/sections/1/firstCharacter
@@ -2412,13 +2466,13 @@ paths:
                                 properties:
                                   key:
                                     type: string
-                                    example: "="
+                                    example: '='
                                   title:
                                     type: string
                                     example: is
-        "400":
-          description: "Bad Request - A parameter was not specified, or was specified incorrectly."
-        "401":
+        '400':
+          description: 'Bad Request - A parameter was not specified, or was specified incorrectly.'
+        '401':
           description: Unauthorized - Returned if the X-Plex-Token is missing from the header or query.
           content:
             application/json:
@@ -2454,11 +2508,11 @@ paths:
             example: 1000
           required: true
       responses:
-        "200":
+        '200':
           description: The library is deleted
-        "400":
-          description: "Bad Request - A parameter was not specified, or was specified incorrectly."
-        "401":
+        '400':
+          description: 'Bad Request - A parameter was not specified, or was specified incorrectly.'
+        '401':
           description: Unauthorized - Returned if the X-Plex-Token is missing from the header or query.
           content:
             application/json:
@@ -2479,7 +2533,7 @@ paths:
                         status:
                           type: number
                           example: 401
-  "/library/sections/{sectionId}/{tag}":
+  '/library/sections/{sectionId}/{tag}':
     get:
       tags:
         - Library
@@ -2512,8 +2566,15 @@ paths:
           required: true
           description: the Id of the library to query
           schema:
-            type: integer
-            example: 1
+            x-speakeasy-type-override: any
+            type:
+              - integer
+              - string
+            examples:
+              librarySectionID:
+                value: 1
+              providerSectionID:
+                value: watchlist
         - name: tag
           in: path
           required: true
@@ -2540,8 +2601,16 @@ paths:
               - resolution
               - firstCharacter
               - folder
+        - name: includeGuids
+          in: query
+          description: |
+            Adds the Guids object to the response
+          schema:
+            type: integer
+          required: false
+          example: 1
       responses:
-        "200":
+        '200':
           description: The contents of the library by section and tag
           content:
             application/json:
@@ -2560,14 +2629,17 @@ paths:
                         example: true
                       art:
                         type: string
-                        example: "/:/resources/movie-fanart.jpg"
+                        example: '/:/resources/movie-fanart.jpg'
                       identifier:
                         type: string
                         example: com.plexapp.plugins.library
                       librarySectionID:
-                        type: integer
-                        format: int32
-                        example: 1
+                        type:
+                          - integer
+                          - string
+                        examples:
+                          - 1
+                          - watchlist
                       librarySectionTitle:
                         type: string
                         example: Movies
@@ -2583,7 +2655,7 @@ paths:
                         example: 1701731894
                       thumb:
                         type: string
-                        example: "/:/resources/movie.png"
+                        example: '/:/resources/movie.png'
                       title1:
                         type: string
                         example: Movies
@@ -2607,13 +2679,13 @@ paths:
                           properties:
                             ratingKey:
                               type: string
-                              example: "58683"
+                              example: '58683'
                             key:
                               type: string
                               example: /library/metadata/58683
                             guid:
                               type: string
-                              example: "plex://movie/5d7768ba96b655001fdc0408"
+                              example: 'plex://movie/5d7768ba96b655001fdc0408'
                             studio:
                               type: string
                               example: 20th Century Studios
@@ -2622,13 +2694,13 @@ paths:
                               example: movie
                             title:
                               type: string
-                              example: "Avatar: The Way of Water"
+                              example: 'Avatar: The Way of Water'
                             contentRating:
                               type: string
                               example: PG-13
                             summary:
                               type: string
-                              example: "Jake Sully lives with his newfound family formed on the extrasolar moon Pandora. Once a familiar threat returns to finish what was previously started, Jake must work with Neytiri and the army of the Na'vi race to protect their home."
+                              example: 'Jake Sully lives with his newfound family formed on the extrasolar moon Pandora. Once a familiar threat returns to finish what was previously started, Jake must work with Neytiri and the army of the Na''vi race to protect their home.'
                             rating:
                               type: number
                               example: 7.6
@@ -2666,7 +2738,7 @@ paths:
                               example: 1703239236
                             audienceRatingImage:
                               type: string
-                              example: "rottentomatoes://image.rating.upright"
+                              example: 'rottentomatoes://image.rating.upright'
                             chapterSource:
                               type: string
                               example: media
@@ -2675,13 +2747,13 @@ paths:
                               example: /library/metadata/58684
                             ratingImage:
                               type: string
-                              example: "rottentomatoes://image.rating.ripe"
+                              example: 'rottentomatoes://image.rating.ripe'
                             grandparentRatingKey:
                               type: string
-                              example: "66"
+                              example: '66'
                             grandparentGuid:
                               type: string
-                              example: "plex://show/5d9c081b170e24001f2a7be4"
+                              example: 'plex://show/5d9c081b170e24001f2a7be4'
                             grandparentKey:
                               type: string
                               example: /library/metadata/66
@@ -2859,16 +2931,16 @@ paths:
                               example: 1
                             hasPremiumExtras:
                               type: string
-                              example: "1"
+                              example: '1'
                             hasPremiumPrimaryExtra:
                               type: string
-                              example: "1"
+                              example: '1'
                             parentRatingKey:
                               type: string
-                              example: "66"
+                              example: '66'
                             parentGuid:
                               type: string
-                              example: "plex://show/5d9c081b170e24001f2a7be4"
+                              example: 'plex://show/5d9c081b170e24001f2a7be4'
                             parentStudio:
                               type: string
                               example: UCP
@@ -2892,9 +2964,9 @@ paths:
                             parentTheme:
                               type: string
                               example: /library/metadata/66/theme/1705716261
-        "400":
-          description: "Bad Request - A parameter was not specified, or was specified incorrectly."
-        "401":
+        '400':
+          description: 'Bad Request - A parameter was not specified, or was specified incorrectly.'
+        '401':
           description: Unauthorized - Returned if the X-Plex-Token is missing from the header or query.
           content:
             application/json:
@@ -2915,7 +2987,7 @@ paths:
                         status:
                           type: number
                           example: 401
-  "/library/sections/{sectionId}/refresh":
+  '/library/sections/{sectionId}/refresh':
     get:
       tags:
         - Library
@@ -2931,11 +3003,11 @@ paths:
             type: number
           required: true
       responses:
-        "200":
+        '200':
           description: The library is refreshing
-        "400":
-          description: "Bad Request - A parameter was not specified, or was specified incorrectly."
-        "401":
+        '400':
+          description: 'Bad Request - A parameter was not specified, or was specified incorrectly.'
+        '401':
           description: Unauthorized - Returned if the X-Plex-Token is missing from the header or query.
           content:
             application/json:
@@ -2956,7 +3028,7 @@ paths:
                         status:
                           type: number
                           example: 401
-  "/library/sections/{sectionId}/search":
+  '/library/sections/{sectionId}/search':
     get:
       tags:
         - Library
@@ -3000,7 +3072,7 @@ paths:
               - 4
           required: true
       responses:
-        "200":
+        '200':
           description: The contents of the library by section and type
           content:
             application/json:
@@ -3019,7 +3091,7 @@ paths:
                         example: false
                       art:
                         type: string
-                        example: "/:/resources/show-fanart.jpg"
+                        example: '/:/resources/show-fanart.jpg'
                       identifier:
                         type: string
                         example: com.plexapp.plugins.library
@@ -3035,7 +3107,7 @@ paths:
                         example: true
                       thumb:
                         type: string
-                        example: "/:/resources/show.png"
+                        example: '/:/resources/show.png'
                       title1:
                         type: string
                         example: TV Shows
@@ -3056,19 +3128,19 @@ paths:
                           properties:
                             ratingKey:
                               type: string
-                              example: "2"
+                              example: '2'
                             key:
                               type: string
                               example: /library/metadata/2/children
                             parentRatingKey:
                               type: string
-                              example: "1"
+                              example: '1'
                             guid:
                               type: string
-                              example: "plex://season/602e67e766dfdb002c0a1b5b"
+                              example: 'plex://season/602e67e766dfdb002c0a1b5b'
                             parentGuid:
                               type: string
-                              example: "plex://show/5d9c086c7d06d9001ffd27aa"
+                              example: 'plex://show/5d9c086c7d06d9001ffd27aa'
                             parentStudio:
                               type: string
                               example: Mutant Enemy Productions
@@ -3119,9 +3191,9 @@ paths:
                               type: integer
                               format: int32
                               example: 1705636920
-        "400":
-          description: "Bad Request - A parameter was not specified, or was specified incorrectly."
-        "401":
+        '400':
+          description: 'Bad Request - A parameter was not specified, or was specified incorrectly.'
+        '401':
           description: Unauthorized - Returned if the X-Plex-Token is missing from the header or query.
           content:
             application/json:
@@ -3142,7 +3214,7 @@ paths:
                         status:
                           type: number
                           example: 401
-  "/library/metadata/{ratingKey}":
+  '/library/metadata/{ratingKey}':
     get:
       tags:
         - Library
@@ -3157,8 +3229,11 @@ paths:
           schema:
             type: number
           required: true
+          examples:
+            rating-key:
+              value: 17
       responses:
-        "200":
+        '200':
           description: The metadata of the library item.
           content:
             application/json:
@@ -3202,13 +3277,13 @@ paths:
                           properties:
                             ratingKey:
                               type: string
-                              example: "17"
+                              example: '17'
                             key:
                               type: string
                               example: /library/metadata/17
                             guid:
                               type: string
-                              example: "plex://movie/5d77683f6f4521001ea9dc53"
+                              example: 'plex://movie/5d77683f6f4521001ea9dc53'
                             studio:
                               type: string
                               example: Universal Pictures
@@ -3271,13 +3346,13 @@ paths:
                               example: 1705637165
                             audienceRatingImage:
                               type: string
-                              example: "rottentomatoes://image.rating.upright"
+                              example: 'rottentomatoes://image.rating.upright'
                             hasPremiumPrimaryExtra:
                               type: string
-                              example: "1"
+                              example: '1'
                             ratingImage:
                               type: string
-                              example: "rottentomatoes://image.rating.ripe"
+                              example: 'rottentomatoes://image.rating.ripe'
                             Media:
                               type: array
                               items:
@@ -3318,7 +3393,7 @@ paths:
                                     example: h264
                                   videoResolution:
                                     type: string
-                                    example: "1080"
+                                    example: '1080'
                                   container:
                                     type: string
                                     example: mp4
@@ -3460,7 +3535,7 @@ paths:
                                                 example: progressive
                                               streamIdentifier:
                                                 type: string
-                                                example: "1"
+                                                example: '1'
                                               width:
                                                 type: integer
                                                 format: int32
@@ -3529,7 +3604,7 @@ paths:
                                 properties:
                                   id:
                                     type: string
-                                    example: "tvdb://2337"
+                                    example: 'tvdb://2337'
                             Rating:
                               x-speakeasy-name-override: ratings
                               type: array
@@ -3538,7 +3613,7 @@ paths:
                                 properties:
                                   image:
                                     type: string
-                                    example: "themoviedb://image.rating"
+                                    example: 'themoviedb://image.rating'
                                   value:
                                     type: number
                                     example: 7.4
@@ -3565,7 +3640,7 @@ paths:
                                     example: 5d776828880197001ec90e8f
                                   thumb:
                                     type: string
-                                    example: "https://metadata-static.plex.tv/people/5d776828880197001ec90e8f.jpg"
+                                    example: 'https://metadata-static.plex.tv/people/5d776828880197001ec90e8f.jpg'
                             Writer:
                               type: array
                               items:
@@ -3586,7 +3661,7 @@ paths:
                                     example: 5d776828880197001ec90e8f
                                   thumb:
                                     type: string
-                                    example: "https://metadata-static.plex.tv/people/5d776828880197001ec90e8f.jpg"
+                                    example: 'https://metadata-static.plex.tv/people/5d776828880197001ec90e8f.jpg'
                             Role:
                               type: array
                               items:
@@ -3610,7 +3685,7 @@ paths:
                                     example: Bar Guy (uncredited)
                                   thumb:
                                     type: string
-                                    example: "https://metadata-static.plex.tv/6/people/648e9a7ea1d537bccfcd7615134b78ce.jpg"
+                                    example: 'https://metadata-static.plex.tv/6/people/648e9a7ea1d537bccfcd7615134b78ce.jpg'
                             Producer:
                               type: array
                               items:
@@ -3631,10 +3706,10 @@ paths:
                                     example: 5d776826961905001eb90e2b
                                   thumb:
                                     type: string
-                                    example: "https://metadata-static.plex.tv/8/people/87877371326a964634d18556d94547e1.jpg"
-        "400":
-          description: "Bad Request - A parameter was not specified, or was specified incorrectly."
-        "401":
+                                    example: 'https://metadata-static.plex.tv/8/people/87877371326a964634d18556d94547e1.jpg'
+        '400':
+          description: 'Bad Request - A parameter was not specified, or was specified incorrectly.'
+        '401':
           description: Unauthorized - Returned if the X-Plex-Token is missing from the header or query.
           content:
             application/json:
@@ -3655,7 +3730,7 @@ paths:
                         status:
                           type: number
                           example: 401
-  "/library/metadata/{ratingKey}/children":
+  '/library/metadata/{ratingKey}/children':
     get:
       tags:
         - Library
@@ -3670,8 +3745,22 @@ paths:
           schema:
             type: number
           required: true
+        - name: includeElements
+          description: |
+            Adds additional elements to the response. Supported types are (Stream)
+          in: query
+          schema:
+            type: string
+          required: false
+          examples:
+            include-stream:
+              value: Stream
+            include-stream-otheritem:
+              value: 'Stream,OtherItem'
+            include-stream-otheritem-anotheritem:
+              value: 'Stream,OtherItem,AnotherItem'
       responses:
-        "200":
+        '200':
           description: The children of the library item.
           content:
             application/json:
@@ -3696,7 +3785,7 @@ paths:
                         example: com.plexapp.plugins.library
                       key:
                         type: string
-                        example: "30072"
+                        example: '30072'
                       librarySectionID:
                         type: integer
                         format: int32
@@ -3730,7 +3819,7 @@ paths:
                         example: 2022
                       summary:
                         type: string
-                        example: "When retired Military Police Officer Jack Reacher is arrested for a murder he did not commit, he finds himself in the middle of a deadly conspiracy full of dirty cops, shady businessmen, and scheming politicians. With nothing but his wits, he must figure out what is happening in Margrave, Georgia."
+                        example: 'When retired Military Police Officer Jack Reacher is arrested for a murder he did not commit, he finds himself in the middle of a deadly conspiracy full of dirty cops, shady businessmen, and scheming politicians. With nothing but his wits, he must figure out what is happening in Margrave, Georgia.'
                       theme:
                         type: string
                         example: /library/metadata/30072/theme/1705739923
@@ -3785,19 +3874,19 @@ paths:
                           properties:
                             ratingKey:
                               type: string
-                              example: "66488"
+                              example: '66488'
                             key:
                               type: string
                               example: /library/metadata/66488/children
                             parentRatingKey:
                               type: string
-                              example: "30072"
+                              example: '30072'
                             guid:
                               type: string
-                              example: "plex://season/652aea6549508477c34c6000"
+                              example: 'plex://season/652aea6549508477c34c6000'
                             parentGuid:
                               type: string
-                              example: "plex://show/5d9c09190aaccd001f8f42f0"
+                              example: 'plex://show/5d9c09190aaccd001f8f42f0'
                             parentStudio:
                               type: string
                               example: Amazon Studios
@@ -3876,9 +3965,9 @@ paths:
                               type: integer
                               format: int32
                               example: 1703881224
-        "400":
-          description: "Bad Request - A parameter was not specified, or was specified incorrectly."
-        "401":
+        '400':
+          description: 'Bad Request - A parameter was not specified, or was specified incorrectly.'
+        '401':
           description: Unauthorized - Returned if the X-Plex-Token is missing from the header or query.
           content:
             application/json:
@@ -3899,6 +3988,228 @@ paths:
                         status:
                           type: number
                           example: 401
+  /library/all/top:
+    get:
+      tags:
+        - Library
+      summary: Get Top Watched Content
+      description: |
+        This endpoint will return the top watched content from libraries of a certain type
+      operationId: getTopWatchedContent
+      parameters:
+        - name: type
+          description: 'the library type (1 - movies, 2 - shows, 3 - music)'
+          in: query
+          schema:
+            type: integer
+          required: true
+          examples:
+            movies:
+              value: 1
+            shows:
+              value: 2
+            music:
+              value: 3
+        - name: includeGuids
+          in: query
+          description: |
+            Adds the Guids object to the response
+          schema:
+            type: integer
+          required: false
+          example: 1
+      responses:
+        '200':
+          description: The metadata of the library item.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  MediaContainer:
+                    type: object
+                    properties:
+                      size:
+                        type: integer
+                        format: int32
+                        example: 1
+                      allowSync:
+                        type: boolean
+                        example: true
+                      identifier:
+                        type: string
+                        example: com.plexapp.plugins.library
+                      mediaTagPrefix:
+                        type: string
+                        example: /system/bundle/media/flags/
+                      mediaTagVersion:
+                        type: integer
+                        format: int32
+                        example: 1698860922
+                      Metadata:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            ratingKey:
+                              type: string
+                              example: '17'
+                            key:
+                              type: string
+                              example: /library/metadata/17
+                            guid:
+                              type: string
+                              example: 'plex://movie/5d77683f6f4521001ea9dc53'
+                            slug:
+                              type: string
+                              example: waterloo-road
+                            studio:
+                              type: string
+                              example: Universal Pictures
+                            type:
+                              type: string
+                              example: movie
+                            title:
+                              type: string
+                              example: Serenity
+                            librarySectionTitle:
+                              type: string
+                              example: Movies
+                            librarySectionID:
+                              type: integer
+                              format: int32
+                              example: 1
+                            librarySectionKey:
+                              type: string
+                              example: /library/sections/1
+                            contentRating:
+                              type: string
+                              example: PG-13
+                            summary:
+                              type: string
+                              example: 'Serenity continues the story of the TV series it was based upon ("Firefly"). River Tam had a secret - one in which she''s not even aware - so dangerous, no one''s safe, as an Alliance operative''s sent to capture her, and all others are considered irrelevant to his job.'
+                            index:
+                              type: integer
+                              example: 1
+                            audienceRating:
+                              type: number
+                              example: 9.1
+                            year:
+                              type: integer
+                              format: int32
+                              example: 2005
+                            tagline:
+                              type: string
+                              example: They aim to misbehave.
+                            thumb:
+                              type: string
+                              example: /library/metadata/17/thumb/1705637165
+                            art:
+                              type: string
+                              example: /library/metadata/17/art/1705637165
+                            duration:
+                              type: integer
+                              format: int32
+                              example: 141417
+                            originallyAvailableAt:
+                              type: string
+                              format: date
+                              example: 2005-09-29T00:00:00.000Z
+                            leafCount:
+                              type: integer
+                              example: 222
+                            viewedLeafCount:
+                              type: integer
+                              example: 100
+                            childCount:
+                              type: integer
+                              example: 13
+                            addedAt:
+                              type: integer
+                              format: int32
+                              example: 1705637164
+                            updatedAt:
+                              type: integer
+                              format: int32
+                              example: 1705637165
+                            globalViewCount:
+                              type: integer
+                              example: 80
+                            audienceRatingImage:
+                              type: string
+                              example: 'rottentomatoes://image.rating.upright'
+                            Genre:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  id:
+                                    type: integer
+                                    format: int32
+                                    example: 184
+                                  filter:
+                                    type: string
+                                    example: genre=184
+                                  tag:
+                                    type: string
+                                    example: Thriller
+                            Country:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  id:
+                                    type: integer
+                                    format: int32
+                                    example: 116
+                                  filter:
+                                    type: string
+                                    example: country=116
+                                  tag:
+                                    type: string
+                                    example: United States of America
+                            Guid:
+                              x-speakeasy-name-override: guids
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  id:
+                                    type: string
+                                    example: 'tvdb://2337'
+                            Role:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  id:
+                                    type: integer
+                                    format: int32
+                                    example: 220
+                                  filter:
+                                    type: string
+                                    example: actor=220
+                                  tag:
+                                    type: string
+                                    example: Dennis Keiffer
+                                  tagKey:
+                                    type: string
+                                    example: 5d77683554f42c001f8c4708
+                                  role:
+                                    type: string
+                                    example: Bar Guy (uncredited)
+                                  thumb:
+                                    type: string
+                                    example: 'https://metadata-static.plex.tv/6/people/648e9a7ea1d537bccfcd7615134b78ce.jpg'
+                            User:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  id:
+                                    type: integer
+                                    format: int32
+                                    example: 220
   /library/onDeck:
     get:
       tags:
@@ -3908,7 +4219,7 @@ paths:
         This endpoint will return the on deck content.
       operationId: getOnDeck
       responses:
-        "200":
+        '200':
           description: The on Deck content
           content:
             application/json:
@@ -3964,13 +4275,13 @@ paths:
                               example: 49556
                             guid:
                               type: string
-                              example: "plex://episode/5ea7d7402e7ab10042e74d4f"
+                              example: 'plex://episode/5ea7d7402e7ab10042e74d4f'
                             parentGuid:
                               type: string
-                              example: "plex://season/602e754d67f4c8002ce54b3d"
+                              example: 'plex://season/602e754d67f4c8002ce54b3d'
                             grandparentGuid:
                               type: string
-                              example: "plex://show/5d9c090e705e7a001e6e94d8"
+                              example: 'plex://show/5d9c090e705e7a001e6e94d8'
                             type:
                               type: string
                               example: episode
@@ -4075,7 +4386,7 @@ paths:
                                     example: hevc
                                   videoResolution:
                                     type: string
-                                    example: "1080"
+                                    example: '1080'
                                   container:
                                     type: string
                                     example: mkv
@@ -4156,7 +4467,7 @@ paths:
                                                 example: left
                                               chromaSubsampling:
                                                 type: string
-                                                example: "4:2:0"
+                                                example: '4:2:0'
                                               codedHeight:
                                                 type: number
                                                 example: 1080
@@ -4198,10 +4509,10 @@ paths:
                                 properties:
                                   id:
                                     type: string
-                                    example: "imdb://tt13303712"
-        "400":
-          description: "Bad Request - A parameter was not specified, or was specified incorrectly."
-        "401":
+                                    example: 'imdb://tt13303712'
+        '400':
+          description: 'Bad Request - A parameter was not specified, or was specified incorrectly.'
+        '401':
           description: Unauthorized - Returned if the X-Plex-Token is missing from the header or query.
           content:
             application/json:
@@ -4264,11 +4575,11 @@ paths:
             example: Postman
           required: true
       responses:
-        "200":
+        '200':
           description: Log Message Posted successfully
-        "400":
-          description: "Bad Request - A parameter was not specified, or was specified incorrectly."
-        "401":
+        '400':
+          description: 'Bad Request - A parameter was not specified, or was specified incorrectly.'
+        '401':
           description: Unauthorized - Returned if the X-Plex-Token is missing from the header or query.
           content:
             application/json:
@@ -4327,11 +4638,11 @@ paths:
                 level=3&message=Test%20message%202&source=postman
                 level=1&message=Test%20message%203&source=postman
       responses:
-        "200":
+        '200':
           description: Multi-Line Log Message Posted successfully
-        "400":
-          description: "Bad Request - A parameter was not specified, or was specified incorrectly."
-        "401":
+        '400':
+          description: 'Bad Request - A parameter was not specified, or was specified incorrectly.'
+        '401':
           description: Unauthorized - Returned if the X-Plex-Token is missing from the header or query.
           content:
             application/json:
@@ -4361,11 +4672,11 @@ paths:
         This endpoint will enable all Plex Media Serverlogs to be sent to the Papertrail networked logging site for a period of time.
       operationId: enablePaperTrail
       responses:
-        "200":
+        '200':
           description: Papertrail enabled successfully
-        "400":
-          description: "Bad Request - A parameter was not specified, or was specified incorrectly."
-        "401":
+        '400':
+          description: 'Bad Request - A parameter was not specified, or was specified incorrectly.'
+        '401':
           description: Unauthorized - Returned if the X-Plex-Token is missing from the header or query.
           content:
             application/json:
@@ -4386,7 +4697,7 @@ paths:
                         status:
                           type: number
                           example: 401
-        "403":
+        '403':
           description: the user was not signed in
   /myplex/account:
     get:
@@ -4396,7 +4707,7 @@ paths:
       description: Returns MyPlex Account Information
       operationId: getMyPlexAccount
       responses:
-        "200":
+        '200':
           description: MyPlex Account
           content:
             application/json:
@@ -4434,15 +4745,15 @@ paths:
                         example: 32400
                       subscriptionFeatures:
                         type: string
-                        example: "federated-auth,hardware_transcoding,home,hwtranscode,item_clusters,kevin-bacon,livetv,loudness,lyrics,music-analysis,music_videos,pass,photo_autotags,photos-v5,photosV6-edit,photosV6-tv-albums,premium_music_metadata,radio,server-manager,session_bandwidth_restrictions,session_kick,shared-radio,sync,trailers,tuner-sharing,type-first,unsupportedtuners,webhooks"
+                        example: 'federated-auth,hardware_transcoding,home,hwtranscode,item_clusters,kevin-bacon,livetv,loudness,lyrics,music-analysis,music_videos,pass,photo_autotags,photos-v5,photosV6-edit,photosV6-tv-albums,premium_music_metadata,radio,server-manager,session_bandwidth_restrictions,session_kick,shared-radio,sync,trailers,tuner-sharing,type-first,unsupportedtuners,webhooks'
                       subscriptionActive:
                         type: boolean
                       subscriptionState:
                         type: string
                         example: Active
-        "400":
-          description: "Bad Request - A parameter was not specified, or was specified incorrectly."
-        "401":
+        '400':
+          description: 'Bad Request - A parameter was not specified, or was specified incorrectly.'
+        '401':
           description: Unauthorized - Returned if the X-Plex-Token is missing from the header or query.
           content:
             application/json:
@@ -4463,7 +4774,7 @@ paths:
                         status:
                           type: number
                           example: 401
-  "/photo/:/transcode":
+  '/photo/:/transcode':
     get:
       tags:
         - Server
@@ -4531,11 +4842,11 @@ paths:
             example: /library/metadata/49564/thumb/1654258204
           required: true
       responses:
-        "200":
+        '200':
           description: Resized Image
-        "400":
-          description: "Bad Request - A parameter was not specified, or was specified incorrectly."
-        "401":
+        '400':
+          description: 'Bad Request - A parameter was not specified, or was specified incorrectly.'
+        '401':
           description: Unauthorized - Returned if the X-Plex-Token is missing from the header or query.
           content:
             application/json:
@@ -4559,7 +4870,7 @@ paths:
   /pins:
     post:
       servers:
-        - url: "https://plex.tv/api/v2"
+        - url: 'https://plex.tv/api/v2'
       tags:
         - Plex
       summary: Get a Pin
@@ -4587,8 +4898,16 @@ paths:
             type: string
             example: Postman
           required: true
+        - name: X-Plex-Product
+          description: |
+            Product name of the application shown in the list of devices
+          in: header
+          schema:
+            type: string
+            example: Postman
+          required: true
       responses:
-        "200":
+        '201':
           description: The Pin
           content:
             application/json:
@@ -4613,7 +4932,7 @@ paths:
                       The QR code redirects to the relevant `plex.tv/link` authentication page
                       Which then prompts the user for the 4 Digit Link Pin
                     type: string
-                    example: "https://plex.tv/api/v2/pins/qr/3patfx1a78ukcbr7x0n9bl26t"
+                    example: 'https://plex.tv/api/v2/pins/qr/3patfx1a78ukcbr7x0n9bl26t'
                   clientIdentifier:
                     type: string
                     example: Postman
@@ -4638,7 +4957,134 @@ paths:
                         type: string
                         example: America/Chicago
                       postal_code:
-                        type: number
+                        type: string
+                        example: 78732
+                      in_privacy_restricted_country:
+                        type: boolean
+                      subdivisions:
+                        type: string
+                        example: Texas
+                      coordinates:
+                        type: string
+                        example: 30.3768 -97.8935
+                  expiresIn:
+                    type: number
+                    example: 1800
+                  createdAt:
+                    type: string
+                    format: date-time
+                    example: 2023-04-12T17:00:03.000Z
+                  expiresAt:
+                    type: string
+                    format: date-time
+                    example: 2023-04-12T17:30:03.000Z
+                  authToken:
+                    type: string
+                    format: nullable
+                  newRegistration:
+                    type:
+                      - boolean
+                      - 'null'
+        '400':
+          description: X-Plex-Client-Identifier is missing
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        code:
+                          type: number
+                          example: 1000
+                        message:
+                          type: string
+                          example: X-Plex-Client-Identifier is missing
+                        status:
+                          type: number
+                          example: 400
+  '/pins/{pinID}':
+    get:
+      servers:
+        - url: 'https://plex.tv/api/v2'
+      tags:
+        - Plex
+      summary: Get Access Token
+      operationId: getToken
+      description: Retrieve an Access Token from Plex.tv after the Pin has already been authenticated
+      security: []
+      parameters:
+        - name: pinID
+          description: The PinID to retrieve an access token for
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: X-Plex-Client-Identifier
+          description: |
+            The unique identifier for the client application
+            This is used to track the client application and its usage
+            (UUID, serial number, or other number unique per device)
+          in: header
+          schema:
+            type: string
+            example: Postman
+          required: true
+      responses:
+        '200':
+          description: Access Token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    description: PinID for use with authentication
+                    type: number
+                    example: 1272322473
+                  code:
+                    type: string
+                    example: 3patfx1a78ukcbr7x0n9bl26t
+                  product:
+                    type: string
+                    example: Plex Web
+                  trusted:
+                    type: boolean
+                  qr:
+                    description: |
+                      a link to a QR code hosted on plex.tv 
+                      The QR code redirects to the relevant `plex.tv/link` authentication page
+                      Which then prompts the user for the 4 Digit Link Pin
+                    type: string
+                    example: 'https://plex.tv/api/v2/pins/qr/3patfx1a78ukcbr7x0n9bl26t'
+                  clientIdentifier:
+                    type: string
+                    example: Postman
+                  location:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                        example: US
+                      european_union_member:
+                        type: boolean
+                      continent_code:
+                        type: string
+                        example: NA
+                      country:
+                        type: string
+                        example: United States
+                      city:
+                        type: string
+                        example: Austin
+                      time_zone:
+                        type: string
+                        example: America/Chicago
+                      postal_code:
+                        type: string
                         example: 78732
                       in_privacy_restricted_country:
                         type: boolean
@@ -4665,58 +5111,7 @@ paths:
                   newRegistration:
                     type: string
                     format: nullable
-        "400":
-          description: X-Plex-Client-Identifier is missing
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  errors:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        code:
-                          type: number
-                          example: 1000
-                        message:
-                          type: string
-                          example: X-Plex-Client-Identifier is missing
-                        status:
-                          type: number
-                          example: 400
-  "/pins/{pinID}":
-    get:
-      servers:
-        - url: "https://plex.tv/api/v2"
-      tags:
-        - Plex
-      summary: Get Access Token
-      operationId: getToken
-      description: Retrieve an Access Token from Plex.tv after the Pin has already been authenticated
-      security: []
-      parameters:
-        - name: pinID
-          description: The PinID to retrieve an access token for
-          in: path
-          schema:
-            type: string
-          required: true
-        - name: X-Plex-Client-Identifier
-          description: |
-            The unique identifier for the client application
-            This is used to track the client application and its usage
-            (UUID, serial number, or other number unique per device)
-          in: header
-          schema:
-            type: string
-            example: Postman
-          required: true
-      responses:
-        "200":
-          description: Access Token
-        "400":
+        '400':
           description: X-Plex-Client-Identifier is missing
           content:
             application/json:
@@ -4786,7 +5181,7 @@ paths:
             type: number
           required: false
       responses:
-        "200":
+        '200':
           description: returns all playlists
           content:
             application/json:
@@ -4807,13 +5202,13 @@ paths:
                           properties:
                             ratingKey:
                               type: string
-                              example: "96"
+                              example: '96'
                             key:
                               type: string
                               example: /playlists/96/items
                             guid:
                               type: string
-                              example: "com.plexapp.agents.none://a2f92937-1408-40e2-b022-63a8a9377e55"
+                              example: 'com.plexapp.agents.none://a2f92937-1408-40e2-b022-63a8a9377e55'
                             type:
                               type: string
                               example: playlist
@@ -4831,7 +5226,7 @@ paths:
                               example: video
                             icon:
                               type: string
-                              example: "playlist://image.smart"
+                              example: 'playlist://image.smart'
                             viewCount:
                               type: integer
                               format: int32
@@ -4859,9 +5254,9 @@ paths:
                               type: integer
                               format: int32
                               example: 141000
-        "400":
-          description: "Bad Request - A parameter was not specified, or was specified incorrectly."
-        "401":
+        '400':
+          description: 'Bad Request - A parameter was not specified, or was specified incorrectly.'
+        '401':
           description: Unauthorized - Returned if the X-Plex-Token is missing from the header or query.
           content:
             application/json:
@@ -4909,7 +5304,7 @@ paths:
               - 1
           required: false
       responses:
-        "200":
+        '200':
           description: returns all playlists
           content:
             application/json:
@@ -4930,13 +5325,13 @@ paths:
                           properties:
                             ratingKey:
                               type: string
-                              example: "92"
+                              example: '92'
                             key:
                               type: string
                               example: /playlists/92/items
                             guid:
                               type: string
-                              example: "com.plexapp.agents.none://7ca5aaef-58e8-4828-9e21-c009c97f2903"
+                              example: 'com.plexapp.agents.none://7ca5aaef-58e8-4828-9e21-c009c97f2903'
                             type:
                               type: string
                               example: playlist
@@ -4957,7 +5352,7 @@ paths:
                               example: /playlists/92/composite/1705716440
                             icon:
                               type: string
-                              example: "playlist://image.smart"
+                              example: 'playlist://image.smart'
                             viewCount:
                               type: integer
                               format: int32
@@ -4982,9 +5377,9 @@ paths:
                               type: integer
                               format: int32
                               example: 1705716440
-        "400":
-          description: "Bad Request - A parameter was not specified, or was specified incorrectly."
-        "401":
+        '400':
+          description: 'Bad Request - A parameter was not specified, or was specified incorrectly.'
+        '401':
           description: Unauthorized - Returned if the X-Plex-Token is missing from the header or query.
           content:
             application/json:
@@ -5005,7 +5400,7 @@ paths:
                         status:
                           type: number
                           example: 401
-  "/playlists/{playlistID}":
+  '/playlists/{playlistID}':
     get:
       tags:
         - Playlists
@@ -5022,7 +5417,7 @@ paths:
             type: number
           required: true
       responses:
-        "200":
+        '200':
           description: The playlist
           content:
             application/json:
@@ -5043,16 +5438,16 @@ paths:
                           properties:
                             content:
                               type: string
-                              example: "library://x/directory/%2Flibrary%2Fsections%2F1%2Fall%3Ftype%3D1%26push%3D1%26title%3D2%26or%3D1%26title%3DSerenity%26pop%3D1"
+                              example: 'library://x/directory/%2Flibrary%2Fsections%2F1%2Fall%3Ftype%3D1%26push%3D1%26title%3D2%26or%3D1%26title%3DSerenity%26pop%3D1'
                             ratingKey:
                               type: string
-                              example: "95"
+                              example: '95'
                             key:
                               type: string
                               example: /playlists/95/items
                             guid:
                               type: string
-                              example: "com.plexapp.agents.none://87425529-380f-44b8-a689-9a0537e7ec91"
+                              example: 'com.plexapp.agents.none://87425529-380f-44b8-a689-9a0537e7ec91'
                             type:
                               type: string
                               example: playlist
@@ -5061,7 +5456,7 @@ paths:
                               example: Smart Movie Playlist
                             summary:
                               type: string
-                              example: ""
+                              example: ''
                             smart:
                               type: boolean
                               example: true
@@ -5073,7 +5468,7 @@ paths:
                               example: /playlists/95/composite/1705717387
                             icon:
                               type: string
-                              example: "playlist://image.smart"
+                              example: 'playlist://image.smart'
                             duration:
                               type: integer
                               format: int32
@@ -5090,9 +5485,9 @@ paths:
                               type: integer
                               format: int32
                               example: 1705717387
-        "400":
-          description: "Bad Request - A parameter was not specified, or was specified incorrectly."
-        "401":
+        '400':
+          description: 'Bad Request - A parameter was not specified, or was specified incorrectly.'
+        '401':
           description: Unauthorized - Returned if the X-Plex-Token is missing from the header or query.
           content:
             application/json:
@@ -5128,11 +5523,11 @@ paths:
             type: number
           required: true
       responses:
-        "200":
+        '204':
           description: The playlist is deleted
-        "400":
-          description: "Bad Request - A parameter was not specified, or was specified incorrectly."
-        "401":
+        '400':
+          description: 'Bad Request - A parameter was not specified, or was specified incorrectly.'
+        '401':
           description: Unauthorized - Returned if the X-Plex-Token is missing from the header or query.
           content:
             application/json:
@@ -5180,11 +5575,11 @@ paths:
             type: string
           required: false
       responses:
-        "200":
+        '200':
           description: The playlist is deleted
-        "400":
-          description: "Bad Request - A parameter was not specified, or was specified incorrectly."
-        "401":
+        '400':
+          description: 'Bad Request - A parameter was not specified, or was specified incorrectly.'
+        '401':
           description: Unauthorized - Returned if the X-Plex-Token is missing from the header or query.
           content:
             application/json:
@@ -5205,7 +5600,7 @@ paths:
                         status:
                           type: number
                           example: 401
-  "/playlists/{playlistID}/items":
+  '/playlists/{playlistID}/items':
     get:
       tags:
         - Playlists
@@ -5230,7 +5625,7 @@ paths:
             type: number
           required: true
       responses:
-        "200":
+        '200':
           description: The playlist contents
           content:
             application/json:
@@ -5260,7 +5655,7 @@ paths:
                         example: video
                       ratingKey:
                         type: string
-                        example: "95"
+                        example: '95'
                       smart:
                         type: boolean
                         example: true
@@ -5274,13 +5669,13 @@ paths:
                           properties:
                             ratingKey:
                               type: string
-                              example: "17"
+                              example: '17'
                             key:
                               type: string
                               example: /library/metadata/17
                             guid:
                               type: string
-                              example: "plex://movie/5d77683f6f4521001ea9dc53"
+                              example: 'plex://movie/5d77683f6f4521001ea9dc53'
                             studio:
                               type: string
                               example: Universal Pictures
@@ -5346,16 +5741,16 @@ paths:
                               example: 1705637165
                             audienceRatingImage:
                               type: string
-                              example: "rottentomatoes://image.rating.upright"
+                              example: 'rottentomatoes://image.rating.upright'
                             hasPremiumExtras:
                               type: string
-                              example: "1"
+                              example: '1'
                             hasPremiumPrimaryExtra:
                               type: string
-                              example: "1"
+                              example: '1'
                             ratingImage:
                               type: string
-                              example: "rottentomatoes://image.rating.ripe"
+                              example: 'rottentomatoes://image.rating.ripe'
                             Media:
                               type: array
                               items:
@@ -5396,7 +5791,7 @@ paths:
                                     example: h264
                                   videoResolution:
                                     type: string
-                                    example: "1080"
+                                    example: '1080'
                                   container:
                                     type: string
                                     example: mp4
@@ -5494,9 +5889,9 @@ paths:
                                   tag:
                                     type: string
                                     example: Gina Torres
-        "400":
-          description: "Bad Request - A parameter was not specified, or was specified incorrectly."
-        "401":
+        '400':
+          description: 'Bad Request - A parameter was not specified, or was specified incorrectly.'
+        '401':
           description: Unauthorized - Returned if the X-Plex-Token is missing from the header or query.
           content:
             application/json:
@@ -5532,11 +5927,11 @@ paths:
             type: number
           required: true
       responses:
-        "200":
+        '200':
           description: The playlist contents are cleared
-        "400":
-          description: "Bad Request - A parameter was not specified, or was specified incorrectly."
-        "401":
+        '400':
+          description: 'Bad Request - A parameter was not specified, or was specified incorrectly.'
+        '401':
           description: Unauthorized - Returned if the X-Plex-Token is missing from the header or query.
           content:
             application/json:
@@ -5577,7 +5972,7 @@ paths:
           in: query
           schema:
             type: string
-            example: "server://12345/com.plexapp.plugins.library/library/metadata/1"
+            example: 'server://12345/com.plexapp.plugins.library/library/metadata/1'
           required: true
         - name: playQueueID
           description: the play queue to add to a playlist
@@ -5587,7 +5982,7 @@ paths:
             example: 123
           required: false
       responses:
-        "200":
+        '200':
           description: Playlist Updated
           content:
             application/json:
@@ -5616,13 +6011,13 @@ paths:
                           properties:
                             ratingKey:
                               type: string
-                              example: "94"
+                              example: '94'
                             key:
                               type: string
                               example: /playlists/94/items
                             guid:
                               type: string
-                              example: "com.plexapp.agents.none://972e3047-83d6-4848-a000-261f0af26ba2"
+                              example: 'com.plexapp.agents.none://972e3047-83d6-4848-a000-261f0af26ba2'
                             type:
                               type: string
                               example: playlist
@@ -5657,9 +6052,9 @@ paths:
                               type: integer
                               format: int32
                               example: 1705800070
-        "400":
-          description: "Bad Request - A parameter was not specified, or was specified incorrectly."
-        "401":
+        '400':
+          description: 'Bad Request - A parameter was not specified, or was specified incorrectly.'
+        '401':
           description: Unauthorized - Returned if the X-Plex-Token is missing from the header or query.
           content:
             application/json:
@@ -5716,11 +6111,11 @@ paths:
               - 1
           required: true
       responses:
-        "200":
+        '200':
           description: The playlist is uploaded
-        "400":
-          description: "Bad Request - A parameter was not specified, or was specified incorrectly."
-        "401":
+        '400':
+          description: 'Bad Request - A parameter was not specified, or was specified incorrectly.'
+        '401':
           description: Unauthorized - Returned if the X-Plex-Token is missing from the header or query.
           content:
             application/json:
@@ -5754,10 +6149,10 @@ paths:
           in: query
           schema:
             type: string
-            example: "110"
+            example: '110'
           required: true
       responses:
-        "200":
+        '200':
           description: Search Results
           content:
             application/json:
@@ -5808,7 +6203,7 @@ paths:
                               example: /library/metadata/10398
                             guid:
                               type: string
-                              example: "plex://movie/5d7768284de0ee001fcc8f52"
+                              example: 'plex://movie/5d7768284de0ee001fcc8f52'
                             studio:
                               type: string
                               example: Paramount
@@ -5817,7 +6212,7 @@ paths:
                               example: movie
                             title:
                               type: string
-                              example: "Mission: Impossible"
+                              example: 'Mission: Impossible'
                             contentRating:
                               type: string
                               example: PG-13
@@ -5857,7 +6252,7 @@ paths:
                               example: 1679505055
                             audienceRatingImage:
                               type: string
-                              example: "rottentomatoes://image.rating.upright"
+                              example: 'rottentomatoes://image.rating.upright'
                             chapterSource:
                               type: string
                               example: media
@@ -5866,7 +6261,7 @@ paths:
                               example: /library/metadata/10501
                             ratingImage:
                               type: string
-                              example: "rottentomatoes://image.rating.ripe"
+                              example: 'rottentomatoes://image.rating.ripe'
                             Media:
                               type: array
                               items:
@@ -5997,9 +6392,9 @@ paths:
                             type:
                               type: string
                               example: mixed
-        "400":
-          description: "Bad Request - A parameter was not specified, or was specified incorrectly."
-        "401":
+        '400':
+          description: 'Bad Request - A parameter was not specified, or was specified incorrectly.'
+        '401':
           description: Unauthorized - Returned if the X-Plex-Token is missing from the header or query.
           content:
             application/json:
@@ -6030,7 +6425,7 @@ paths:
       operationId: getTransientToken
       parameters:
         - name: type
-          description: "`delegation` - This is the only supported `type` parameter."
+          description: '`delegation` - This is the only supported `type` parameter.'
           in: query
           schema:
             type: string
@@ -6038,7 +6433,7 @@ paths:
               - delegation
           required: true
         - name: scope
-          description: "`all` - This is the only supported `scope` parameter."
+          description: '`all` - This is the only supported `scope` parameter.'
           in: query
           schema:
             type: string
@@ -6046,11 +6441,11 @@ paths:
               - all
           required: true
       responses:
-        "200":
+        '200':
           description: A Transient Token
-        "400":
-          description: "Bad Request - A parameter was not specified, or was specified incorrectly."
-        "401":
+        '400':
+          description: 'Bad Request - A parameter was not specified, or was specified incorrectly.'
+        '401':
           description: Unauthorized - Returned if the X-Plex-Token is missing from the header or query.
           content:
             application/json:
@@ -6087,15 +6482,15 @@ paths:
           schema:
             type: string
             examples:
-              - "server://client-identifier"
-              - "provider://provider-identifier"
+              - 'server://client-identifier'
+              - 'provider://provider-identifier'
           required: true
       responses:
-        "200":
+        '200':
           description: Source Connection Information
-        "400":
-          description: "Bad Request - A parameter was not specified, or was specified incorrectly."
-        "401":
+        '400':
+          description: 'Bad Request - A parameter was not specified, or was specified incorrectly.'
+        '401':
           description: Unauthorized - Returned if the X-Plex-Token is missing from the header or query.
           content:
             application/json:
@@ -6124,7 +6519,7 @@ paths:
       description: Get Server List
       operationId: getServerList
       responses:
-        "200":
+        '200':
           description: List of Servers
           content:
             application/json:
@@ -6160,9 +6555,9 @@ paths:
                             version:
                               type: string
                               example: 1.31.3.6868-28fc46b27
-        "400":
-          description: "Bad Request - A parameter was not specified, or was specified incorrectly."
-        "401":
+        '400':
+          description: 'Bad Request - A parameter was not specified, or was specified incorrectly.'
+        '401':
           description: Unauthorized - Returned if the X-Plex-Token is missing from the header or query.
           content:
             application/json:
@@ -6201,7 +6596,7 @@ paths:
           required: false
           example: 4
       responses:
-        "200":
+        '200':
           description: Media Statistics
           content:
             application/json:
@@ -6267,7 +6662,7 @@ paths:
                               example: 1
                             thumb:
                               type: string
-                              example: "https://plex.tv/users/50d83634246da1de/avatar?c=1707110967"
+                              example: 'https://plex.tv/users/50d83634246da1de/avatar?c=1707110967'
                       StatisticsMedia:
                         type: array
                         items:
@@ -6301,9 +6696,225 @@ paths:
                               type: integer
                               format: int32
                               example: 1555
-        "400":
-          description: "Bad Request - A parameter was not specified, or was specified incorrectly."
-        "401":
+        '400':
+          description: 'Bad Request - A parameter was not specified, or was specified incorrectly.'
+        '401':
+          description: Unauthorized - Returned if the X-Plex-Token is missing from the header or query.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        code:
+                          type: number
+                          example: 1001
+                        message:
+                          type: string
+                          example: User could not be authenticated
+                        status:
+                          type: number
+                          example: 401
+  /statistics/resources:
+    get:
+      tags:
+        - Statistics
+      summary: Get Resources Statistics
+      description: This will return the resources for the server
+      operationId: getResourcesStatistics
+      parameters:
+        - name: Timespan
+          description: |
+            The timespan to retrieve statistics for
+            the exact meaning of this parameter is not known
+          in: query
+          schema:
+            type: integer
+          required: false
+          example: 4
+      responses:
+        '200':
+          description: Resource Statistics
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  MediaContainer:
+                    type: object
+                    properties:
+                      size:
+                        type: integer
+                        format: int32
+                        example: 5497
+                      StatisticsResources:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            timespan:
+                              type: integer
+                              example: 6
+                            at:
+                              type: integer
+                              example: 1718384427
+                            hostCpuUtilization:
+                              type: number
+                              format: float
+                              example: 1.276
+                            processCpuUtilization:
+                              type: number
+                              format: float
+                              example: 0.025
+                            hostMemoryUtilization:
+                              type: number
+                              format: float
+                              example: 17.026
+                            processMemoryUtilization:
+                              type: number
+                              format: float
+                              example: 0.493
+        '400':
+          description: 'Bad Request - A parameter was not specified, or was specified incorrectly.'
+        '401':
+          description: Unauthorized - Returned if the X-Plex-Token is missing from the header or query.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        code:
+                          type: number
+                          example: 1001
+                        message:
+                          type: string
+                          example: User could not be authenticated
+                        status:
+                          type: number
+                          example: 401
+  /statistics/bandwidth:
+    get:
+      tags:
+        - Statistics
+      summary: Get Bandwidth Statistics
+      description: This will return the bandwidth statistics for the server
+      operationId: getBandwidthStatistics
+      parameters:
+        - name: Timespan
+          description: |
+            The timespan to retrieve statistics for
+            the exact meaning of this parameter is not known
+          in: query
+          schema:
+            type: integer
+          required: false
+          example: 4
+      responses:
+        '200':
+          description: Bandwidth Statistics
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  MediaContainer:
+                    type: object
+                    properties:
+                      size:
+                        type: integer
+                        format: int32
+                        example: 5497
+                      Device:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              format: int32
+                              example: 208
+                            name:
+                              type: string
+                              example: Roku Express
+                            platform:
+                              type: string
+                              example: Roku
+                            clientIdentifier:
+                              type: string
+                              example: 793095d235660625108ef785cc7646e9
+                            createdAt:
+                              type: integer
+                              format: int32
+                              example: 1706470556
+                      Account:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              format: int32
+                              example: 238960586
+                            key:
+                              type: string
+                              example: /accounts/238960586
+                            name:
+                              type: string
+                              example: Diane
+                            defaultAudioLanguage:
+                              type: string
+                              example: en
+                            autoSelectAudio:
+                              type: boolean
+                              example: true
+                            defaultSubtitleLanguage:
+                              type: string
+                              example: en
+                            subtitleMode:
+                              type: integer
+                              format: int32
+                              example: 1
+                            thumb:
+                              type: string
+                              example: 'https://plex.tv/users/50d83634246da1de/avatar?c=1707110967'
+                      StatisticsBandwidth:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            accountID:
+                              type: integer
+                              format: int32
+                              example: 238960586
+                            deviceID:
+                              type: integer
+                              format: int32
+                              exmaple: 208
+                            timespan:
+                              type: integer
+                              example: 6
+                            at:
+                              type: integer
+                              format: int32
+                              example: 1718387650
+                            lan:
+                              type: boolean
+                              example: true
+                            bytes:
+                              type: integer
+                              example: 22
+        '400':
+          description: 'Bad Request - A parameter was not specified, or was specified incorrectly.'
+        '401':
           description: Unauthorized - Returned if the X-Plex-Token is missing from the header or query.
           content:
             application/json:
@@ -6332,7 +6943,7 @@ paths:
       description: This will retrieve the "Now Playing" Information of the PMS.
       operationId: getSessions
       responses:
-        "200":
+        '200':
           description: List of Active Plex Sessions
           content:
             application/json:
@@ -6367,13 +6978,13 @@ paths:
                               example: /library/metadata/39904/art/1705310687
                             grandparentGuid:
                               type: string
-                              example: "plex://artist/5d07bbfd403c6402904a6480"
+                              example: 'plex://artist/5d07bbfd403c6402904a6480'
                             grandparentKey:
                               type: string
                               example: /library/metadata/39904
                             grandparentRatingKey:
                               type: string
-                              example: "39904"
+                              example: '39904'
                             grandparentThumb:
                               type: string
                               example: /library/metadata/39904/thumb/1705310687
@@ -6382,7 +6993,7 @@ paths:
                               example: Green Day
                             guid:
                               type: string
-                              example: "plex://track/6535834f71f22f36f71a8e8f"
+                              example: 'plex://track/6535834f71f22f36f71a8e8f'
                             index:
                               type: integer
                               format: int32
@@ -6392,7 +7003,7 @@ paths:
                               example: /library/metadata/67085
                             librarySectionID:
                               type: string
-                              example: "3"
+                              example: '3'
                             librarySectionKey:
                               type: string
                               example: /library/sections/3
@@ -6401,10 +7012,10 @@ paths:
                               example: Music
                             musicAnalysisVersion:
                               type: string
-                              example: "1"
+                              example: '1'
                             parentGuid:
                               type: string
-                              example: "plex://album/65394d6d472b8ab03ef47f12"
+                              example: 'plex://album/65394d6d472b8ab03ef47f12'
                             parentIndex:
                               type: integer
                               format: int32
@@ -6414,7 +7025,7 @@ paths:
                               example: /library/metadata/67084
                             parentRatingKey:
                               type: string
-                              example: "67084"
+                              example: '67084'
                             parentStudio:
                               type: string
                               example: Reprise Records
@@ -6434,10 +7045,10 @@ paths:
                               example: 45885
                             ratingKey:
                               type: string
-                              example: "67085"
+                              example: '67085'
                             sessionKey:
                               type: string
-                              example: "203"
+                              example: '203'
                             thumb:
                               type: string
                               example: /library/metadata/67084/thumb/1705543314
@@ -6483,7 +7094,7 @@ paths:
                                     example: 186240
                                   id:
                                     type: string
-                                    example: "130355"
+                                    example: '130355'
                                   selected:
                                     type: boolean
                                     example: true
@@ -6504,10 +7115,10 @@ paths:
                                           example: /music/Green Day/Saviors (2024)/Green Day - Saviors - 01 - The American Dream Is Killing Me.flac
                                         hasThumbnail:
                                           type: string
-                                          example: "1"
+                                          example: '1'
                                         id:
                                           type: string
-                                          example: "130625"
+                                          example: '130625'
                                         key:
                                           type: string
                                           example: /library/parts/130625/1705543268/file.flac
@@ -6528,13 +7139,13 @@ paths:
                                             properties:
                                               albumGain:
                                                 type: string
-                                                example: "-12.94"
+                                                example: '-12.94'
                                               albumPeak:
                                                 type: string
-                                                example: "1.000000"
+                                                example: '1.000000'
                                               albumRange:
                                                 type: string
-                                                example: "4.751014"
+                                                example: '4.751014'
                                               audioChannelLayout:
                                                 type: string
                                                 example: stereo
@@ -6561,23 +7172,23 @@ paths:
                                                 example: FLAC (Stereo)
                                               gain:
                                                 type: string
-                                                example: "-12.94"
+                                                example: '-12.94'
                                               id:
                                                 type: string
-                                                example: "352487"
+                                                example: '352487'
                                               index:
                                                 type: integer
                                                 format: int32
                                                 example: 0
                                               loudness:
                                                 type: string
-                                                example: "-5.94"
+                                                example: '-5.94'
                                               lra:
                                                 type: string
-                                                example: "1.74"
+                                                example: '1.74'
                                               peak:
                                                 type: string
-                                                example: "1.000000"
+                                                example: '1.000000'
                                               samplingRate:
                                                 type: integer
                                                 format: int32
@@ -6597,10 +7208,10 @@ paths:
                               properties:
                                 id:
                                   type: string
-                                  example: "1"
+                                  example: '1'
                                 thumb:
                                   type: string
-                                  example: "https://plex.tv/users/844780fc6f8a26b5/avatar?c=1705853661"
+                                  example: 'https://plex.tv/users/844780fc6f8a26b5/avatar?c=1705853661'
                                 title:
                                   type: string
                                   example: Blindkitty38
@@ -6666,9 +7277,9 @@ paths:
                                 location:
                                   type: string
                                   example: lan
-        "400":
-          description: "Bad Request - A parameter was not specified, or was specified incorrectly."
-        "401":
+        '400':
+          description: 'Bad Request - A parameter was not specified, or was specified incorrectly.'
+        '401':
           description: Unauthorized - Returned if the X-Plex-Token is missing from the header or query.
           content:
             application/json:
@@ -6696,8 +7307,60 @@ paths:
       summary: Get Session History
       description: This will Retrieve a listing of all history views.
       operationId: getSessionHistory
+      parameters:
+        - name: sort
+          description: |
+            Sorts the results by the specified field followed by the direction (asc, desc)
+          in: query
+          schema:
+            type: string
+          required: false
+          examples:
+            viewed-at-descending:
+              value: 'viewedAt:desc'
+            viewed-at-ascending:
+              value: 'viewedAt:asc'
+            rating-descending:
+              value: 'rating:desc'
+            rating-ascending:
+              value: 'rating:asc'
+        - name: accountId
+          description: |
+            Filter results by those that are related to a specific users id
+          in: query
+          schema:
+            type: integer
+          required: false
+          example: 1
+        - name: filter
+          description: |
+            Filters content by field and direction/equality
+            (Unknown if viewedAt is the only supported column)
+          in: query
+          schema:
+            type: object
+            pattern: '^[A-Za-z][A-Za-z0-9]*[>=<]{0,2}$'
+            example:
+              viewed-at-greater-than:
+                value: viewedAt>
+              viewed-at-greater-than-or-equal-to:
+                value: viewedAt>=>
+              viewed-at-less-than:
+                value: viewedAt<
+          required: false
+          examples:
+            ViewedAt:
+              value: viewedAt>=1704862818
+        - name: librarySectionID
+          description: |
+            Filters the results based on the id of a valid library section
+          in: query
+          schema:
+            type: integer
+          required: false
+          example: 12
       responses:
-        "200":
+        '200':
           description: List of Plex Sessions
           content:
             application/json:
@@ -6724,10 +7387,10 @@ paths:
                               example: /library/metadata/32171
                             ratingKey:
                               type: string
-                              example: "32171"
+                              example: '32171'
                             librarySectionID:
                               type: string
-                              example: "2"
+                              example: '2'
                             parentKey:
                               type: string
                               example: /library/metadata/32170
@@ -6779,9 +7442,9 @@ paths:
                               type: integer
                               format: int32
                               example: 5
-        "400":
-          description: "Bad Request - A parameter was not specified, or was specified incorrectly."
-        "401":
+        '400':
+          description: 'Bad Request - A parameter was not specified, or was specified incorrectly.'
+        '401':
           description: Unauthorized - Returned if the X-Plex-Token is missing from the header or query.
           content:
             application/json:
@@ -6810,7 +7473,7 @@ paths:
       description: Get Transcode Sessions
       operationId: getTranscodeSessions
       responses:
-        "200":
+        '200':
           description: The Transcode Sessions
           content:
             application/json:
@@ -6930,9 +7593,9 @@ paths:
                             timeStamp: 1705895805.4919229
                             maxOffsetAvailable: 29.53
                             minOffsetAvailable: 3.003000020980835
-        "400":
-          description: "Bad Request - A parameter was not specified, or was specified incorrectly."
-        "401":
+        '400':
+          description: 'Bad Request - A parameter was not specified, or was specified incorrectly.'
+        '401':
           description: Unauthorized - Returned if the X-Plex-Token is missing from the header or query.
           content:
             application/json:
@@ -6953,7 +7616,7 @@ paths:
                         status:
                           type: number
                           example: 401
-  "/transcode/sessions/{sessionKey}":
+  '/transcode/sessions/{sessionKey}':
     delete:
       tags:
         - Sessions
@@ -6969,11 +7632,11 @@ paths:
             example: zz7llzqlx8w9vnrsbnwhbmep
           required: true
       responses:
-        "204":
+        '204':
           description: The Transcode Session ended
-        "400":
-          description: "Bad Request - A parameter was not specified, or was specified incorrectly."
-        "401":
+        '400':
+          description: 'Bad Request - A parameter was not specified, or was specified incorrectly.'
+        '401':
           description: Unauthorized - Returned if the X-Plex-Token is missing from the header or query.
           content:
             application/json:
@@ -7002,7 +7665,7 @@ paths:
       description: Querying status of updates
       operationId: getUpdateStatus
       responses:
-        "200":
+        '200':
           description: The Server Updates
           content:
             application/json:
@@ -7025,7 +7688,7 @@ paths:
                         example: 1705801232
                       downloadURL:
                         type: string
-                        example: "https://plex.tv/downloads/latest/5?channel=8&build=linux-x86_64&distro=redhat&X-Plex-Token=xxxxxxxxxxxxxxxxxxxx"
+                        example: 'https://plex.tv/downloads/latest/5?channel=8&build=linux-x86_64&distro=redhat&X-Plex-Token=xxxxxxxxxxxxxxxxxxxx'
                       status:
                         type: integer
                         format: int32
@@ -7037,7 +7700,7 @@ paths:
                           properties:
                             key:
                               type: string
-                              example: "https://plex.tv/updater/releases/5136"
+                              example: 'https://plex.tv/updater/releases/5136'
                             version:
                               type: string
                               example: 1.40.0.7775-456fbaf97
@@ -7066,12 +7729,12 @@ paths:
                                 (Transcoder) Software transcoding on Ubuntu could cause unexpected behavior (#14605)
                             downloadURL:
                               type: string
-                              example: "https://plex.tv/downloads/latest/5?channel=8&build=linux-x86_64&distro=redhat&X-Plex-Token=xxxxxxxxxxxxxxxxxxxx"
+                              example: 'https://plex.tv/downloads/latest/5?channel=8&build=linux-x86_64&distro=redhat&X-Plex-Token=xxxxxxxxxxxxxxxxxxxx'
                             state:
                               type: string
                               example: notify
                         example:
-                          - key: "https://plex.tv/updater/releases/5136"
+                          - key: 'https://plex.tv/updater/releases/5136'
                             version: 1.40.0.7775-456fbaf97
                             added: |-
                               (PLEASE NOTE) This version makes changes to the database which will make it compatible only with server versions 1.31.2 or higher (released March 14). You will not be able to use your database on Plex Media Server versions lower than this after this update. Please also be patient when updating to this version if you have a very large database and allow the upgrade process to finish.
@@ -7092,11 +7755,11 @@ paths:
                               (Subtitles) In some circumstances, sidecar subtitles can show up for media when they're no longer available (#14674)
                               (Transcoder) HW encoding would fail on devices with no rate control (#14222)
                               (Transcoder) Software transcoding on Ubuntu could cause unexpected behavior (#14605)
-                            downloadURL: "https://plex.tv/downloads/latest/5?channel=8&build=linux-x86_64&distro=redhat&X-Plex-Token=xxxxxxxxxxxxxxxxxxxx"
+                            downloadURL: 'https://plex.tv/downloads/latest/5?channel=8&build=linux-x86_64&distro=redhat&X-Plex-Token=xxxxxxxxxxxxxxxxxxxx'
                             state: notify
-        "400":
-          description: "Bad Request - A parameter was not specified, or was specified incorrectly."
-        "401":
+        '400':
+          description: 'Bad Request - A parameter was not specified, or was specified incorrectly.'
+        '401':
           description: Unauthorized - Returned if the X-Plex-Token is missing from the header or query.
           content:
             application/json:
@@ -7136,11 +7799,11 @@ paths:
               - 1
           example: 1
       responses:
-        "200":
-          description: "The update check is started, if download is set to 1 and the system is able to update automatically, the update download will start."
-        "400":
-          description: "Bad Request - A parameter was not specified, or was specified incorrectly."
-        "401":
+        '200':
+          description: 'The update check is started, if download is set to 1 and the system is able to update automatically, the update download will start.'
+        '400':
+          description: 'Bad Request - A parameter was not specified, or was specified incorrectly.'
+        '401':
           description: Unauthorized - Returned if the X-Plex-Token is missing from the header or query.
           content:
             application/json:
@@ -7191,11 +7854,11 @@ paths:
               - 1
           example: 1
       responses:
-        "200":
+        '200':
           description: If the update process started correctly
-        "400":
-          description: "Bad Request - A parameter was not specified, or was specified incorrectly."
-        "401":
+        '400':
+          description: 'Bad Request - A parameter was not specified, or was specified incorrectly.'
+        '401':
           description: Unauthorized - Returned if the X-Plex-Token is missing from the header or query.
           content:
             application/json:
@@ -7216,9 +7879,9 @@ paths:
                         status:
                           type: number
                           example: 401
-        "500":
+        '500':
           description: If the update process failed to start
-  "/video/:/transcode/universal/start.mpd":
+  '/video/:/transcode/universal/start.mpd':
     get:
       tags:
         - Video
@@ -7339,11 +8002,242 @@ paths:
             type: number
           example: 0
       responses:
-        "200":
+        '200':
           description: The transcode session has started
-        "400":
-          description: "Bad Request - A parameter was not specified, or was specified incorrectly."
-        "401":
+        '400':
+          description: 'Bad Request - A parameter was not specified, or was specified incorrectly.'
+        '401':
+          description: Unauthorized - Returned if the X-Plex-Token is missing from the header or query.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        code:
+                          type: number
+                          example: 1001
+                        message:
+                          type: string
+                          example: User could not be authenticated
+                        status:
+                          type: number
+                          example: 401
+  '/library/sections/watchlist/{filter}':
+    servers:
+      - url: 'https://metadata.provider.plex.tv'
+        description: The plex metadata provider server
+    get:
+      tags:
+        - Watchlist
+      summary: Get User Watchlist
+      description: Get User Watchlist
+      operationId: getWatchlist
+      parameters:
+        - name: filter
+          description: Filter
+          in: path
+          required: true
+          schema:
+            type: string
+            enum:
+              - all
+              - available
+              - released
+        - name: sort
+          description: |
+            In the format "field:dir". Available fields are "watchlistedAt" (Added At),
+            "titleSort" (Title), "originallyAvailableAt" (Release Date), or "rating" (Critic Rating).
+            "dir" can be "asc" or "desc"
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: libtype
+          description: |
+            The type of library to filter. Can be "movie" or "show", or all if not present.
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - movie
+              - show
+        - name: maxresults
+          description: |
+            The number of items to return. If not specified, all items will be returned.
+            If the number of items exceeds the limit, the response will be paginated.
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: includeCollections
+          description: |
+            include collections in the results
+          in: query
+          required: false
+          schema:
+            type: integer
+            enum:
+              - 1
+              - 0
+        - name: includeExternalMedia
+          description: |
+            include external media in the results
+          in: query
+          required: false
+          schema:
+            type: integer
+            enum:
+              - 1
+              - 0
+        - name: X-Plex-Token
+          description: User Token
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: X-Plex-Container-Start
+          description: |
+            The index of the first item to return. If not specified, the first item will be returned.
+            If the number of items exceeds the limit, the response will be paginated.
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: X-Plex-Container-Size
+          description: |
+            The number of items to return. If not specified, all items will be returned.
+            If the number of items exceeds the limit, the response will be paginated.
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Watchlist Data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  librarySectionID:
+                    type: string
+                  librarySectionTitle:
+                    type: string
+                  offset:
+                    type: integer
+                    format: int32
+                  totalSize:
+                    type: integer
+                    format: int32
+                  identifier:
+                    type: string
+                  size:
+                    type: integer
+                    format: int32
+                  Metadata:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        art:
+                          type: string
+                        guid:
+                          type: string
+                        key:
+                          type: string
+                        ratingKey:
+                          type: string
+                        studio:
+                          type: string
+                        tagline:
+                          type: string
+                        type:
+                          type: string
+                        thumb:
+                          type: string
+                        addedAt:
+                          type: integer
+                          format: int32
+                        duration:
+                          type: integer
+                          format: int32
+                        publicPagesURL:
+                          type: string
+                        slug:
+                          type: string
+                        userState:
+                          type: boolean
+                        title:
+                          type: string
+                        contentRating:
+                          type: string
+                        originallyAvailableAt:
+                          type: string
+                          format: date
+                        year:
+                          type: integer
+                          format: int32
+                        Image:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              alt:
+                                type: string
+                              type:
+                                type: string
+                              url:
+                                type: string
+                        banner:
+                          type: string
+                        rating:
+                          type: number
+                        expiresAt:
+                          type: integer
+                          format: int32
+                        originalTitle:
+                          type: string
+                        audienceRating:
+                          type: number
+                        audienceRatingImage:
+                          type: string
+                        ratingImage:
+                          type: string
+                        imdbRatingCount:
+                          type: integer
+                          format: int32
+                        subtype:
+                          type: string
+                        theme:
+                          type: string
+                        leafCount:
+                          type: integer
+                          format: int32
+                        childCount:
+                          type: integer
+                          format: int32
+                        isContinuingSeries:
+                          type: boolean
+                        skipChildren:
+                          type: boolean
+                        availabilityId:
+                          type: string
+                        streamingMediaId:
+                          type: string
+                        playableKey:
+                          type: string
+        '400':
+          description: 'Bad Request - A parameter was not specified, or was specified incorrectly.'
+        '401':
           description: Unauthorized - Returned if the X-Plex-Token is missing from the header or query.
           content:
             application/json:
@@ -7423,3 +8317,6 @@ tags:
   - name: Statistics
     description: |
       API Calls that perform operations with Plex Media Server Statistics
+  - name: Watchlist
+    description: |
+      API Calls that perform operations with Plex Media Server Watchlists
