@@ -3,6 +3,11 @@
   "name": "Plex API Documentation",
   "openapi": "https://raw.githubusercontent.com/LukeHagar/plex-api-spec/main/plex-media-server-spec-dereferenced.yaml",
   "favicon": "/favicon.svg",
+  "colors": {
+    "primary": "#219ebc",
+    "light": "#8ecae6",
+    "dark": "#219ebc"
+  },
   "theme": "prism",
   "topbarCtaButton": {
     "name": "Suggest an edit",
