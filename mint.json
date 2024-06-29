@@ -22,165 +22,24 @@
     }
   ],
 
+  "tabs": [
+    {
+      "name": "Plex API Reference",
+      "url": "api-reference",
+      "openapi": "/plex-media-server-spec-dereferenced.yaml"
+    }
+  ],
+
 
   "navigation": [
     {
       "group": "Getting Started",
-      "pages": ["Intro", "API-Specification", "SDKs"]
-    },
-    {
-      "group": "API Documentation",
-      "pages": [
-        {
-          "group": "Server",
-          "pages": [
-            "api-reference/server/get-server-capabilities",
-            "api-reference/server/get-server-preferences",
-            "api-reference/server/get-available-clients",
-            "api-reference/server/get-devices",
-            "api-reference/server/get-server-identity",
-            "api-reference/server/get-myplex-account",
-            "api-reference/server/get-a-resized-photo",
-            "api-reference/server/get-server-list"
-          ]
-        },
-        {
-          "group": "Media",
-          "pages": [
-            "api-reference/media/mark-media-played",
-            "api-reference/media/mark-media-unplayed",
-            "api-reference/media/update-media-play-progress"
-          ]
-        },
-        {
-          "group": "Video",
-          "pages": [
-            "api-reference/video/get-the-timeline-for-a-media-item",
-            "api-reference/video/start-universal-transcode"
-          ]
-        },
-        {
-          "group": "Activities",
-          "pages": [
-            "api-reference/activities/get-server-activities",
-            "api-reference/activities/cancel-server-activities"
-          ]
-        },
-        {
-          "group": "Butler",
-          "pages": [
-            "api-reference/butler/get-butler-tasks",
-            "api-reference/butler/start-all-butler-tasks",
-            "api-reference/butler/stop-all-butler-tasks",
-            "api-reference/butler/start-a-single-butler-task",
-            "api-reference/butler/stop-a-single-butler-task"
-          ]
-        },
-        {
-          "group": "Plex",
-          "pages": [
-            "api-reference/plex/get-plex-home-data",
-            "api-reference/plex/get-a-pin",
-            "api-reference/plex/get-access-token"
-          ]
-        },
-        {
-          "group": "Hubs",
-          "pages": [
-            "api-reference/hubs/get-global-hubs",
-            "api-reference/hubs/get-library-specific-hubs"
-          ]
-        },
-        {
-          "group": "Search",
-          "pages": [
-            "api-reference/search/perform-a-search",
-            "api-reference/search/perform-a-voice-search",
-            "api-reference/search/get-search-results"
-          ]
-        },
-        {
-          "group": "Library",
-          "pages": [
-            "api-reference/library/get-hash-value",
-            "api-reference/library/get-recently-added",
-            "api-reference/library/get-all-libraries",
-            "api-reference/library/get-library-details",
-            "api-reference/library/delete-library-section",
-            "api-reference/library/get-library-items",
-            "api-reference/library/refresh-library",
-            "api-reference/library/search-library",
-            "api-reference/library/get-items-metadata",
-            "api-reference/library/get-items-children",
-            "api-reference/library/get-top-watched-content",
-            "api-reference/library/get-on-deck"
-          ]
-        },
-        {
-          "group": "Log",
-          "pages": [
-            "api-reference/log/logging-a-single-line-message",
-            "api-reference/log/logging-a-multi-line-message",
-            "api-reference/log/enabling-papertrail"
-          ]
-        },
-        {
-          "group": "Playlists",
-          "pages": [
-            "api-reference/playlists/get-all-playlists",
-            "api-reference/playlists/create-a-playlist",
-            "api-reference/playlists/retrieve-playlist",
-            "api-reference/playlists/update-a-playlist",
-            "api-reference/playlists/deletes-a-playlist",
-            "api-reference/playlists/retrieve-playlist-contents",
-            "api-reference/playlists/adding-to-a-playlist",
-            "api-reference/playlists/delete-playlist-contents",
-            "api-reference/playlists/upload-playlist"
-          ]
-        },
-        {
-          "group": "Authentication",
-          "pages": [
-            "api-reference/authentication/get-a-transient-token",
-            "api-reference/authentication/get-source-connection-information"
-          ]
-        },
-        {
-          "group": "Statistics",
-          "pages": [
-            "api-reference/statistics/get-media-statistics",
-            "api-reference/statistics/get-resources-statistics",
-            "api-reference/statistics/get-bandwidth-statistics"
-          ]
-        },
-        {
-          "group": "Sessions",
-          "pages": [
-            "api-reference/sessions/get-active-sessions",
-            "api-reference/sessions/get-session-history",
-            "api-reference/sessions/get-transcode-sessions",
-            "api-reference/sessions/stop-a-transcode-session"
-          ]
-        },
-        {
-          "group": "Updater",
-          "pages": [
-            "api-reference/updater/querying-status-of-updates",
-            "api-reference/updater/checking-for-updates",
-            "api-reference/updater/apply-updates"
-          ]
-        },
-        {
-          "group": "Watchlist",
-          "pages": [
-            "api-reference/watchlist/get-user-watchlist"
-          ]
-        }
-      ]
+      "pages": ["Intro", "api-specification", "SDKs"]
     }
   ],
   "footerSocials": {
     "github": "https://github.com/lukehagar",
     "linkedin": "https://www.linkedin.com/in/lukehagar/"
+    
   }
 }
