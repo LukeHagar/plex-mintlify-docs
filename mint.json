@@ -33,7 +33,7 @@
   "navigation": [
     {
       "group": "Getting Started",
-      "pages": ["Intro", "api-specification", "SDKs"]
+      "pages": ["Intro", "Open-API-Specification", "SDKs", "other-resources"]
     }
   ],
   "footerSocials": {
