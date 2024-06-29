@@ -26,10 +26,9 @@
     {
       "name": "Plex API Reference",
       "url": "api-reference",
-      "openapi": "/plex-media-server-spec-dereferenced.yaml"
+      "openapi": "https://raw.githubusercontent.com/LukeHagar/plex-api-spec/main/plex-media-server-spec-dereferenced.yaml"
     }
   ],
-
 
   "navigation": [
     {
@@ -40,6 +39,6 @@
   "footerSocials": {
     "github": "https://github.com/lukehagar",
     "linkedin": "https://www.linkedin.com/in/lukehagar/"
-    
+
   }
 }
