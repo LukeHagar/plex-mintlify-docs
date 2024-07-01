@@ -1,0 +1,16 @@
+workflowVersion: 1.0.0
+sources:
+    merge-code-samples-into-spec:
+        inputs:
+            - location: registry.speakeasyapi.dev/lukehagar/lukehagar/my-source
+        overlays:
+            - location: registry.speakeasyapi.dev/lukehagar/lukehagar/code-samples-python-plexpy:main
+            - location: registry.speakeasyapi.dev/lukehagar/lukehagar/code-samples-swift-plexswift:main
+            - location: registry.speakeasyapi.dev/lukehagar/lukehagar/code-samples-php-plexphp:main
+            - location: registry.speakeasyapi.dev/lukehagar/lukehagar/code-samples-ruby-plexruby:main
+            - location: registry.speakeasyapi.dev/lukehagar/lukehagar/code-samples-go-plexgo:main
+            - location: registry.speakeasyapi.dev/lukehagar/lukehagar/code-samples-java-plexjava:main
+            - location: registry.speakeasyapi.dev/lukehagar/lukehagar/code-samples-typescript-plexjs:main
+            - location: registry.speakeasyapi.dev/lukehagar/lukehagar/code-samples-terraform-plexterraform:main
+        output: ./openapi-with-code-samples.json
+targets: {}
