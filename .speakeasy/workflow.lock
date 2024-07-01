@@ -1,0 +1,26 @@
+speakeasyVersion: 1.323.0
+sources:
+    merge-code-samples-into-spec:
+        sourceNamespace: merge-code-samples-into-spec
+        sourceRevisionDigest: sha256:3063298bae5248cde25807184d682428075ce6742468fcda2b902a7ea0a4bff7
+        sourceBlobDigest: sha256:b7d5c96543963e3e8935877c6312b08eadef551c49b4d411b22641ee4f6e6f2e
+        tags:
+            - latest
+targets: {}
+workflow:
+    workflowVersion: 1.0.0
+    speakeasyVersion: latest
+    sources:
+        merge-code-samples-into-spec:
+            inputs:
+                - location: registry.speakeasyapi.dev/lukehagar/lukehagar/my-source
+            overlays:
+                - location: registry.speakeasyapi.dev/lukehagar/lukehagar/code-samples-php-plexphp:main
+                - location: registry.speakeasyapi.dev/lukehagar/lukehagar/code-samples-ruby-plexruby:main
+                - location: registry.speakeasyapi.dev/lukehagar/lukehagar/code-samples-go-plexgo:main
+                - location: registry.speakeasyapi.dev/lukehagar/lukehagar/code-samples-java-plexjava:main
+                - location: registry.speakeasyapi.dev/lukehagar/lukehagar/code-samples-typescript-plexjs:main
+            output: ./openapi-with-code-samples.yaml
+            registry:
+                location: registry.speakeasyapi.dev/lukehagar/lukehagar/merge-code-samples-into-spec
+    targets: {}

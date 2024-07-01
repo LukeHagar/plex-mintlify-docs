@@ -29,11 +29,11 @@
       ]
     }
   ],
-  "openapi": "/openapi-with-code-samples.json",
+  "openapi": "/openapi-with-code-samples.yaml",
   "tabs": [
     {
       "name": "Plex API Reference",
-      "openapi": "https://raw.githubusercontent.com/LukeHagar/plex-api-spec/main/plex-media-server-spec-dereferenced.yaml",
+      "openapi": "/openapi-with-code-samples.yaml",
       "url": "api-reference"
     }
   ],
