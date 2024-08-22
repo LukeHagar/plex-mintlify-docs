@@ -29,11 +29,11 @@
       ]
     }
   ],
-  "openapi": "/openapi-with-code-samples.yaml",
+  "openapi": "./openapi-with-code-samples.yaml",
   "tabs": [
     {
       "name": "Plex API Reference",
-      "openapi": "/openapi-with-code-samples.yaml",
+      "openapi": "./openapi-with-code-samples.yaml",
       "url": "api-reference"
     }
   ],
