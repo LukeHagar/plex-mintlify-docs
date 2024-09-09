@@ -1,9 +1,9 @@
-speakeasyVersion: 1.377.1
+speakeasyVersion: 1.392.1
 sources:
     merge-code-samples-into-spec:
         sourceNamespace: merge-code-samples-into-spec
-        sourceRevisionDigest: sha256:931d5158bc1ba3e9f812759491cc7d8f87e49cde5e1adb21291c076f219718ef
-        sourceBlobDigest: sha256:aafd87aaf8b0d02c32a38b9c4e1f57c1740cda06edf001d4167d0d05f4b23398
+        sourceRevisionDigest: sha256:bb871f0125f3ba9269eb9fe3f89ae3e1a77a71f17ea5ca75da963aac27667f28
+        sourceBlobDigest: sha256:101caa77c2fb4a6b37fc0d0f49525caaa53eb341884f44674ce8cc0a5c8ab123
         tags:
             - latest
             - main
@@ -14,7 +14,7 @@ workflow:
     sources:
         merge-code-samples-into-spec:
             inputs:
-                - location: registry.speakeasyapi.dev/lukehagar/lukehagar/my-source
+                - location: registry.speakeasyapi.dev/lukehagar/lukehagar/plex-api
             overlays:
                 - location: registry.speakeasyapi.dev/lukehagar/lukehagar/code-samples-php-plexphp:main
                 - location: registry.speakeasyapi.dev/lukehagar/lukehagar/code-samples-ruby-plexruby:main
