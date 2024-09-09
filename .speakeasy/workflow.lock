@@ -2,11 +2,10 @@ speakeasyVersion: 1.392.1
 sources:
     merge-code-samples-into-spec:
         sourceNamespace: merge-code-samples-into-spec
-        sourceRevisionDigest: sha256:bb871f0125f3ba9269eb9fe3f89ae3e1a77a71f17ea5ca75da963aac27667f28
-        sourceBlobDigest: sha256:101caa77c2fb4a6b37fc0d0f49525caaa53eb341884f44674ce8cc0a5c8ab123
+        sourceRevisionDigest: sha256:30691138bddfb8eb11988088e2e8b9a18d75ae13d751d195c050a63196dcc8d1
+        sourceBlobDigest: sha256:bd80764316637b8651d7b6117cbe2822ce8894f19671f9d502073fbe0590e4c0
         tags:
             - latest
-            - main
 targets: {}
 workflow:
     workflowVersion: 1.0.0
@@ -14,8 +13,9 @@ workflow:
     sources:
         merge-code-samples-into-spec:
             inputs:
-                - location: registry.speakeasyapi.dev/lukehagar/lukehagar/plex-api
+                - location: registry.speakeasyapi.dev/lukehagar/lukehagar/plex-api:main
             overlays:
+                - location: ./mintlify-overlay.yaml
                 - location: registry.speakeasyapi.dev/lukehagar/lukehagar/code-samples-php-plexphp:main
                 - location: registry.speakeasyapi.dev/lukehagar/lukehagar/code-samples-ruby-plexruby:main
                 - location: registry.speakeasyapi.dev/lukehagar/lukehagar/code-samples-go-plexgo:main
