@@ -179,6 +179,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -201,6 +202,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -262,7 +264,7 @@ paths:
             func main() {
                 s := plexgo.New(
                     plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
-                    plexgo.WithXPlexClientIdentifier("Postman"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
                 )
 
                 ctx := context.Background()
@@ -386,6 +388,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -408,6 +411,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -469,7 +473,7 @@ paths:
             func main() {
                 s := plexgo.New(
                     plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
-                    plexgo.WithXPlexClientIdentifier("Postman"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
                 )
 
                 ctx := context.Background()
@@ -554,6 +558,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -576,6 +581,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -638,11 +644,11 @@ paths:
             func main() {
                 s := plexgo.New(
                     plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
-                    plexgo.WithXPlexClientIdentifier("Postman"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
                 )
-                var key float64 = 59398
+
                 ctx := context.Background()
-                res, err := s.Media.MarkPlayed(ctx, key)
+                res, err := s.Media.MarkPlayed(ctx, 59398)
                 if err != nil {
                     log.Fatal(err)
                 }
@@ -722,6 +728,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -744,6 +751,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -806,11 +814,11 @@ paths:
             func main() {
                 s := plexgo.New(
                     plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
-                    plexgo.WithXPlexClientIdentifier("Postman"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
                 )
-                var key float64 = 59398
+
                 ctx := context.Background()
-                res, err := s.Media.MarkUnplayed(ctx, key)
+                res, err := s.Media.MarkUnplayed(ctx, 59398)
                 if err != nil {
                     log.Fatal(err)
                 }
@@ -904,6 +912,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -926,6 +935,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -988,15 +998,11 @@ paths:
             func main() {
                 s := plexgo.New(
                     plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
-                    plexgo.WithXPlexClientIdentifier("Postman"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
                 )
-                var key string = "<value>"
 
-                var time float64 = 90000
-
-                var state string = "played"
                 ctx := context.Background()
-                res, err := s.Media.UpdatePlayProgress(ctx, key, time, state)
+                res, err := s.Media.UpdatePlayProgress(ctx, "<key>", 90000, "played")
                 if err != nil {
                     log.Fatal(err)
                 }
@@ -1145,6 +1151,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -1167,6 +1174,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -1234,17 +1242,19 @@ paths:
 
             import(
             	"github.com/LukeHagar/plexgo"
-            	"github.com/LukeHagar/plexgo/models/operations"
             	"context"
+            	"github.com/LukeHagar/plexgo/models/operations"
             	"log"
             )
 
             func main() {
                 s := plexgo.New(
                     plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
-                    plexgo.WithXPlexClientIdentifier("Postman"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
                 )
-                request := operations.GetTimelineRequest{
+
+                ctx := context.Background()
+                res, err := s.Video.GetTimeline(ctx, operations.GetTimelineRequest{
                     RatingKey: 23409,
                     Key: "/library/metadata/23409",
                     State: operations.StatePlaying,
@@ -1255,9 +1265,7 @@ paths:
                     PlayQueueItemID: 1,
                     PlayBackTime: 2000,
                     Row: 1,
-                }
-                ctx := context.Background()
-                res, err := s.Video.GetTimeline(ctx, request)
+                })
                 if err != nil {
                     log.Fatal(err)
                 }
@@ -1376,6 +1384,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -1398,6 +1407,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -1459,7 +1469,7 @@ paths:
             func main() {
                 s := plexgo.New(
                     plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
-                    plexgo.WithXPlexClientIdentifier("Postman"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
                 )
 
                 ctx := context.Background()
@@ -1544,6 +1554,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -1566,6 +1577,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -1628,11 +1640,11 @@ paths:
             func main() {
                 s := plexgo.New(
                     plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
-                    plexgo.WithXPlexClientIdentifier("Postman"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
                 )
-                var activityUUID string = "25b71ed5-0f9d-461c-baa7-d404e9e10d3e"
+
                 ctx := context.Background()
-                res, err := s.Activities.CancelServerActivities(ctx, activityUUID)
+                res, err := s.Activities.CancelServerActivities(ctx, "25b71ed5-0f9d-461c-baa7-d404e9e10d3e")
                 if err != nil {
                     log.Fatal(err)
                 }
@@ -1733,6 +1745,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -1755,6 +1768,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -1816,7 +1830,7 @@ paths:
             func main() {
                 s := plexgo.New(
                     plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
-                    plexgo.WithXPlexClientIdentifier("Postman"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
                 )
 
                 ctx := context.Background()
@@ -1897,6 +1911,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -1919,6 +1934,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -1980,7 +1996,7 @@ paths:
             func main() {
                 s := plexgo.New(
                     plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
-                    plexgo.WithXPlexClientIdentifier("Postman"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
                 )
 
                 ctx := context.Background()
@@ -2055,6 +2071,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -2077,6 +2094,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -2138,7 +2156,7 @@ paths:
             func main() {
                 s := plexgo.New(
                     plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
-                    plexgo.WithXPlexClientIdentifier("Postman"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
                 )
 
                 ctx := context.Background()
@@ -2242,6 +2260,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -2264,6 +2283,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -2320,19 +2340,19 @@ paths:
 
             import(
             	"github.com/LukeHagar/plexgo"
-            	"github.com/LukeHagar/plexgo/models/operations"
             	"context"
+            	"github.com/LukeHagar/plexgo/models/operations"
             	"log"
             )
 
             func main() {
                 s := plexgo.New(
                     plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
-                    plexgo.WithXPlexClientIdentifier("Postman"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
                 )
-                var taskName operations.TaskName = operations.TaskNameCleanOldBundles
+
                 ctx := context.Background()
-                res, err := s.Butler.StartTask(ctx, taskName)
+                res, err := s.Butler.StartTask(ctx, operations.TaskNameCleanOldBundles)
                 if err != nil {
                     log.Fatal(err)
                 }
@@ -2426,6 +2446,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -2448,6 +2469,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -2506,19 +2528,19 @@ paths:
 
             import(
             	"github.com/LukeHagar/plexgo"
-            	"github.com/LukeHagar/plexgo/models/operations"
             	"context"
+            	"github.com/LukeHagar/plexgo/models/operations"
             	"log"
             )
 
             func main() {
                 s := plexgo.New(
                     plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
-                    plexgo.WithXPlexClientIdentifier("Postman"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
                 )
-                var taskName operations.PathParamTaskName = operations.PathParamTaskNameBackupDatabase
+
                 ctx := context.Background()
-                res, err := s.Butler.StopTask(ctx, taskName)
+                res, err := s.Butler.StopTask(ctx, operations.PathParamTaskNameBackupDatabase)
                 if err != nil {
                     log.Fatal(err)
                 }
@@ -2639,6 +2661,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -2661,6 +2684,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -2722,7 +2746,7 @@ paths:
             func main() {
                 s := plexgo.New(
                     plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
-                    plexgo.WithXPlexClientIdentifier("Postman"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
                 )
 
                 ctx := context.Background()
@@ -2832,6 +2856,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -2854,6 +2879,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -2915,7 +2941,7 @@ paths:
             func main() {
                 s := plexgo.New(
                     plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
-                    plexgo.WithXPlexClientIdentifier("Postman"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
                 )
 
                 ctx := context.Background()
@@ -3027,6 +3053,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -3049,6 +3076,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -3067,6 +3095,32 @@ paths:
                           type: integer
                           example: 401
       x-codeSamples:
+        - lang: go
+          label: getCompanionsData
+          source: |-
+            package main
+
+            import(
+            	"github.com/LukeHagar/plexgo"
+            	"context"
+            	"log"
+            )
+
+            func main() {
+                s := plexgo.New(
+                    plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
+                )
+
+                ctx := context.Background()
+                res, err := s.Plex.GetCompanionsData(ctx)
+                if err != nil {
+                    log.Fatal(err)
+                }
+                if res.ResponseBodies != nil {
+                    // handle response
+                }
+            }
         - lang: typescript
           label: getCompanionsData
           source: "import { PlexAPI } from \"@lukehagar/plexjs\";\n\nconst plexAPI = new PlexAPI({\n  accessToken: \"<YOUR_API_KEY_HERE>\",\n  xPlexClientIdentifier: \"gcgzw5rz2xovp84b4vha3a40\",\n});\n\nasync function run() {\n  const result = await plexAPI.plex.getCompanionsData();\n  \n  // Handle the result\n  console.log(result)\n}\n\nrun();"
@@ -3176,6 +3230,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -3198,6 +3253,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -3216,6 +3272,32 @@ paths:
                           type: integer
                           example: 401
       x-codeSamples:
+        - lang: go
+          label: getUserFriends
+          source: |-
+            package main
+
+            import(
+            	"github.com/LukeHagar/plexgo"
+            	"context"
+            	"log"
+            )
+
+            func main() {
+                s := plexgo.New(
+                    plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
+                )
+
+                ctx := context.Background()
+                res, err := s.Plex.GetUserFriends(ctx)
+                if err != nil {
+                    log.Fatal(err)
+                }
+                if res.Friends != nil {
+                    // handle response
+                }
+            }
         - lang: typescript
           label: getUserFriends
           source: "import { PlexAPI } from \"@lukehagar/plexjs\";\n\nconst plexAPI = new PlexAPI({\n  accessToken: \"<YOUR_API_KEY_HERE>\",\n  xPlexClientIdentifier: \"gcgzw5rz2xovp84b4vha3a40\",\n});\n\nasync function run() {\n  const result = await plexAPI.plex.getUserFriends();\n  \n  // Handle the result\n  console.log(result)\n}\n\nrun();"
@@ -3315,6 +3397,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -3337,6 +3420,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -3355,6 +3439,31 @@ paths:
                           type: integer
                           example: 401
       x-codeSamples:
+        - lang: go
+          label: getGeoData
+          source: |-
+            package main
+
+            import(
+            	"github.com/LukeHagar/plexgo"
+            	"context"
+            	"log"
+            )
+
+            func main() {
+                s := plexgo.New(
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
+                )
+
+                ctx := context.Background()
+                res, err := s.Plex.GetGeoData(ctx)
+                if err != nil {
+                    log.Fatal(err)
+                }
+                if res.GeoData != nil {
+                    // handle response
+                }
+            }
         - lang: typescript
           label: getGeoData
           source: "import { PlexAPI } from \"@lukehagar/plexjs\";\n\nconst plexAPI = new PlexAPI({\n  xPlexClientIdentifier: \"gcgzw5rz2xovp84b4vha3a40\",\n});\n\nasync function run() {\n  const result = await plexAPI.plex.getGeoData();\n  \n  // Handle the result\n  console.log(result)\n}\n\nrun();"
@@ -3394,6 +3503,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -3416,6 +3526,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -3477,7 +3588,7 @@ paths:
             func main() {
                 s := plexgo.New(
                     plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
-                    plexgo.WithXPlexClientIdentifier("Postman"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
                 )
 
                 ctx := context.Background()
@@ -3686,6 +3797,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -3708,6 +3820,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -3764,7 +3877,6 @@ paths:
 
             import(
             	"github.com/LukeHagar/plexgo"
-            	"github.com/LukeHagar/plexgo/models/operations"
             	"context"
             	"log"
             )
@@ -3772,13 +3884,11 @@ paths:
             func main() {
                 s := plexgo.New(
                     plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
-                    plexgo.WithXPlexClientIdentifier("Postman"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
                 )
-                var count *float64 = plexgo.Float64(1262.49)
 
-                var onlyTransient *operations.OnlyTransient = operations.OnlyTransientOne.ToPointer()
                 ctx := context.Background()
-                res, err := s.Hubs.GetGlobalHubs(ctx, count, onlyTransient)
+                res, err := s.Hubs.GetGlobalHubs(ctx, nil, nil)
                 if err != nil {
                     log.Fatal(err)
                 }
@@ -3888,6 +3998,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -3910,6 +4021,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -3972,15 +4084,11 @@ paths:
             func main() {
                 s := plexgo.New(
                     plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
-                    plexgo.WithXPlexClientIdentifier("Postman"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
                 )
-                var query string = "dylan"
 
-                var sectionID *float64 = plexgo.Float64(1516.53)
-
-                var limit *float64 = plexgo.Float64(5)
                 ctx := context.Background()
-                res, err := s.Search.PerformSearch(ctx, query, sectionID, limit)
+                res, err := s.Search.PerformSearch(ctx, "dylan", nil, plexgo.Float64(5))
                 if err != nil {
                     log.Fatal(err)
                 }
@@ -4077,6 +4185,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -4099,6 +4208,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -4161,15 +4271,11 @@ paths:
             func main() {
                 s := plexgo.New(
                     plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
-                    plexgo.WithXPlexClientIdentifier("Postman"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
                 )
-                var query string = "dead+poop"
 
-                var sectionID *float64 = plexgo.Float64(4094.8)
-
-                var limit *float64 = plexgo.Float64(5)
                 ctx := context.Background()
-                res, err := s.Search.PerformVoiceSearch(ctx, query, sectionID, limit)
+                res, err := s.Search.PerformVoiceSearch(ctx, "dead+poop", nil, plexgo.Float64(5))
                 if err != nil {
                     log.Fatal(err)
                 }
@@ -4569,6 +4675,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -4591,6 +4698,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -4647,7 +4755,6 @@ paths:
 
             import(
             	"github.com/LukeHagar/plexgo"
-            	"github.com/LukeHagar/plexgo/models/operations"
             	"context"
             	"log"
             )
@@ -4655,15 +4762,11 @@ paths:
             func main() {
                 s := plexgo.New(
                     plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
-                    plexgo.WithXPlexClientIdentifier("Postman"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
                 )
-                var sectionID float64 = 6728.76
 
-                var count *float64 = plexgo.Float64(9010.22)
-
-                var onlyTransient *operations.QueryParamOnlyTransient = operations.QueryParamOnlyTransientZero.ToPointer()
                 ctx := context.Background()
-                res, err := s.Hubs.GetLibraryHubs(ctx, sectionID, count, onlyTransient)
+                res, err := s.Hubs.GetLibraryHubs(ctx, 6728.76, nil, nil)
                 if err != nil {
                     log.Fatal(err)
                 }
@@ -4759,6 +4862,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: RequestTimeout
                 type: object
                 properties:
                   code:
@@ -4799,7 +4903,7 @@ paths:
           label: getServerIdentity
           source: "require 'plexruby'\n\n\ns = ::OpenApiSDK::PlexAPI.new(\n      x_plex_client_identifier: \"Postman\",\n    )\ns.config_security(\n  ::OpenApiSDK::Shared::Security.new(\n    access_token: \"<YOUR_API_KEY_HERE>\",\n  )\n)\n\n    \nres = s.server.get_server_identity()\n\nif ! res.two_hundred_application_json_object.nil?\n  # handle response\nend"
         - lang: go
-          label: getServerIdentity
+          label: identity
           source: |-
             package main
 
@@ -4811,8 +4915,7 @@ paths:
 
             func main() {
                 s := plexgo.New(
-                    plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
-                    plexgo.WithXPlexClientIdentifier("Postman"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
                 )
 
                 ctx := context.Background()
@@ -4903,6 +5006,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -4925,6 +5029,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -4987,13 +5092,11 @@ paths:
             func main() {
                 s := plexgo.New(
                     plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
-                    plexgo.WithXPlexClientIdentifier("Postman"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
                 )
-                var url_ string = "file://C:\Image.png&type=13"
 
-                var type_ *float64 = plexgo.Float64(4462.17)
                 ctx := context.Background()
-                res, err := s.Library.GetFileHash(ctx, url_, type_)
+                res, err := s.Library.GetFileHash(ctx, "file://C:\Image.png&type=13", nil)
                 if err != nil {
                     log.Fatal(err)
                 }
@@ -5060,15 +5163,6 @@ paths:
         This endpoint will return the recently added content.
       operationId: getRecentlyAdded
       parameters:
-        - name: Accept
-          in: header
-          required: false
-          schema:
-            type: string
-            enum:
-              - application/json
-              - application/xml
-            example: application/json
         - name: X-Plex-Container-Start
           in: query
           description: |
@@ -5330,6 +5424,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -5352,6 +5447,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -5413,11 +5509,11 @@ paths:
             func main() {
                 s := plexgo.New(
                     plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
-                    plexgo.WithXPlexClientIdentifier("Postman"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
                 )
 
                 ctx := context.Background()
-                res, err := s.Library.GetRecentlyAdded(ctx)
+                res, err := s.Library.GetRecentlyAdded(ctx, plexgo.Int(0), plexgo.Int(50))
                 if err != nil {
                     log.Fatal(err)
                 }
@@ -5600,6 +5696,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -5622,6 +5719,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -5670,7 +5768,7 @@ paths:
           label: getLibraries
           source: "require 'plexruby'\n\n\ns = ::OpenApiSDK::PlexAPI.new(\n      x_plex_client_identifier: \"Postman\",\n    )\ns.config_security(\n  ::OpenApiSDK::Shared::Security.new(\n    access_token: \"<YOUR_API_KEY_HERE>\",\n  )\n)\n\n    \nres = s.library.get_libraries()\n\nif ! res.two_hundred_application_json_object.nil?\n  # handle response\nend"
         - lang: go
-          label: getLibraries
+          label: libraries
           source: |-
             package main
 
@@ -5683,11 +5781,11 @@ paths:
             func main() {
                 s := plexgo.New(
                     plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
-                    plexgo.WithXPlexClientIdentifier("Postman"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
                 )
 
                 ctx := context.Background()
-                res, err := s.Library.GetLibraries(ctx)
+                res, err := s.Library.GetAllLibraries(ctx)
                 if err != nil {
                     log.Fatal(err)
                 }
@@ -5943,6 +6041,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -5965,6 +6064,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -5983,6 +6083,32 @@ paths:
                           type: integer
                           example: 401
       x-codeSamples:
+        - lang: go
+          label: details
+          source: |-
+            package main
+
+            import(
+            	"github.com/LukeHagar/plexgo"
+            	"context"
+            	"log"
+            )
+
+            func main() {
+                s := plexgo.New(
+                    plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
+                )
+
+                ctx := context.Background()
+                res, err := s.Library.GetLibraryDetails(ctx, 9518, nil)
+                if err != nil {
+                    log.Fatal(err)
+                }
+                if res.Object != nil {
+                    // handle response
+                }
+            }
         - lang: typescript
           label: details
           source: "import { PlexAPI } from \"@lukehagar/plexjs\";\n\nconst plexAPI = new PlexAPI({\n  accessToken: \"<YOUR_API_KEY_HERE>\",\n  xPlexClientIdentifier: \"gcgzw5rz2xovp84b4vha3a40\",\n});\n\nasync function run() {\n  const result = await plexAPI.library.getLibraryDetails(9518);\n  \n  // Handle the result\n  console.log(result)\n}\n\nrun();"
@@ -6009,6 +6135,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -6031,6 +6158,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -6049,6 +6177,32 @@ paths:
                           type: integer
                           example: 401
       x-codeSamples:
+        - lang: go
+          label: deleteLibrary
+          source: |-
+            package main
+
+            import(
+            	"github.com/LukeHagar/plexgo"
+            	"context"
+            	"log"
+            )
+
+            func main() {
+                s := plexgo.New(
+                    plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
+                )
+
+                ctx := context.Background()
+                res, err := s.Library.DeleteLibrary(ctx, 9518)
+                if err != nil {
+                    log.Fatal(err)
+                }
+                if res != nil {
+                    // handle response
+                }
+            }
         - lang: typescript
           label: deleteLibrary
           source: "import { PlexAPI } from \"@lukehagar/plexjs\";\n\nconst plexAPI = new PlexAPI({\n  accessToken: \"<YOUR_API_KEY_HERE>\",\n  xPlexClientIdentifier: \"gcgzw5rz2xovp84b4vha3a40\",\n});\n\nasync function run() {\n  const result = await plexAPI.library.deleteLibrary(9518);\n  \n  // Handle the result\n  console.log(result)\n}\n\nrun();"
@@ -6281,6 +6435,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -6303,6 +6458,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -6363,28 +6519,30 @@ paths:
           label: getWatchlist
           source: "require 'plexruby'\n\n\ns = ::OpenApiSDK::PlexAPI.new(\n      x_plex_client_identifier: \"Postman\",\n    )\ns.config_security(\n  ::OpenApiSDK::Shared::Security.new(\n    access_token: \"<YOUR_API_KEY_HERE>\",\n  )\n)\n\n\nreq = ::OpenApiSDK::Operations::GetWatchlistRequest.new(\n  filter: ::OpenApiSDK::Operations::PathParamFilter::RELEASED,\n  x_plex_token: \"<value>\",\n)\n    \nres = s.watchlist.get_watchlist(req)\n\nif ! res.two_hundred_application_json_object.nil?\n  # handle response\nend"
         - lang: go
-          label: getWatchlist
+          label: list
           source: |-
             package main
 
             import(
             	"github.com/LukeHagar/plexgo"
-            	"github.com/LukeHagar/plexgo/models/operations"
             	"context"
+            	"github.com/LukeHagar/plexgo/models/operations"
             	"log"
             )
 
             func main() {
                 s := plexgo.New(
                     plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
-                    plexgo.WithXPlexClientIdentifier("Postman"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
                 )
-                request := operations.GetWatchlistRequest{
-                    Filter: operations.PathParamFilterReleased,
-                    XPlexToken: "<value>",
-                }
+
                 ctx := context.Background()
-                res, err := s.Watchlist.GetWatchlist(ctx, request)
+                res, err := s.Watchlist.GetWatchList(ctx, operations.GetWatchListRequest{
+                    Filter: operations.FilterAvailable,
+                    XPlexContainerStart: plexgo.Int(0),
+                    XPlexContainerSize: plexgo.Int(50),
+                    XPlexToken: "CV5xoxjTpFKUzBTShsaf",
+                })
                 if err != nil {
                     log.Fatal(err)
                 }
@@ -6943,6 +7101,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -6965,6 +7124,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -6983,6 +7143,41 @@ paths:
                           type: integer
                           example: 401
       x-codeSamples:
+        - lang: go
+          label: items
+          source: |-
+            package main
+
+            import(
+            	"github.com/LukeHagar/plexgo"
+            	"context"
+            	"github.com/LukeHagar/plexgo/models/operations"
+            	"log"
+            )
+
+            func main() {
+                s := plexgo.New(
+                    plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
+                )
+
+                ctx := context.Background()
+                res, err := s.Library.GetLibraryItems(ctx, operations.GetLibraryItemsRequest{
+                    SectionKey: 9518,
+                    Tag: operations.TagEdition,
+                    IncludeGuids: operations.IncludeGuidsOne.ToPointer(),
+                    IncludeMeta: operations.IncludeMetaOne.ToPointer(),
+                    Type: operations.TypeTwo,
+                    XPlexContainerStart: plexgo.Int(0),
+                    XPlexContainerSize: plexgo.Int(50),
+                })
+                if err != nil {
+                    log.Fatal(err)
+                }
+                if res.Object != nil {
+                    // handle response
+                }
+            }
         - lang: typescript
           label: items
           source: "import { PlexAPI } from \"@lukehagar/plexjs\";\nimport { IncludeGuids, IncludeMeta, Tag, Type } from \"@lukehagar/plexjs/sdk/models/operations\";\n\nconst plexAPI = new PlexAPI({\n  accessToken: \"<YOUR_API_KEY_HERE>\",\n  xPlexClientIdentifier: \"gcgzw5rz2xovp84b4vha3a40\",\n});\n\nasync function run() {\n  const result = await plexAPI.library.getLibraryItems({\n    sectionKey: 9518,\n    tag: Tag.Edition,\n    includeGuids: IncludeGuids.One,\n    includeMeta: IncludeMeta.One,\n    type: Type.Two,\n    xPlexContainerStart: 0,\n    xPlexContainerSize: 50,\n  });\n  \n  // Handle the result\n  console.log(result)\n}\n\nrun();"
@@ -7021,6 +7216,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -7043,6 +7239,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -7061,6 +7258,33 @@ paths:
                           type: integer
                           example: 401
       x-codeSamples:
+        - lang: go
+          label: metadata
+          source: |-
+            package main
+
+            import(
+            	"github.com/LukeHagar/plexgo"
+            	"context"
+            	"github.com/LukeHagar/plexgo/models/operations"
+            	"log"
+            )
+
+            func main() {
+                s := plexgo.New(
+                    plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
+                )
+
+                ctx := context.Background()
+                res, err := s.Library.GetRefreshLibraryMetadata(ctx, 9518, operations.ForceOne.ToPointer())
+                if err != nil {
+                    log.Fatal(err)
+                }
+                if res != nil {
+                    // handle response
+                }
+            }
         - lang: typescript
           label: metadata
           source: "import { PlexAPI } from \"@lukehagar/plexjs\";\nimport { Force } from \"@lukehagar/plexjs/sdk/models/operations\";\n\nconst plexAPI = new PlexAPI({\n  accessToken: \"<YOUR_API_KEY_HERE>\",\n  xPlexClientIdentifier: \"gcgzw5rz2xovp84b4vha3a40\",\n});\n\nasync function run() {\n  const result = await plexAPI.library.getRefreshLibraryMetadata(9518, Force.One);\n  \n  // Handle the result\n  console.log(result)\n}\n\nrun();"
@@ -7232,6 +7456,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -7254,6 +7479,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -7272,6 +7498,33 @@ paths:
                           type: integer
                           example: 401
       x-codeSamples:
+        - lang: go
+          label: library
+          source: |-
+            package main
+
+            import(
+            	"github.com/LukeHagar/plexgo"
+            	"context"
+            	"github.com/LukeHagar/plexgo/models/operations"
+            	"log"
+            )
+
+            func main() {
+                s := plexgo.New(
+                    plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
+                )
+
+                ctx := context.Background()
+                res, err := s.Library.GetSearchLibrary(ctx, 9518, operations.QueryParamTypeTwo)
+                if err != nil {
+                    log.Fatal(err)
+                }
+                if res.Object != nil {
+                    // handle response
+                }
+            }
         - lang: typescript
           label: library
           source: "import { PlexAPI } from \"@lukehagar/plexjs\";\nimport { QueryParamType } from \"@lukehagar/plexjs/sdk/models/operations\";\n\nconst plexAPI = new PlexAPI({\n  accessToken: \"<YOUR_API_KEY_HERE>\",\n  xPlexClientIdentifier: \"gcgzw5rz2xovp84b4vha3a40\",\n});\n\nasync function run() {\n  const result = await plexAPI.library.getSearchLibrary(9518, QueryParamType.Two);\n  \n  // Handle the result\n  console.log(result)\n}\n\nrun();"
@@ -7771,6 +8024,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -7793,6 +8047,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -7842,7 +8097,7 @@ paths:
           label: getMetadata
           source: "require 'plexruby'\n\n\ns = ::OpenApiSDK::PlexAPI.new(\n      x_plex_client_identifier: \"Postman\",\n    )\ns.config_security(\n  ::OpenApiSDK::Shared::Security.new(\n    access_token: \"<YOUR_API_KEY_HERE>\",\n  )\n)\n\n    \nres = s.library.get_metadata(rating_key=8382.31)\n\nif ! res.two_hundred_application_json_object.nil?\n  # handle response\nend"
         - lang: go
-          label: getMetadata
+          label: key
           source: |-
             package main
 
@@ -7855,11 +8110,11 @@ paths:
             func main() {
                 s := plexgo.New(
                     plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
-                    plexgo.WithXPlexClientIdentifier("Postman"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
                 )
-                var ratingKey float64 = 8382.31
+
                 ctx := context.Background()
-                res, err := s.Library.GetMetadata(ctx, ratingKey)
+                res, err := s.Library.GetMetaDataByRatingKey(ctx, 9518)
                 if err != nil {
                     log.Fatal(err)
                 }
@@ -8032,6 +8287,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -8054,6 +8310,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -8072,6 +8329,40 @@ paths:
                           type: integer
                           example: 401
       x-codeSamples:
+        - lang: go
+          label: image
+          source: |-
+            package main
+
+            import(
+            	"github.com/LukeHagar/plexgo"
+            	"context"
+            	"github.com/LukeHagar/plexgo/models/operations"
+            	"log"
+            )
+
+            func main() {
+                s := plexgo.New(
+                    plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
+                )
+
+                ctx := context.Background()
+                res, err := s.Media.GetBannerImage(ctx, operations.GetBannerImageRequest{
+                    RatingKey: 9518,
+                    Width: 396,
+                    Height: 396,
+                    MinSize: 1,
+                    Upscale: 1,
+                    XPlexToken: "CV5xoxjTpFKUzBTShsaf",
+                })
+                if err != nil {
+                    log.Fatal(err)
+                }
+                if res.ResponseStream != nil {
+                    // handle response
+                }
+            }
         - lang: typescript
           label: image
           source: "import { PlexAPI } from \"@lukehagar/plexjs\";\n\nconst plexAPI = new PlexAPI({\n  accessToken: \"<YOUR_API_KEY_HERE>\",\n  xPlexClientIdentifier: \"gcgzw5rz2xovp84b4vha3a40\",\n});\n\nasync function run() {\n  const result = await plexAPI.media.getBannerImage({\n    ratingKey: 9518,\n    width: 396,\n    height: 396,\n    minSize: 1,\n    upscale: 1,\n    xPlexToken: \"CV5xoxjTpFKUzBTShsaf\",\n  });\n  \n  // Handle the result\n  console.log(result)\n}\n\nrun();"
@@ -8189,6 +8480,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -8211,6 +8503,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -8229,6 +8522,40 @@ paths:
                           type: integer
                           example: 401
       x-codeSamples:
+        - lang: go
+          label: image
+          source: |-
+            package main
+
+            import(
+            	"github.com/LukeHagar/plexgo"
+            	"context"
+            	"github.com/LukeHagar/plexgo/models/operations"
+            	"log"
+            )
+
+            func main() {
+                s := plexgo.New(
+                    plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
+                )
+
+                ctx := context.Background()
+                res, err := s.Media.GetThumbImage(ctx, operations.GetThumbImageRequest{
+                    RatingKey: 9518,
+                    Width: 396,
+                    Height: 396,
+                    MinSize: 1,
+                    Upscale: 1,
+                    XPlexToken: "CV5xoxjTpFKUzBTShsaf",
+                })
+                if err != nil {
+                    log.Fatal(err)
+                }
+                if res.ResponseStream != nil {
+                    // handle response
+                }
+            }
         - lang: typescript
           label: image
           source: "import { PlexAPI } from \"@lukehagar/plexjs\";\n\nconst plexAPI = new PlexAPI({\n  accessToken: \"<YOUR_API_KEY_HERE>\",\n  xPlexClientIdentifier: \"gcgzw5rz2xovp84b4vha3a40\",\n});\n\nasync function run() {\n  const result = await plexAPI.media.getThumbImage({\n    ratingKey: 9518,\n    width: 396,\n    height: 396,\n    minSize: 1,\n    upscale: 1,\n    xPlexToken: \"CV5xoxjTpFKUzBTShsaf\",\n  });\n  \n  // Handle the result\n  console.log(result)\n}\n\nrun();"
@@ -8472,6 +8799,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -8494,6 +8822,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -8556,13 +8885,11 @@ paths:
             func main() {
                 s := plexgo.New(
                     plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
-                    plexgo.WithXPlexClientIdentifier("Postman"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
                 )
-                var ratingKey float64 = 1539.14
 
-                var includeElements *string = plexgo.String("<value>")
                 ctx := context.Background()
-                res, err := s.Library.GetMetadataChildren(ctx, ratingKey, includeElements)
+                res, err := s.Library.GetMetadataChildren(ctx, 1539.14, plexgo.String("Stream"))
                 if err != nil {
                     log.Fatal(err)
                 }
@@ -8854,6 +9181,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -8876,6 +9204,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -8932,19 +9261,18 @@ paths:
             import(
             	"github.com/LukeHagar/plexgo"
             	"context"
+            	"github.com/LukeHagar/plexgo/models/operations"
             	"log"
             )
 
             func main() {
                 s := plexgo.New(
                     plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
-                    plexgo.WithXPlexClientIdentifier("Postman"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
                 )
-                var type_ int64 = 505531
 
-                var includeGuids *int64 = plexgo.Int64(1)
                 ctx := context.Background()
-                res, err := s.Library.GetTopWatchedContent(ctx, type_, includeGuids)
+                res, err := s.Library.GetTopWatchedContent(ctx, operations.GetTopWatchedContentQueryParamTypeTwo, plexgo.Int64(1))
                 if err != nil {
                     log.Fatal(err)
                 }
@@ -9306,6 +9634,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -9328,6 +9657,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -9389,7 +9719,7 @@ paths:
             func main() {
                 s := plexgo.New(
                     plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
-                    plexgo.WithXPlexClientIdentifier("Postman"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
                 )
 
                 ctx := context.Background()
@@ -9471,13 +9801,6 @@ paths:
             type: string
             example: gcgzw5rz2xovp84b4vha3a40
           required: true
-        - name: X-Plex-Token
-          in: query
-          description: Plex Authentication Token
-          schema:
-            type: string
-            example: CV5xoxjTpFKUzBTShsaf
-          required: true
         - name: includeHttps
           in: query
           description: Include Https entries in the results
@@ -9511,15 +9834,6 @@ paths:
               - 1
             example: 1
             default: 0
-        - name: Accept
-          in: header
-          required: false
-          schema:
-            type: string
-            enum:
-              - application/json
-              - application/xml
-            example: application/json
       responses:
         '200':
           description: List of Plex Devices. This includes Plex hosted servers and clients
@@ -9647,6 +9961,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -9669,6 +9984,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -9687,9 +10003,36 @@ paths:
                           type: integer
                           example: 401
       x-codeSamples:
+        - lang: go
+          label: resources
+          source: |-
+            package main
+
+            import(
+            	"github.com/LukeHagar/plexgo"
+            	"context"
+            	"github.com/LukeHagar/plexgo/models/operations"
+            	"log"
+            )
+
+            func main() {
+                s := plexgo.New(
+                    plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
+                )
+
+                ctx := context.Background()
+                res, err := s.Plex.GetServerResources(ctx, plexgo.String("gcgzw5rz2xovp84b4vha3a40"), operations.IncludeHTTPSOne.ToPointer(), operations.IncludeRelayOne.ToPointer(), operations.IncludeIPv6One.ToPointer())
+                if err != nil {
+                    log.Fatal(err)
+                }
+                if res.PlexDevices != nil {
+                    // handle response
+                }
+            }
         - lang: typescript
           label: resources
-          source: "import { PlexAPI } from \"@lukehagar/plexjs\";\nimport { IncludeHttps, IncludeIPv6, IncludeRelay } from \"@lukehagar/plexjs/sdk/models/operations\";\n\nconst plexAPI = new PlexAPI({\n  accessToken: \"<YOUR_API_KEY_HERE>\",\n  xPlexClientIdentifier: \"gcgzw5rz2xovp84b4vha3a40\",\n});\n\nasync function run() {\n  const result = await plexAPI.plex.getServerResources({\n    xPlexToken: \"CV5xoxjTpFKUzBTShsaf\",\n    includeHttps: IncludeHttps.One,\n    includeRelay: IncludeRelay.One,\n    includeIPv6: IncludeIPv6.One,\n  });\n  \n  // Handle the result\n  console.log(result)\n}\n\nrun();"
+          source: "import { PlexAPI } from \"@lukehagar/plexjs\";\nimport { IncludeHttps, IncludeIPv6, IncludeRelay } from \"@lukehagar/plexjs/sdk/models/operations\";\n\nconst plexAPI = new PlexAPI({\n  accessToken: \"<YOUR_API_KEY_HERE>\",\n  xPlexClientIdentifier: \"gcgzw5rz2xovp84b4vha3a40\",\n});\n\nasync function run() {\n  const result = await plexAPI.plex.getServerResources(\"gcgzw5rz2xovp84b4vha3a40\", IncludeHttps.One, IncludeRelay.One, IncludeIPv6.One);\n  \n  // Handle the result\n  console.log(result)\n}\n\nrun();"
   /log:
     get:
       tags:
@@ -9733,6 +10076,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -9755,6 +10099,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -9811,23 +10156,19 @@ paths:
 
             import(
             	"github.com/LukeHagar/plexgo"
-            	"github.com/LukeHagar/plexgo/models/operations"
             	"context"
+            	"github.com/LukeHagar/plexgo/models/operations"
             	"log"
             )
 
             func main() {
                 s := plexgo.New(
                     plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
-                    plexgo.WithXPlexClientIdentifier("Postman"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
                 )
-                var level operations.Level = operations.LevelThree
 
-                var message string = "Test log message"
-
-                var source string = "Postman"
                 ctx := context.Background()
-                res, err := s.Log.LogLine(ctx, level, message, source)
+                res, err := s.Log.LogLine(ctx, operations.LevelThree, "Test log message", "Postman")
                 if err != nil {
                     log.Fatal(err)
                 }
@@ -9910,6 +10251,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -9932,6 +10274,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -9996,13 +10339,13 @@ paths:
             func main() {
                 s := plexgo.New(
                     plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
-                    plexgo.WithXPlexClientIdentifier("Postman"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
                 )
-                var request string = "level=4&message=Test%20message%201&source=postman
-            level=3&message=Test%20message%202&source=postman
-            level=1&message=Test%20message%203&source=postman"
+
                 ctx := context.Background()
-                res, err := s.Log.LogMultiLine(ctx, request)
+                res, err := s.Log.LogMultiLine(ctx, "level=4&message=Test%20message%201&source=postman\n" +
+            "level=3&message=Test%20message%202&source=postman\n" +
+            "level=1&message=Test%20message%203&source=postman")
                 if err != nil {
                     log.Fatal(err)
                 }
@@ -10079,6 +10422,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -10101,6 +10445,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -10164,7 +10509,7 @@ paths:
             func main() {
                 s := plexgo.New(
                     plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
-                    plexgo.WithXPlexClientIdentifier("Postman"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
                 )
 
                 ctx := context.Background()
@@ -10281,6 +10626,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -10303,6 +10649,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -10364,7 +10711,7 @@ paths:
             func main() {
                 s := plexgo.New(
                     plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
-                    plexgo.WithXPlexClientIdentifier("Postman"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
                 )
 
                 ctx := context.Background()
@@ -10501,6 +10848,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -10523,6 +10871,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -10587,27 +10936,27 @@ paths:
 
             import(
             	"github.com/LukeHagar/plexgo"
-            	"github.com/LukeHagar/plexgo/models/operations"
             	"context"
+            	"github.com/LukeHagar/plexgo/models/operations"
             	"log"
             )
 
             func main() {
                 s := plexgo.New(
                     plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
-                    plexgo.WithXPlexClientIdentifier("Postman"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
                 )
-                request := operations.GetResizedPhotoRequest{
+
+                ctx := context.Background()
+                res, err := s.Server.GetResizedPhoto(ctx, operations.GetResizedPhotoRequest{
                     Width: 110,
                     Height: 165,
                     Opacity: 100,
                     Blur: 20,
                     MinSize: operations.MinSizeOne,
-                    Upscale: operations.UpscaleZero,
+                    Upscale: operations.UpscaleOne,
                     URL: "/library/metadata/49564/thumb/1654258204",
-                }
-                ctx := context.Background()
-                res, err := s.Server.GetResizedPhoto(ctx, request)
+                })
                 if err != nil {
                     log.Fatal(err)
                 }
@@ -10892,10 +11241,11 @@ paths:
                   newRegistration:
                     type: 'null'
         '400':
-          description: Bad Request response when the X-Plex-Client-Identifier is missing
+          description: 'Bad Request - A parameter was not specified, or was specified incorrectly.'
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -10953,19 +11303,15 @@ paths:
 
             func main() {
                 s := plexgo.New(
-                    plexgo.WithXPlexClientIdentifier("Postman"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
                 )
-                var xPlexProduct string = "Postman"
 
-                var strong *bool = plexgo.Bool(false)
-
-                var xPlexClientIdentifier *string = plexgo.String("Postman")
                 ctx := context.Background()
-                res, err := s.Plex.GetPin(ctx, xPlexProduct, strong, xPlexClientIdentifier)
+                res, err := s.Plex.GetPin(ctx, nil, plexgo.String("gcgzw5rz2xovp84b4vha3a40"), plexgo.String("Plex Web"))
                 if err != nil {
                     log.Fatal(err)
                 }
-                if res.Object != nil {
+                if res.AuthPinContainer != nil {
                     // handle response
                 }
             }
@@ -11228,10 +11574,11 @@ paths:
                   newRegistration:
                     type: 'null'
         '400':
-          description: Bad Request response when the X-Plex-Client-Identifier is missing
+          description: 'Bad Request - A parameter was not specified, or was specified incorrectly.'
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -11299,7 +11646,7 @@ paths:
           label: getToken
           source: "require 'plexruby'\n\n\ns = ::OpenApiSDK::PlexAPI.new(\n      x_plex_client_identifier: \"Postman\",\n    )\n\n    \nres = s.plex.get_token(pin_id=\"<value>\", x_plex_client_identifier=\"Postman\")\n\nif ! res.two_hundred_application_json_object.nil?\n  # handle response\nend"
         - lang: go
-          label: getToken
+          label: getTokenByPinId
           source: |-
             package main
 
@@ -11311,17 +11658,15 @@ paths:
 
             func main() {
                 s := plexgo.New(
-                    plexgo.WithXPlexClientIdentifier("Postman"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
                 )
-                var pinID string = "<value>"
 
-                var xPlexClientIdentifier *string = plexgo.String("Postman")
                 ctx := context.Background()
-                res, err := s.Plex.GetToken(ctx, pinID, xPlexClientIdentifier)
+                res, err := s.Plex.GetTokenByPinID(ctx, 408895, plexgo.String("gcgzw5rz2xovp84b4vha3a40"))
                 if err != nil {
                     log.Fatal(err)
                 }
-                if res.Object != nil {
+                if res.AuthPinContainer != nil {
                     // handle response
                 }
             }
@@ -11502,6 +11847,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -11524,6 +11870,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -11586,24 +11933,24 @@ paths:
 
             import(
             	"github.com/LukeHagar/plexgo"
-            	"github.com/LukeHagar/plexgo/models/operations"
             	"context"
+            	"github.com/LukeHagar/plexgo/models/operations"
             	"log"
             )
 
             func main() {
                 s := plexgo.New(
                     plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
-                    plexgo.WithXPlexClientIdentifier("Postman"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
                 )
-                request := operations.CreatePlaylistRequest{
+
+                ctx := context.Background()
+                res, err := s.Playlists.CreatePlaylist(ctx, operations.CreatePlaylistRequest{
                     Title: "<value>",
-                    Type: operations.QueryParamTypePhoto,
+                    Type: operations.CreatePlaylistQueryParamTypePhoto,
                     Smart: operations.SmartOne,
                     URI: "https://inborn-brochure.biz",
-                }
-                ctx := context.Background()
-                res, err := s.Playlists.CreatePlaylist(ctx, request)
+                })
                 if err != nil {
                     log.Fatal(err)
                 }
@@ -11774,6 +12121,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -11796,6 +12144,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -11852,7 +12201,6 @@ paths:
 
             import(
             	"github.com/LukeHagar/plexgo"
-            	"github.com/LukeHagar/plexgo/models/operations"
             	"context"
             	"log"
             )
@@ -11860,13 +12208,11 @@ paths:
             func main() {
                 s := plexgo.New(
                     plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
-                    plexgo.WithXPlexClientIdentifier("Postman"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
                 )
-                var playlistType *operations.PlaylistType = operations.PlaylistTypeAudio.ToPointer()
 
-                var smart *operations.QueryParamSmart = operations.QueryParamSmartZero.ToPointer()
                 ctx := context.Background()
-                res, err := s.Playlists.GetPlaylists(ctx, playlistType, smart)
+                res, err := s.Playlists.GetPlaylists(ctx, nil, nil)
                 if err != nil {
                     log.Fatal(err)
                 }
@@ -12016,6 +12362,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -12038,6 +12385,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -12100,11 +12448,11 @@ paths:
             func main() {
                 s := plexgo.New(
                     plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
-                    plexgo.WithXPlexClientIdentifier("Postman"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
                 )
-                var playlistID float64 = 4109.48
+
                 ctx := context.Background()
-                res, err := s.Playlists.GetPlaylist(ctx, playlistID)
+                res, err := s.Playlists.GetPlaylist(ctx, 4109.48)
                 if err != nil {
                     log.Fatal(err)
                 }
@@ -12185,6 +12533,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -12207,6 +12556,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -12269,11 +12619,11 @@ paths:
             func main() {
                 s := plexgo.New(
                     plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
-                    plexgo.WithXPlexClientIdentifier("Postman"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
                 )
-                var playlistID float64 = 216.22
+
                 ctx := context.Background()
-                res, err := s.Playlists.DeletePlaylist(ctx, playlistID)
+                res, err := s.Playlists.DeletePlaylist(ctx, 216.22)
                 if err != nil {
                     log.Fatal(err)
                 }
@@ -12364,6 +12714,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -12386,6 +12737,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -12448,15 +12800,11 @@ paths:
             func main() {
                 s := plexgo.New(
                     plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
-                    plexgo.WithXPlexClientIdentifier("Postman"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
                 )
-                var playlistID float64 = 3915
 
-                var title *string = plexgo.String("<value>")
-
-                var summary *string = plexgo.String("<value>")
                 ctx := context.Background()
-                res, err := s.Playlists.UpdatePlaylist(ctx, playlistID, title, summary)
+                res, err := s.Playlists.UpdatePlaylist(ctx, 3915, nil, nil)
                 if err != nil {
                     log.Fatal(err)
                 }
@@ -12817,6 +13165,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -12839,6 +13188,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -12895,19 +13245,18 @@ paths:
             import(
             	"github.com/LukeHagar/plexgo"
             	"context"
+            	"github.com/LukeHagar/plexgo/models/operations"
             	"log"
             )
 
             func main() {
                 s := plexgo.New(
                     plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
-                    plexgo.WithXPlexClientIdentifier("Postman"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
                 )
-                var playlistID float64 = 5004.46
 
-                var type_ float64 = 9403.59
                 ctx := context.Background()
-                res, err := s.Playlists.GetPlaylistContents(ctx, playlistID, type_)
+                res, err := s.Playlists.GetPlaylistContents(ctx, 5004.46, operations.GetPlaylistContentsQueryParamTypeTwo)
                 if err != nil {
                     log.Fatal(err)
                 }
@@ -12989,6 +13338,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -13011,6 +13361,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -13073,11 +13424,11 @@ paths:
             func main() {
                 s := plexgo.New(
                     plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
-                    plexgo.WithXPlexClientIdentifier("Postman"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
                 )
-                var playlistID float64 = 1893.18
+
                 ctx := context.Background()
-                res, err := s.Playlists.ClearPlaylistContents(ctx, playlistID)
+                res, err := s.Playlists.ClearPlaylistContents(ctx, 1893.18)
                 if err != nil {
                     log.Fatal(err)
                 }
@@ -13239,6 +13590,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -13261,6 +13613,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -13323,15 +13676,11 @@ paths:
             func main() {
                 s := plexgo.New(
                     plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
-                    plexgo.WithXPlexClientIdentifier("Postman"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
                 )
-                var playlistID float64 = 8502.01
 
-                var uri string = "server://12345/com.plexapp.plugins.library/library/metadata/1"
-
-                var playQueueID *float64 = plexgo.Float64(123)
                 ctx := context.Background()
-                res, err := s.Playlists.AddPlaylistContents(ctx, playlistID, uri, playQueueID)
+                res, err := s.Playlists.AddPlaylistContents(ctx, 8502.01, "server://12345/com.plexapp.plugins.library/library/metadata/1", plexgo.Float64(123))
                 if err != nil {
                     log.Fatal(err)
                 }
@@ -13425,6 +13774,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -13447,6 +13797,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -13503,21 +13854,19 @@ paths:
 
             import(
             	"github.com/LukeHagar/plexgo"
-            	"github.com/LukeHagar/plexgo/models/operations"
             	"context"
+            	"github.com/LukeHagar/plexgo/models/operations"
             	"log"
             )
 
             func main() {
                 s := plexgo.New(
                     plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
-                    plexgo.WithXPlexClientIdentifier("Postman"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
                 )
-                var path string = "/home/barkley/playlist.m3u"
 
-                var force operations.Force = operations.ForceZero
                 ctx := context.Background()
-                res, err := s.Playlists.UploadPlaylist(ctx, path, force)
+                res, err := s.Playlists.UploadPlaylist(ctx, "/home/barkley/playlist.m3u", operations.QueryParamForceZero)
                 if err != nil {
                     log.Fatal(err)
                 }
@@ -13771,6 +14120,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -13793,6 +14143,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -13811,6 +14162,32 @@ paths:
                           type: integer
                           example: 401
       x-codeSamples:
+        - lang: go
+          label: providers
+          source: |-
+            package main
+
+            import(
+            	"github.com/LukeHagar/plexgo"
+            	"context"
+            	"log"
+            )
+
+            func main() {
+                s := plexgo.New(
+                    plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
+                )
+
+                ctx := context.Background()
+                res, err := s.Server.GetMediaProviders(ctx, "CV5xoxjTpFKUzBTShsaf")
+                if err != nil {
+                    log.Fatal(err)
+                }
+                if res.Object != nil {
+                    // handle response
+                }
+            }
         - lang: typescript
           label: providers
           source: "import { PlexAPI } from \"@lukehagar/plexjs\";\n\nconst plexAPI = new PlexAPI({\n  accessToken: \"<YOUR_API_KEY_HERE>\",\n  xPlexClientIdentifier: \"gcgzw5rz2xovp84b4vha3a40\",\n});\n\nasync function run() {\n  const result = await plexAPI.server.getMediaProviders(\"CV5xoxjTpFKUzBTShsaf\");\n  \n  // Handle the result\n  console.log(result)\n}\n\nrun();"
@@ -14075,6 +14452,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -14097,6 +14475,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -14159,11 +14538,11 @@ paths:
             func main() {
                 s := plexgo.New(
                     plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
-                    plexgo.WithXPlexClientIdentifier("Postman"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
                 )
-                var query string = "110"
+
                 ctx := context.Background()
-                res, err := s.Search.GetSearchResults(ctx, query)
+                res, err := s.Search.GetSearchResults(ctx, "110")
                 if err != nil {
                     log.Fatal(err)
                 }
@@ -14226,7 +14605,7 @@ paths:
     get:
       tags:
         - Authentication
-      summary: Get a Transient Token.
+      summary: Get a Transient Token
       description: |
         This endpoint provides the caller with a temporary token with the same access level as the caller's token. These tokens are valid for up to 48 hours and are destroyed if the server instance is restarted.
       operationId: getTransientToken
@@ -14255,6 +14634,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -14277,6 +14657,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -14333,21 +14714,19 @@ paths:
 
             import(
             	"github.com/LukeHagar/plexgo"
-            	"github.com/LukeHagar/plexgo/models/operations"
             	"context"
+            	"github.com/LukeHagar/plexgo/models/operations"
             	"log"
             )
 
             func main() {
                 s := plexgo.New(
                     plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
-                    plexgo.WithXPlexClientIdentifier("Postman"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
                 )
-                var type_ operations.GetTransientTokenQueryParamType = operations.GetTransientTokenQueryParamTypeDelegation
 
-                var scope operations.Scope = operations.ScopeAll
                 ctx := context.Background()
-                res, err := s.Authentication.GetTransientToken(ctx, type_, scope)
+                res, err := s.Authentication.GetTransientToken(ctx, operations.GetTransientTokenQueryParamTypeDelegation, operations.ScopeAll)
                 if err != nil {
                     log.Fatal(err)
                 }
@@ -14432,6 +14811,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -14454,6 +14834,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -14516,11 +14897,11 @@ paths:
             func main() {
                 s := plexgo.New(
                     plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
-                    plexgo.WithXPlexClientIdentifier("Postman"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
                 )
-                var source string = "server://client-identifier"
+
                 ctx := context.Background()
-                res, err := s.Authentication.GetSourceConnectionInformation(ctx, source)
+                res, err := s.Authentication.GetSourceConnectionInformation(ctx, "server://client-identifier")
                 if err != nil {
                     log.Fatal(err)
                 }
@@ -14626,6 +15007,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -14648,6 +15030,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -14709,7 +15092,7 @@ paths:
             func main() {
                 s := plexgo.New(
                     plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
-                    plexgo.WithXPlexClientIdentifier("Postman"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
                 )
 
                 ctx := context.Background()
@@ -14894,6 +15277,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -14916,6 +15300,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -14978,11 +15363,11 @@ paths:
             func main() {
                 s := plexgo.New(
                     plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
-                    plexgo.WithXPlexClientIdentifier("Postman"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
                 )
-                var timespan *int64 = plexgo.Int64(4)
+
                 ctx := context.Background()
-                res, err := s.Statistics.GetStatistics(ctx, timespan)
+                res, err := s.Statistics.GetStatistics(ctx, plexgo.Int64(4))
                 if err != nil {
                     log.Fatal(err)
                 }
@@ -15105,6 +15490,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -15127,6 +15513,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -15189,11 +15576,11 @@ paths:
             func main() {
                 s := plexgo.New(
                     plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
-                    plexgo.WithXPlexClientIdentifier("Postman"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
                 )
-                var timespan *int64 = plexgo.Int64(4)
+
                 ctx := context.Background()
-                res, err := s.Statistics.GetResourcesStatistics(ctx, timespan)
+                res, err := s.Statistics.GetResourcesStatistics(ctx, plexgo.Int64(4))
                 if err != nil {
                     log.Fatal(err)
                 }
@@ -15368,6 +15755,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -15390,6 +15778,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -15452,11 +15841,11 @@ paths:
             func main() {
                 s := plexgo.New(
                     plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
-                    plexgo.WithXPlexClientIdentifier("Postman"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
                 )
-                var timespan *int64 = plexgo.Int64(4)
+
                 ctx := context.Background()
-                res, err := s.Statistics.GetBandwidthStatistics(ctx, timespan)
+                res, err := s.Statistics.GetBandwidthStatistics(ctx, plexgo.Int64(4))
                 if err != nil {
                     log.Fatal(err)
                 }
@@ -15862,6 +16251,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -15884,6 +16274,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -15945,7 +16336,7 @@ paths:
             func main() {
                 s := plexgo.New(
                     plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
-                    plexgo.WithXPlexClientIdentifier("Postman"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
                 )
 
                 ctx := context.Background()
@@ -16154,6 +16545,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -16176,6 +16568,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -16234,25 +16627,19 @@ paths:
 
             import(
             	"github.com/LukeHagar/plexgo"
-            	"github.com/LukeHagar/plexgo/models/operations"
             	"context"
+            	"github.com/LukeHagar/plexgo/models/operations"
             	"log"
             )
 
             func main() {
                 s := plexgo.New(
                     plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
-                    plexgo.WithXPlexClientIdentifier("Postman"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
                 )
-                var sort *string = plexgo.String("<value>")
 
-                var accountID *int64 = plexgo.Int64(1)
-
-                var filter *operations.Filter = &operations.Filter{}
-
-                var librarySectionID *int64 = plexgo.Int64(12)
                 ctx := context.Background()
-                res, err := s.Sessions.GetSessionHistory(ctx, sort, accountID, filter, librarySectionID)
+                res, err := s.Sessions.GetSessionHistory(ctx, plexgo.String("viewedAt:desc"), plexgo.Int64(1), &operations.QueryParamFilter{}, plexgo.Int64(12))
                 if err != nil {
                     log.Fatal(err)
                 }
@@ -16448,6 +16835,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -16470,6 +16858,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -16531,7 +16920,7 @@ paths:
             func main() {
                 s := plexgo.New(
                     plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
-                    plexgo.WithXPlexClientIdentifier("Postman"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
                 )
 
                 ctx := context.Background()
@@ -16616,6 +17005,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -16638,6 +17028,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -16700,11 +17091,11 @@ paths:
             func main() {
                 s := plexgo.New(
                     plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
-                    plexgo.WithXPlexClientIdentifier("Postman"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
                 )
-                var sessionKey string = "zz7llzqlx8w9vnrsbnwhbmep"
+
                 ctx := context.Background()
-                res, err := s.Sessions.StopTranscodeSession(ctx, sessionKey)
+                res, err := s.Sessions.StopTranscodeSession(ctx, "zz7llzqlx8w9vnrsbnwhbmep")
                 if err != nil {
                     log.Fatal(err)
                 }
@@ -16866,6 +17257,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -16888,6 +17280,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -16949,7 +17342,7 @@ paths:
             func main() {
                 s := plexgo.New(
                     plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
-                    plexgo.WithXPlexClientIdentifier("Postman"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
                 )
 
                 ctx := context.Background()
@@ -17037,6 +17430,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -17059,6 +17453,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -17115,19 +17510,19 @@ paths:
 
             import(
             	"github.com/LukeHagar/plexgo"
-            	"github.com/LukeHagar/plexgo/models/operations"
             	"context"
+            	"github.com/LukeHagar/plexgo/models/operations"
             	"log"
             )
 
             func main() {
                 s := plexgo.New(
                     plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
-                    plexgo.WithXPlexClientIdentifier("Postman"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
                 )
-                var download *operations.Download = operations.DownloadOne.ToPointer()
+
                 ctx := context.Background()
-                res, err := s.Updater.CheckForUpdates(ctx, download)
+                res, err := s.Updater.CheckForUpdates(ctx, operations.DownloadOne.ToPointer())
                 if err != nil {
                     log.Fatal(err)
                 }
@@ -17221,6 +17616,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -17243,6 +17639,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -17301,21 +17698,19 @@ paths:
 
             import(
             	"github.com/LukeHagar/plexgo"
-            	"github.com/LukeHagar/plexgo/models/operations"
             	"context"
+            	"github.com/LukeHagar/plexgo/models/operations"
             	"log"
             )
 
             func main() {
                 s := plexgo.New(
                     plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
-                    plexgo.WithXPlexClientIdentifier("Postman"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
                 )
-                var tonight *operations.Tonight = operations.TonightOne.ToPointer()
 
-                var skip *operations.Skip = operations.SkipOne.ToPointer()
                 ctx := context.Background()
-                res, err := s.Updater.ApplyUpdates(ctx, tonight, skip)
+                res, err := s.Updater.ApplyUpdates(ctx, operations.TonightOne.ToPointer(), operations.SkipOne.ToPointer())
                 if err != nil {
                     log.Fatal(err)
                 }
@@ -17501,6 +17896,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -17523,6 +17919,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -17589,17 +17986,19 @@ paths:
 
             import(
             	"github.com/LukeHagar/plexgo"
-            	"github.com/LukeHagar/plexgo/models/operations"
             	"context"
+            	"github.com/LukeHagar/plexgo/models/operations"
             	"log"
             )
 
             func main() {
                 s := plexgo.New(
                     plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
-                    plexgo.WithXPlexClientIdentifier("Postman"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
                 )
-                request := operations.StartUniversalTranscodeRequest{
+
+                ctx := context.Background()
+                res, err := s.Video.StartUniversalTranscode(ctx, operations.StartUniversalTranscodeRequest{
                     HasMDE: 1,
                     Path: "/library/metadata/23409",
                     MediaIndex: 0,
@@ -17616,9 +18015,7 @@ paths:
                     Session: plexgo.String("zvcage8b7rkioqcm8f4uns4c"),
                     AddDebugOverlay: plexgo.Float64(0),
                     AutoAdjustQuality: plexgo.Float64(0),
-                }
-                ctx := context.Background()
-                res, err := s.Video.StartUniversalTranscode(ctx, request)
+                })
                 if err != nil {
                     log.Fatal(err)
                 }
@@ -17700,26 +18097,9 @@ paths:
         - url: 'https://plex.tv/api/v2/'
       tags:
         - Authentication
-      summary: Get User Data By Token
+      summary: Get Token Details
       description: Get the User data from the provided X-Plex-Token
-      operationId: getUserDetails
-      parameters:
-        - name: X-Plex-Token
-          in: query
-          description: Plex Authentication Token
-          schema:
-            type: string
-            example: CV5xoxjTpFKUzBTShsaf
-          required: true
-        - name: Accept
-          in: header
-          required: false
-          schema:
-            type: string
-            enum:
-              - application/json
-              - application/xml
-            example: application/json
+      operationId: getTokenDetails
       responses:
         '200':
           description: Logged in user details
@@ -18305,6 +18685,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -18327,6 +18708,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -18345,9 +18727,35 @@ paths:
                           type: integer
                           example: 401
       x-codeSamples:
+        - lang: go
+          label: getTokenDetails
+          source: |-
+            package main
+
+            import(
+            	"github.com/LukeHagar/plexgo"
+            	"context"
+            	"log"
+            )
+
+            func main() {
+                s := plexgo.New(
+                    plexgo.WithSecurity("<YOUR_API_KEY_HERE>"),
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
+                )
+
+                ctx := context.Background()
+                res, err := s.Authentication.GetTokenDetails(ctx)
+                if err != nil {
+                    log.Fatal(err)
+                }
+                if res.UserPlexAccount != nil {
+                    // handle response
+                }
+            }
         - lang: typescript
-          label: getUserDetails
-          source: "import { PlexAPI } from \"@lukehagar/plexjs\";\n\nconst plexAPI = new PlexAPI({\n  accessToken: \"<YOUR_API_KEY_HERE>\",\n  xPlexClientIdentifier: \"gcgzw5rz2xovp84b4vha3a40\",\n});\n\nasync function run() {\n  const result = await plexAPI.authentication.getUserDetails(\"CV5xoxjTpFKUzBTShsaf\");\n  \n  // Handle the result\n  console.log(result)\n}\n\nrun();"
+          label: getTokenDetails
+          source: "import { PlexAPI } from \"@lukehagar/plexjs\";\n\nconst plexAPI = new PlexAPI({\n  accessToken: \"<YOUR_API_KEY_HERE>\",\n  xPlexClientIdentifier: \"gcgzw5rz2xovp84b4vha3a40\",\n});\n\nasync function run() {\n  const result = await plexAPI.authentication.getTokenDetails();\n  \n  // Handle the result\n  console.log(result)\n}\n\nrun();"
   /users/signin:
     post:
       servers:
@@ -18369,15 +18777,6 @@ paths:
             type: string
             example: gcgzw5rz2xovp84b4vha3a40
           required: true
-        - name: Accept
-          in: header
-          required: false
-          schema:
-            type: string
-            enum:
-              - application/json
-              - application/xml
-            example: application/json
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -19094,6 +19493,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: BadRequest
                 type: object
                 properties:
                   errors:
@@ -19116,6 +19516,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-name-override: Unauthorized
                 type: object
                 properties:
                   errors:
@@ -19134,6 +19535,36 @@ paths:
                           type: integer
                           example: 401
       x-codeSamples:
+        - lang: go
+          label: data
+          source: |-
+            package main
+
+            import(
+            	"github.com/LukeHagar/plexgo"
+            	"context"
+            	"github.com/LukeHagar/plexgo/models/operations"
+            	"log"
+            )
+
+            func main() {
+                s := plexgo.New(
+                    plexgo.WithXPlexClientIdentifier("gcgzw5rz2xovp84b4vha3a40"),
+                )
+
+                ctx := context.Background()
+                res, err := s.Authentication.PostUsersSignInData(ctx, plexgo.String("gcgzw5rz2xovp84b4vha3a40"), &operations.PostUsersSignInDataRequestBody{
+                    Login: "username@email.com",
+                    Password: "password123",
+                    VerificationCode: plexgo.String("123456"),
+                })
+                if err != nil {
+                    log.Fatal(err)
+                }
+                if res.UserPlexAccount != nil {
+                    // handle response
+                }
+            }
         - lang: typescript
           label: data
           source: "import { PlexAPI } from \"@lukehagar/plexjs\";\n\nconst plexAPI = new PlexAPI({\n  xPlexClientIdentifier: \"gcgzw5rz2xovp84b4vha3a40\",\n});\n\nasync function run() {\n  const result = await plexAPI.authentication.postUsersSignInData(\"gcgzw5rz2xovp84b4vha3a40\", {\n    login: \"username@email.com\",\n    password: \"password123\",\n    verificationCode: \"123456\",\n  });\n  \n  // Handle the result\n  console.log(result)\n}\n\nrun();"
