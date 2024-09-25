@@ -3,15 +3,15 @@ speakeasyVersion: latest
 sources:
     merge-code-samples-into-spec:
         inputs:
-            - location: registry.speakeasyapi.dev/lukehagar/lukehagar/plex-api:main
+            - location: registry.speakeasyapi.dev/plexapi/plexapi/plexapi:main
         overlays:
             - location: ./mintlify-overlay.yaml
-            - location: registry.speakeasyapi.dev/lukehagar/lukehagar/code-samples-php-plexphp:main
-            - location: registry.speakeasyapi.dev/lukehagar/lukehagar/code-samples-ruby-plexruby:main
-            - location: registry.speakeasyapi.dev/lukehagar/lukehagar/code-samples-go-plexgo:main
-            - location: registry.speakeasyapi.dev/lukehagar/lukehagar/code-samples-java-plexjava:main
-            - location: registry.speakeasyapi.dev/lukehagar/lukehagar/code-samples-typescript-plexjs:main
+            - location: registry.speakeasyapi.dev/plexapi/plexapi/code-samples-php-plexphp:main
+            - location: registry.speakeasyapi.dev/plexapi/plexapi/code-samples-ruby-plexruby:main
+            - location: registry.speakeasyapi.dev/plexapi/plexapi/code-samples-go-plexgo:main
+            - location: registry.speakeasyapi.dev/plexapi/plexapi/code-samples-java-plexjava:main
+            - location: registry.speakeasyapi.dev/plexapi/plexapi/code-samples-typescript-plexjs:main
         output: ./openapi-with-code-samples.yaml
         registry:
-            location: registry.speakeasyapi.dev/lukehagar/lukehagar/merge-code-samples-into-spec
+            location: registry.speakeasyapi.dev/plexapi/plexapi/merge-code-samples-into-spec
 targets: {}
