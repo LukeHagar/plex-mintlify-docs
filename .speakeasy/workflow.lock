@@ -1,9 +1,9 @@
-speakeasyVersion: 1.402.12
+speakeasyVersion: 1.402.14
 sources:
     merge-code-samples-into-spec:
         sourceNamespace: merge-code-samples-into-spec
-        sourceRevisionDigest: sha256:8559be5fdfcd467d31f5360838fdef8436916858d5187caf9d112523d6493ade
-        sourceBlobDigest: sha256:2c2b2da4a193c98754ed782dd418ff1c6e7b01f708d9e78083f283418a44c145
+        sourceRevisionDigest: sha256:152775604ae1abdda1426eab3c46f36d4ed6393898531b901a0ee6c535ae3ac6
+        sourceBlobDigest: sha256:57a64aef5317a4620d6d429a780bda8884f3c457829920d1249d744ab8840a78
         tags:
             - latest
             - main
@@ -14,15 +14,15 @@ workflow:
     sources:
         merge-code-samples-into-spec:
             inputs:
-                - location: registry.speakeasyapi.dev/lukehagar/lukehagar/plex-api:main
+                - location: registry.speakeasyapi.dev/plexapi/plexapi/plexapi:main
             overlays:
                 - location: ./mintlify-overlay.yaml
-                - location: registry.speakeasyapi.dev/lukehagar/lukehagar/code-samples-php-plexphp:main
-                - location: registry.speakeasyapi.dev/lukehagar/lukehagar/code-samples-ruby-plexruby:main
-                - location: registry.speakeasyapi.dev/lukehagar/lukehagar/code-samples-go-plexgo:main
-                - location: registry.speakeasyapi.dev/lukehagar/lukehagar/code-samples-java-plexjava:main
-                - location: registry.speakeasyapi.dev/lukehagar/lukehagar/code-samples-typescript-plexjs:main
+                - location: registry.speakeasyapi.dev/plexapi/plexapi/code-samples-php-plexphp:main
+                - location: registry.speakeasyapi.dev/plexapi/plexapi/code-samples-ruby-plexruby:main
+                - location: registry.speakeasyapi.dev/plexapi/plexapi/code-samples-go-plexgo:main
+                - location: registry.speakeasyapi.dev/plexapi/plexapi/code-samples-java-plexjava:main
+                - location: registry.speakeasyapi.dev/plexapi/plexapi/code-samples-typescript-plexjs:main
             output: ./openapi-with-code-samples.yaml
             registry:
-                location: registry.speakeasyapi.dev/lukehagar/lukehagar/merge-code-samples-into-spec
+                location: registry.speakeasyapi.dev/plexapi/plexapi/merge-code-samples-into-spec
     targets: {}
