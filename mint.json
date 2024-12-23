@@ -29,7 +29,7 @@
       ]
     }
   ],
-  "openapi": "/openapi-with-code-samples.yaml",
+  "openapi": "https://spec.speakeasy.com/plexapi/plexapi/merge-code-samples-into-spec-with-code-samples",
   "tabs": [
     {
       "name": "Plex API Reference",
