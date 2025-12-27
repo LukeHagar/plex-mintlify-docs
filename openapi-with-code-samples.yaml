@@ -5297,8 +5297,8 @@ paths:
                     Agent: "<value>",
                     Language: "<value>",
                     Locations: []string{
-                        "O:\fatboy\\Media\\Ripped\\Music",
-                        "O:\fatboy\\Media\\My Music",
+                        "O:\\fatboy\\Media\\Ripped\\Music",
+                        "O:\\fatboy\\Media\\My Music",
                     },
                     Prefs: &operations.QueryParamPrefs{},
                     Relative: components.BoolIntTrue.ToPointer(),
@@ -5393,8 +5393,8 @@ paths:
                 agent: "<value>",
                 language: "<value>",
                 locations: [
-                  "O:\fatboy\\Media\\Ripped\\Music",
-                  "O:\fatboy\\Media\\My Music",
+                  "O:\\fatboy\\Media\\Ripped\\Music",
+                  "O:\\fatboy\\Media\\My Music",
                 ],
                 prefs: {},
                 relative: BoolInt.True,
@@ -23854,8 +23854,8 @@ paths:
                     SectionID: "<id>",
                     Agent: "<value>",
                     Locations: []string{
-                        "O:\fatboy\\Media\\Ripped\\Music",
-                        "O:\fatboy\\Media\\My Music",
+                        "O:\\fatboy\\Media\\Ripped\\Music",
+                        "O:\\fatboy\\Media\\My Music",
                     },
                     Prefs: &operations.EditSectionQueryParamPrefs{},
                 })
@@ -23939,8 +23939,8 @@ paths:
                 sectionId: "<id>",
                 agent: "<value>",
                 locations: [
-                  "O:\fatboy\\Media\\Ripped\\Music",
-                  "O:\fatboy\\Media\\My Music",
+                  "O:\\fatboy\\Media\\Ripped\\Music",
+                  "O:\\fatboy\\Media\\My Music",
                 ],
                 prefs: {},
               });
@@ -43464,6 +43464,7 @@ components:
           type: string
           enum:
             - background
+            - backgroundSquare
             - banner
             - clearLogo
             - coverPoster
