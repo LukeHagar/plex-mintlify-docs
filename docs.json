@@ -1,0 +1,54 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "prism",
+  "name": "Plex API Documentation",
+  "colors": {
+    "primary": "#219ebc",
+    "light": "#8ecae6",
+    "dark": "#219ebc"
+  },
+  "favicon": "/favicon.svg",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Documentation",
+        "groups": [
+          {
+            "group": "Getting Started",
+            "pages": [
+              "Intro",
+              "Open-API-Specification",
+              "SDKs",
+              "other-resources"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Plex API Reference",
+        "openapi": "/openapi-with-code-samples.yaml",
+        "url": "api-reference"
+      }
+    ],
+    "anchors": [
+      {
+        "anchor": "Community",
+        "href": "https://discord.gg/CYuDKV9uK3",
+        "icon": "discord"
+      }
+    ]
+  },
+  "navbar": {
+    "primary": {
+      "type": "button",
+      "label": "Suggest an edit",
+      "href": "https://github.com/LukasParke/plex-api-spec"
+    }
+  },
+  "footer": {
+    "socials": {
+      "github": "https://github.com/LukasParke",
+      "linkedin": "https://www.linkedin.com/in/lukehagar/"
+    }
+  }
+}
