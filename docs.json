@@ -1,6 +1,6 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "prism",
+  "theme": "mint",
   "name": "Plex API Documentation",
   "colors": {
     "primary": "#219ebc",
