@@ -1,4 +1,4 @@
-speakeasyVersion: 1.774.0
+speakeasyVersion: 1.776.0
 sources:
     merge-code-samples-into-spec:
         sourceNamespace: merge-code-samples-into-spec
