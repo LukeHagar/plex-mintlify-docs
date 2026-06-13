@@ -1,0 +1,41 @@
+---
+title: "Libraries"
+description: "How Plex Media Server organizes media into libraries and how to query them"
+---
+
+# Libraries
+
+Library sections and the items they contain.
+
+## List library sections
+
+```http
+GET /library/sections
+```
+
+Returns all configured library sections, such as movies, TV shows, music, and photos.
+
+### Response
+
+```json
+{
+  "MediaContainer": {
+    "size": 2,
+    "Directory": [
+      {
+        "key": "1",
+        "type": "movie",
+        "title": "Movies"
+      }
+    ]
+  }
+}
+```
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `key` | `string` | Section identifier. |
+| `type` | `string` | Section type: `movie`, `show`, `artist`, or `photo`. |
+| `title` | `string` | Display name. |
+
+See the [Quick Start](/quick-start) for a runnable example, and the [API Reference](/api-reference) for the full endpoint schema.

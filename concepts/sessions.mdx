@@ -1,0 +1,44 @@
+---
+title: "Sessions"
+description: "Active playback sessions and transcoding status for Plex Media Server"
+---
+
+# Sessions
+
+Active playback sessions and transcoding status.
+
+## List active sessions
+
+```http
+GET /status/sessions
+```
+
+Returns all currently active playback sessions.
+
+### Response
+
+```json
+{
+  "MediaContainer": {
+    "size": 1,
+    "Metadata": [
+      {
+        "ratingKey": "100",
+        "title": "The Shawshank Redemption",
+        "Player": {
+          "title": "Chrome",
+          "state": "playing"
+        }
+      }
+    ]
+  }
+}
+```
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `Session.id` | `string` | Unique session identifier. |
+| `Player.title` | `string` | Player application name. |
+| `Player.state` | `string` | Playback state. |
+
+See the [API Reference](/api-reference) for the full endpoint schema.

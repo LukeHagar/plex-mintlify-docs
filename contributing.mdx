@@ -56,6 +56,18 @@ Before submitting changes:
 - Prefer the `X-Plex-Token` header over query parameters in examples.
 - Use American English spelling and avoid jargon where possible.
 
+## Detailed content style rules
+
+- **Sentence case for headings.** Use "Quick start", not "Quick Start".
+- **Write for the reader.** Start each guide with what the reader will accomplish and what they need first.
+- **Keep examples copy-pasteable.** Provide complete commands and include placeholders like `<your-token>` where sensitive data belongs.
+- **No real credentials.** Never include real Plex tokens, server addresses, or user metadata in examples or screenshots.
+- **Use relative links for internal pages.** For example, use `/quick-start` or `/concepts/library` instead of absolute URLs.
+- **Prefer the `X-Plex-Token` header.** Do not show tokens as query parameters unless the example specifically explains query-parameter usage.
+- **One sentence per line in source Markdown.** This makes diffs easier to read and review.
+- **Use American English spelling** and avoid jargon where possible.
+- **Check the build.** `mintlify validate` and `mintlify broken-links` catch structural and link errors before CI.
+
 ## Review process
 
 1. Open a pull request with a clear summary of the change.

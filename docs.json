@@ -17,10 +17,20 @@
             "group": "Getting Started",
             "pages": [
               "Intro",
+              "quick-start",
+              "authentication",
               "Open-API-Specification",
               "SDKs",
               "other-resources",
               "contributing"
+            ]
+          },
+          {
+            "group": "Core concepts",
+            "pages": [
+              "concepts/library",
+              "concepts/server",
+              "concepts/sessions"
             ]
           }
         ]

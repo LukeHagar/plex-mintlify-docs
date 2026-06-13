@@ -1,0 +1,37 @@
+---
+title: "Server"
+description: "Server discovery, identity, and top-level status for Plex Media Server"
+---
+
+# Server
+
+Server discovery, identity, and top-level status.
+
+## Get server identity
+
+```http
+GET /identity
+```
+
+Returns the server's identity, including its unique machine identifier. This endpoint does **not** require authentication and is useful for server discovery.
+
+### Response
+
+```json
+{
+  "MediaContainer": {
+    "size": 0,
+    "claimed": true,
+    "machineIdentifier": "abc123def456",
+    "version": "1.40.2.8395"
+  }
+}
+```
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `machineIdentifier` | `string` | Unique identifier for this Plex server. |
+| `claimed` | `boolean` | Whether the server is claimed to a Plex account. |
+| `version` | `string` | Plex Media Server version. |
+
+See the [API Reference](/api-reference) for the full endpoint schema.
