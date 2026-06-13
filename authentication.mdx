@@ -1,0 +1,177 @@
+---
+title: "Authentication"
+description: "How to obtain, use, and protect Plex Media Server API tokens"
+---
+
+Most Plex Media Server API endpoints require an authentication token. This guide explains what Plex tokens are, how to obtain one safely, and how to use and protect them in your integrations.
+
+## What is a Plex token?
+
+A Plex token is a long-lived credential that proves who you are to Plex services. Two token shapes matter to API developers:
+
+| Token type | What it does | Where it is used |
+|------------|--------------|------------------|
+| **Server token** (`X-Plex-Token`) | Grants access to a specific Plex Media Server. | Sent with every request to that server. |
+| **Plex.tv token** | Authenticates your Plex account against Plex's cloud services. | Used to discover servers, manage account settings, and request server tokens remotely. |
+
+This guide focuses on the server token because it is what you send with every API call to a Plex Media Server.
+
+## Before you begin
+
+You will need:
+
+- A Plex account.
+- Access to a Plex Media Server (your own, or one you have been invited to).
+- A way to store secrets securely, such as environment variables or a secrets manager.
+
+## Find your server URL
+
+Most local API examples use the server's LAN address:
+
+```
+http://<server-ip>:32400
+```
+
+If you access Plex through a reverse proxy or remote access, use that HTTPS URL instead. Some requests, such as the root identity endpoint, work without a token; everything under `/library`, `/status`, and most other paths requires one.
+
+## Obtain a server token
+
+### Option 1: Copy a token from the Plex Web App (fastest for personal scripts)
+
+The Plex Web App already has a valid token for your server. You can copy it from the browser's network tools:
+
+1. Open your Plex server in a web browser and sign in.
+2. Open the browser developer tools and go to the **Network** tab.
+3. Refresh a library or perform any action that triggers a request to your server.
+4. Select a request whose URL points to your server, for example `.../library/sections`.
+5. Look for the `X-Plex-Token` query parameter or request header.
+6. Copy the token value and store it securely.
+
+<Tip>
+The token shown is tied to the signed-in account. If you share the server with others, each account has its own token.
+</Tip>
+
+### Option 2: Request a token from Plex.tv
+
+For applications that cannot open a browser, you can authenticate with Plex.tv and exchange credentials for a token. This requires your Plex username and password and is best done with a small helper script or an OAuth-style sign-in flow. A full example is beyond the scope of this guide; for now, store any Plex.tv token as securely as a server token.
+
+### Option 3: Use an account setting or claim token
+
+When setting up a new server, Plex uses a short-lived **claim token** to link the server to your account. Claim tokens expire quickly and are not used for routine API calls. After the server is claimed, use one of the methods above to get a long-lived token.
+
+## Send the token with each request
+
+Include the token on every request to a protected endpoint. The preferred method is the `X-Plex-Token` header:
+
+```bash
+curl -H "X-Plex-Token: $PLEX_TOKEN" \
+  "$PLEX_SERVER_URL/library/sections"
+```
+
+You can also send the token as a query parameter, which is useful for quick browser tests:
+
+```bash
+curl "$PLEX_SERVER_URL/library/sections?X-Plex-Token=$PLEX_TOKEN"
+```
+
+<Warning>
+The query parameter can appear in server logs, proxy logs, and browser history. Prefer the header for production code.
+</Warning>
+
+## Identify your client
+
+Plex expects API clients to identify themselves with a few extra headers. These headers help server administrators see which clients are connected and help Plex enforce rate limits or compatibility checks. Include them whenever possible:
+
+| Header | Example | Purpose |
+|--------|---------|---------|
+| `X-Plex-Client-Identifier` | `my-dashboard-1234` | A unique ID for your application or installation. |
+| `X-Plex-Product` | `My Plex Dashboard` | Human-readable product name. |
+| `X-Plex-Version` | `1.0.0` | Version of your client. |
+| `X-Plex-Device` | `Linux` | The device or platform running the client. |
+| `X-Plex-Device-Name` | `office-pi` | A friendly name for the device. |
+
+Example request with identification headers:
+
+```bash
+curl -H "X-Plex-Token: $PLEX_TOKEN" \
+  -H "X-Plex-Client-Identifier: my-dashboard-1234" \
+  -H "X-Plex-Product: My Plex Dashboard" \
+  -H "X-Plex-Version: 1.0.0" \
+  -H "X-Plex-Device: Linux" \
+  -H "X-Plex-Device-Name: office-pi" \
+  "$PLEX_SERVER_URL/library/sections"
+```
+
+Choose an `X-Plex-Client-Identifier` that is stable for the lifetime of your app installation. Generating a new UUID on every restart is fine for experiments, but stable IDs are better for dashboards and automation that run continuously.
+
+## Token scope and managed users
+
+The token you use determines what the API can see:
+
+- **Server owner token** — full access to libraries, settings, and sessions.
+- **Home user token** — limited to the libraries and permissions granted by the owner.
+- **Friend/shared user token** — limited to the shared libraries the owner chose.
+
+If your integration behaves differently than expected, confirm the token belongs to the intended account and that the account has permission for the library or action.
+
+## Environment-variable handling
+
+A minimal, safe pattern is to read the token and server URL from the environment at startup and fail fast if either is missing:
+
+```js
+const serverUrl = process.env.PLEX_SERVER_URL;
+const token = process.env.PLEX_TOKEN;
+
+if (!serverUrl || !token) {
+  throw new Error("PLEX_SERVER_URL and PLEX_TOKEN are required");
+}
+```
+
+```py
+import os
+
+server_url = os.environ.get("PLEX_SERVER_URL")
+token = os.environ.get("PLEX_TOKEN")
+
+if not server_url or not token:
+    raise ValueError("PLEX_SERVER_URL and PLEX_TOKEN are required")
+```
+
+For local development, use a `.env` file loaded by your application, and add `.env` to `.gitignore`.
+
+## Token rotation
+
+If a token is exposed:
+
+1. Revoke it by signing the affected device or account out of Plex.
+2. Generate or copy a new token using one of the methods above.
+3. Update the token in your secrets manager or environment.
+4. Restart your integration.
+
+For automation that runs on a server, consider using a dedicated managed user or app-specific token where possible so rotation does not affect your personal devices.
+
+## Security best practices
+
+Treat your Plex token like a password. Anyone with the token can act as you on that server.
+
+- **Never commit tokens to source control.** Load them from environment variables or a secrets manager.
+- **Never expose tokens in public documentation, screenshots, or examples.** Use placeholder values such as `<your-token>`.
+- **Prefer HTTPS when accessing a server remotely.** HTTP is acceptable on trusted local networks, but it sends the token in plain text.
+- **Rotate tokens if you suspect leakage.** You can sign out other devices from your Plex account settings, which invalidates existing tokens.
+- **Scope tokens by user.** When building tools for others, authenticate as that user rather than reusing an owner token.
+- **Do not log tokens or full request URLs.** Redact `X-Plex-Token` and any `X-Plex-Token` query parameter from logs.
+
+## Troubleshooting
+
+| Symptom | Likely cause | What to try |
+|---------|--------------|-------------|
+| `401 Unauthorized` | Token is missing, expired, or invalid. | Verify the token value and that the account can access the server. |
+| `403 Forbidden` | Account lacks permission. | Check that the user owns or has been shared the library you are querying. |
+| Empty library list | Token belongs to the wrong account. | Confirm which account the token was copied from. |
+| SSL errors | Self-signed or mismatched certificate. | Use the correct HTTPS hostname, or use HTTP only on trusted local networks. |
+
+## Next steps
+
+- Follow the [Quick Start](/quick-start) to make your first authenticated API call.
+- Review the [API Reference](/api-reference) for endpoints that accept the token.
+- Read the [SDKs](/SDKs) page for language-specific client libraries.

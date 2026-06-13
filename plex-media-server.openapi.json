@@ -1,0 +1,4112 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Plex Media Server API",
+    "description": "Machine-readable contract for the most-used endpoints of the Plex Media Server HTTP API. This spec is the single source of truth for reference documentation and future SDK generation at PlexAPI.dev.",
+    "version": "0.2.0",
+    "contact": {
+      "name": "PlexAPI.dev",
+      "url": "https://plexapi.dev"
+    },
+    "license": {
+      "name": "MIT",
+      "identifier": "MIT"
+    }
+  },
+  "servers": [
+    {
+      "url": "{protocol}://{host}:{port}",
+      "description": "Local Plex Media Server",
+      "variables": {
+        "protocol": {
+          "default": "http",
+          "enum": [
+            "http",
+            "https"
+          ]
+        },
+        "host": {
+          "default": "localhost"
+        },
+        "port": {
+          "default": "32400"
+        }
+      }
+    }
+  ],
+  "security": [
+    {
+      "plexToken": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "Server",
+      "description": "Server discovery, identity, and top-level status."
+    },
+    {
+      "name": "Library",
+      "description": "Library sections and the items they contain."
+    },
+    {
+      "name": "Sessions",
+      "description": "Active playback sessions and transcoding status."
+    },
+    {
+      "name": "Metadata",
+      "description": "Item-level metadata and relationships."
+    },
+    {
+      "name": "Playlists",
+      "description": "Playlists and playlist items."
+    },
+    {
+      "name": "Hub",
+      "description": "Global and per-library search hubs."
+    },
+    {
+      "name": "Media",
+      "description": "Media endpoints."
+    },
+    {
+      "name": "Sync",
+      "description": "Sync endpoints."
+    }
+  ],
+  "paths": {
+    "/identity": {
+      "get": {
+        "operationId": "getIdentity",
+        "summary": "Get server identity",
+        "description": "Returns the server's identity, including its unique Machine Identifier. This endpoint does not require authentication and is commonly used for server discovery.",
+        "tags": [
+          "Server"
+        ],
+        "x-plex-resource": "Server",
+        "security": [],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AcceptHeader"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Server identity.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaContainerIdentity"
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "php",
+            "label": "PlexPHP",
+            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse LukeHagar\\Plex_API;\n\n$sdk = Plex_API\\PlexAPI::builder()->build();\n\n\n\n$response = $sdk->server->getServerIdentity(\n\n);\n\nif ($response->object !== null) {\n    // handle response\n}"
+          },
+          {
+            "lang": "ruby",
+            "label": "PlexRuby",
+            "source": "require 'plex_ruby_sdk'\n\ns = ::PlexRubySDK::PlexAPI.new\n\nres = s.server.get_server_identity()\n\nif ! res.object.nil?\n  # handle response\nend"
+          },
+          {
+            "lang": "go",
+            "label": "PlexGO",
+            "source": "package main\n\nimport(\n\t\"context\"\n\t\"github.com/LukeHagar/plexgo\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n\n    s := plexgo.New()\n\n    res, err := s.General.GetIdentity(ctx)\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res.Object != nil {\n        // handle response\n    }\n}"
+          },
+          {
+            "lang": "java",
+            "label": "PlexJava",
+            "source": "package hello.world;\n\nimport dev.plexapi.sdk.PlexAPI;\nimport dev.plexapi.sdk.models.operations.GetIdentityResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        PlexAPI sdk = PlexAPI.builder()\n            .build();\n\n        GetIdentityResponse res = sdk.general().getIdentity()\n                .call();\n\n        if (res.object().isPresent()) {\n            // handle response\n        }\n    }\n}"
+          },
+          {
+            "lang": "typescript",
+            "label": "PlexJS",
+            "source": "import { PlexAPI } from \"@lukehagar/plexjs\";\n\nconst plexAPI = new PlexAPI();\n\nasync function run() {\n  const result = await plexAPI.general.getIdentity();\n\n  console.log(result);\n}\n\nrun();"
+          }
+        ]
+      }
+    },
+    "/": {
+      "get": {
+        "operationId": "getServerInfo",
+        "summary": "Get server information",
+        "description": "Returns the server root MediaContainer, including friendly name, platform, version, and available features.",
+        "tags": [
+          "Server"
+        ],
+        "x-plex-resource": "Server",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AcceptHeader"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Server information.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaContainerServer"
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "php",
+            "label": "PlexPHP",
+            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse LukeHagar\\Plex_API;\n\n$sdk = Plex_API\\PlexAPI::builder()\n    ->setSecurity(\n        '<YOUR_API_KEY_HERE>'\n    )\n    ->build();\n\n\n\n$response = $sdk->server->getServerCapabilities(\n\n);\n\nif ($response->object !== null) {\n    // handle response\n}"
+          },
+          {
+            "lang": "ruby",
+            "label": "PlexRuby",
+            "source": "require 'plex_ruby_sdk'\n\ns = ::PlexRubySDK::PlexAPI.new(\n      security: Models::Shared::Security.new(\n        access_token: \"<YOUR_API_KEY_HERE>\",\n      ),\n    )\n\nres = s.server.get_server_capabilities()\n\nif ! res.object.nil?\n  # handle response\nend"
+          },
+          {
+            "lang": "go",
+            "label": "PlexGO",
+            "source": "package main\n\nimport(\n\t\"context\"\n\t\"github.com/LukeHagar/plexgo/models/components\"\n\t\"github.com/LukeHagar/plexgo\"\n\t\"github.com/LukeHagar/plexgo/models/operations\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n\n    s := plexgo.New(\n        plexgo.WithAccepts(components.AcceptsApplicationXML),\n        plexgo.WithClientIdentifier(\"abc123\"),\n        plexgo.WithProduct(\"Plex for Roku\"),\n        plexgo.WithVersion(\"2.4.1\"),\n        plexgo.WithPlatform(\"Roku\"),\n        plexgo.WithPlatformVersion(\"4.3 build 1057\"),\n        plexgo.WithDevice(\"Roku 3\"),\n        plexgo.WithModel(\"4200X\"),\n        plexgo.WithDeviceVendor(\"Roku\"),\n        plexgo.WithDeviceName(\"Living Room TV\"),\n        plexgo.WithMarketplace(\"googlePlay\"),\n        plexgo.WithSecurity(\"<YOUR_API_KEY_HERE>\"),\n    )\n\n    res, err := s.General.GetServerInfo(ctx, operations.GetServerInfoRequest{})\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res.MediaContainerWithDirectory != nil {\n        // handle response\n    }\n}"
+          },
+          {
+            "lang": "java",
+            "label": "PlexJava",
+            "source": "package hello.world;\n\nimport dev.plexapi.sdk.PlexAPI;\nimport dev.plexapi.sdk.models.operations.GetServerInfoRequest;\nimport dev.plexapi.sdk.models.operations.GetServerInfoResponse;\nimport dev.plexapi.sdk.models.shared.Accepts;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        PlexAPI sdk = PlexAPI.builder()\n                .accepts(Accepts.APPLICATION_XML)\n                .clientIdentifier(\"abc123\")\n                .product(\"Plex for Roku\")\n                .version(\"2.4.1\")\n                .platform(\"Roku\")\n                .platformVersion(\"4.3 build 1057\")\n                .device(\"Roku 3\")\n                .model(\"4200X\")\n                .deviceVendor(\"Roku\")\n                .deviceName(\"Living Room TV\")\n                .marketplace(\"googlePlay\")\n                .token(System.getenv().getOrDefault(\"TOKEN\", \"\"))\n            .build();\n\n        GetServerInfoRequest req = GetServerInfoRequest.builder()\n                .build();\n\n        GetServerInfoResponse res = sdk.general().getServerInfo()\n                .request(req)\n                .call();\n\n        if (res.mediaContainerWithDirectory().isPresent()) {\n            // handle response\n        }\n    }\n}"
+          },
+          {
+            "lang": "typescript",
+            "label": "PlexJS",
+            "source": "import { PlexAPI } from \"@lukehagar/plexjs\";\nimport { Accepts } from \"@lukehagar/plexjs/models/shared\";\n\nconst plexAPI = new PlexAPI({\n  accepts: Accepts.ApplicationXml,\n  clientIdentifier: \"abc123\",\n  product: \"Plex for Roku\",\n  version: \"2.4.1\",\n  platform: \"Roku\",\n  platformVersion: \"4.3 build 1057\",\n  device: \"Roku 3\",\n  model: \"4200X\",\n  deviceVendor: \"Roku\",\n  deviceName: \"Living Room TV\",\n  marketplace: \"googlePlay\",\n  token: \"<YOUR_API_KEY_HERE>\",\n});\n\nasync function run() {\n  const result = await plexAPI.general.getServerInfo({});\n\n  console.log(result);\n}\n\nrun();"
+          }
+        ]
+      }
+    },
+    "/library/sections": {
+      "get": {
+        "operationId": "getLibrarySections",
+        "summary": "List library sections",
+        "description": "Returns all configured library sections (movies, TV shows, music, photos, etc.).",
+        "tags": [
+          "Library"
+        ],
+        "x-plex-resource": "Library",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AcceptHeader"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Library sections.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaContainerLibrarySections"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/library/sections/{sectionKey}/all": {
+      "get": {
+        "operationId": "getLibraryItems",
+        "summary": "List items in a library section",
+        "description": "Returns all items within a specific library section. Use query parameters such as `type` and `includeCollections` to narrow results.",
+        "tags": [
+          "Library"
+        ],
+        "x-plex-resource": "Library",
+        "parameters": [
+          {
+            "name": "sectionKey",
+            "in": "path",
+            "required": true,
+            "description": "The key of the library section, as returned by `/library/sections`.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/AcceptHeader"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "Filter by media type integer (e.g., 1 for movies, 2 for shows, 8 for artists).",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "includeCollections",
+            "in": "query",
+            "description": "Include collection items in the response.",
+            "schema": {
+              "type": "integer",
+              "enum": [
+                0,
+                1
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Library items.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaContainerLibraryItems"
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "go",
+            "label": "PlexGO",
+            "source": "package main\n\nimport(\n\t\"context\"\n\t\"github.com/LukeHagar/plexgo/models/components\"\n\t\"github.com/LukeHagar/plexgo\"\n\t\"github.com/LukeHagar/plexgo/models/operations\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n\n    s := plexgo.New(\n        plexgo.WithAccepts(components.AcceptsApplicationXML),\n        plexgo.WithClientIdentifier(\"abc123\"),\n        plexgo.WithProduct(\"Plex for Roku\"),\n        plexgo.WithVersion(\"2.4.1\"),\n        plexgo.WithPlatform(\"Roku\"),\n        plexgo.WithPlatformVersion(\"4.3 build 1057\"),\n        plexgo.WithDevice(\"Roku 3\"),\n        plexgo.WithModel(\"4200X\"),\n        plexgo.WithDeviceVendor(\"Roku\"),\n        plexgo.WithDeviceName(\"Living Room TV\"),\n        plexgo.WithMarketplace(\"googlePlay\"),\n        plexgo.WithSecurity(\"<YOUR_API_KEY_HERE>\"),\n    )\n\n    res, err := s.Content.ListContent(ctx, operations.ListContentRequest{\n        MediaQuery: &components.MediaQuery{\n            Type: components.MediaTypeEpisode.ToPointer(),\n            SourceType: plexgo.Pointer[int64](2),\n            Sort: plexgo.Pointer(\"duration:desc,index\"),\n        },\n        IncludeMeta: components.BoolIntTrue.ToPointer(),\n        IncludeGuids: components.BoolIntTrue.ToPointer(),\n        SectionID: \"<id>\",\n    })\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res.MediaContainerWithMetadata != nil {\n        // handle response\n    }\n}"
+          },
+          {
+            "lang": "java",
+            "label": "PlexJava",
+            "source": "package hello.world;\n\nimport dev.plexapi.sdk.PlexAPI;\nimport dev.plexapi.sdk.models.operations.ListContentRequest;\nimport dev.plexapi.sdk.models.operations.ListContentResponse;\nimport dev.plexapi.sdk.models.shared.*;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        PlexAPI sdk = PlexAPI.builder()\n                .accepts(Accepts.APPLICATION_XML)\n                .clientIdentifier(\"abc123\")\n                .product(\"Plex for Roku\")\n                .version(\"2.4.1\")\n                .platform(\"Roku\")\n                .platformVersion(\"4.3 build 1057\")\n                .device(\"Roku 3\")\n                .model(\"4200X\")\n                .deviceVendor(\"Roku\")\n                .deviceName(\"Living Room TV\")\n                .marketplace(\"googlePlay\")\n                .token(System.getenv().getOrDefault(\"TOKEN\", \"\"))\n            .build();\n\n        ListContentRequest req = ListContentRequest.builder()\n                .sectionId(\"<id>\")\n                .mediaQuery(MediaQuery.builder()\n                    .type(MediaType.Episode)\n                    .sourceType(2L)\n                    .sort(\"duration:desc,index\")\n                    .build())\n                .includeMeta(BoolInt.True)\n                .includeGuids(BoolInt.True)\n                .build();\n\n        ListContentResponse res = sdk.content().listContent()\n                .request(req)\n                .call();\n\n        if (res.mediaContainerWithMetadata().isPresent()) {\n            // handle response\n        }\n    }\n}"
+          },
+          {
+            "lang": "typescript",
+            "label": "PlexJS",
+            "source": "import { PlexAPI } from \"@lukehagar/plexjs\";\nimport { Accepts, BoolInt, MediaType } from \"@lukehagar/plexjs/models/shared\";\n\nconst plexAPI = new PlexAPI({\n  accepts: Accepts.ApplicationXml,\n  clientIdentifier: \"abc123\",\n  product: \"Plex for Roku\",\n  version: \"2.4.1\",\n  platform: \"Roku\",\n  platformVersion: \"4.3 build 1057\",\n  device: \"Roku 3\",\n  model: \"4200X\",\n  deviceVendor: \"Roku\",\n  deviceName: \"Living Room TV\",\n  marketplace: \"googlePlay\",\n  token: \"<YOUR_API_KEY_HERE>\",\n});\n\nasync function run() {\n  const result = await plexAPI.content.listContent({\n    mediaQuery: {\n      type: MediaType.Episode,\n      sourceType: 2,\n      sort: \"duration:desc,index\",\n    },\n    includeMeta: BoolInt.True,\n    includeGuids: BoolInt.True,\n    sectionId: \"<id>\",\n  });\n\n  console.log(result);\n}\n\nrun();"
+          }
+        ]
+      }
+    },
+    "/library/sections/{sectionKey}/refresh": {
+      "post": {
+        "operationId": "refreshLibrarySection",
+        "summary": "Refresh a library section",
+        "description": "Triggers a metadata refresh for the specified library section.",
+        "tags": [
+          "Library"
+        ],
+        "x-plex-resource": "Library",
+        "parameters": [
+          {
+            "name": "sectionKey",
+            "in": "path",
+            "required": true,
+            "description": "The key of the library section.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "force",
+            "in": "query",
+            "description": "Force a full metadata refresh.",
+            "schema": {
+              "type": "integer",
+              "enum": [
+                0,
+                1
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Refresh accepted."
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "go",
+            "label": "PlexGO",
+            "source": "package main\n\nimport(\n\t\"context\"\n\t\"github.com/LukeHagar/plexgo/models/components\"\n\t\"github.com/LukeHagar/plexgo\"\n\t\"github.com/LukeHagar/plexgo/models/operations\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n\n    s := plexgo.New(\n        plexgo.WithAccepts(components.AcceptsApplicationXML),\n        plexgo.WithClientIdentifier(\"abc123\"),\n        plexgo.WithProduct(\"Plex for Roku\"),\n        plexgo.WithVersion(\"2.4.1\"),\n        plexgo.WithPlatform(\"Roku\"),\n        plexgo.WithPlatformVersion(\"4.3 build 1057\"),\n        plexgo.WithDevice(\"Roku 3\"),\n        plexgo.WithModel(\"4200X\"),\n        plexgo.WithDeviceVendor(\"Roku\"),\n        plexgo.WithDeviceName(\"Living Room TV\"),\n        plexgo.WithMarketplace(\"googlePlay\"),\n        plexgo.WithSecurity(\"<YOUR_API_KEY_HERE>\"),\n    )\n\n    res, err := s.Library.RefreshSection(ctx, operations.RefreshSectionRequest{\n        SectionID: 450300,\n        Force: components.BoolIntTrue.ToPointer(),\n    })\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res != nil {\n        // handle response\n    }\n}"
+          },
+          {
+            "lang": "java",
+            "label": "PlexJava",
+            "source": "package hello.world;\n\nimport dev.plexapi.sdk.PlexAPI;\nimport dev.plexapi.sdk.models.operations.RefreshSectionRequest;\nimport dev.plexapi.sdk.models.operations.RefreshSectionResponse;\nimport dev.plexapi.sdk.models.shared.Accepts;\nimport dev.plexapi.sdk.models.shared.BoolInt;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        PlexAPI sdk = PlexAPI.builder()\n                .accepts(Accepts.APPLICATION_XML)\n                .clientIdentifier(\"abc123\")\n                .product(\"Plex for Roku\")\n                .version(\"2.4.1\")\n                .platform(\"Roku\")\n                .platformVersion(\"4.3 build 1057\")\n                .device(\"Roku 3\")\n                .model(\"4200X\")\n                .deviceVendor(\"Roku\")\n                .deviceName(\"Living Room TV\")\n                .marketplace(\"googlePlay\")\n                .token(System.getenv().getOrDefault(\"TOKEN\", \"\"))\n            .build();\n\n        RefreshSectionRequest req = RefreshSectionRequest.builder()\n                .sectionId(450300L)\n                .force(BoolInt.True)\n                .build();\n\n        RefreshSectionResponse res = sdk.library().refreshSection()\n                .request(req)\n                .call();\n\n        // handle response\n    }\n}"
+          },
+          {
+            "lang": "typescript",
+            "label": "PlexJS",
+            "source": "import { PlexAPI } from \"@lukehagar/plexjs\";\nimport { Accepts, BoolInt } from \"@lukehagar/plexjs/models/shared\";\n\nconst plexAPI = new PlexAPI({\n  accepts: Accepts.ApplicationXml,\n  clientIdentifier: \"abc123\",\n  product: \"Plex for Roku\",\n  version: \"2.4.1\",\n  platform: \"Roku\",\n  platformVersion: \"4.3 build 1057\",\n  device: \"Roku 3\",\n  model: \"4200X\",\n  deviceVendor: \"Roku\",\n  deviceName: \"Living Room TV\",\n  marketplace: \"googlePlay\",\n  token: \"<YOUR_API_KEY_HERE>\",\n});\n\nasync function run() {\n  await plexAPI.library.refreshSection({\n    sectionId: 450300,\n    force: BoolInt.True,\n  });\n\n\n}\n\nrun();"
+          }
+        ]
+      }
+    },
+    "/library/sections/{sectionKey}/search": {
+      "get": {
+        "operationId": "searchLibrarySection",
+        "summary": "Search within a library section",
+        "description": "Returns search results scoped to a single library section.",
+        "tags": [
+          "Hub"
+        ],
+        "x-plex-resource": "Hub",
+        "parameters": [
+          {
+            "name": "sectionKey",
+            "in": "path",
+            "required": true,
+            "description": "The key of the library section.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "required": true,
+            "description": "Search query string.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/AcceptHeader"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Section search results.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaContainerHub"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/library/metadata/{ratingKey}": {
+      "get": {
+        "operationId": "getMetadata",
+        "summary": "Get metadata for an item",
+        "description": "Returns full metadata for a single item by its rating key.",
+        "tags": [
+          "Metadata"
+        ],
+        "x-plex-resource": "Metadata",
+        "parameters": [
+          {
+            "name": "ratingKey",
+            "in": "path",
+            "required": true,
+            "description": "The rating key of the item.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/AcceptHeader"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Item metadata.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaContainerMetadata"
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "go",
+            "label": "PlexGO",
+            "source": "package main\n\nimport(\n\t\"context\"\n\t\"github.com/LukeHagar/plexgo/models/components\"\n\t\"github.com/LukeHagar/plexgo\"\n\t\"github.com/LukeHagar/plexgo/models/operations\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n\n    s := plexgo.New(\n        plexgo.WithAccepts(components.AcceptsApplicationXML),\n        plexgo.WithClientIdentifier(\"abc123\"),\n        plexgo.WithProduct(\"Plex for Roku\"),\n        plexgo.WithVersion(\"2.4.1\"),\n        plexgo.WithPlatform(\"Roku\"),\n        plexgo.WithPlatformVersion(\"4.3 build 1057\"),\n        plexgo.WithDevice(\"Roku 3\"),\n        plexgo.WithModel(\"4200X\"),\n        plexgo.WithDeviceVendor(\"Roku\"),\n        plexgo.WithDeviceName(\"Living Room TV\"),\n        plexgo.WithMarketplace(\"googlePlay\"),\n        plexgo.WithSecurity(\"<YOUR_API_KEY_HERE>\"),\n    )\n\n    res, err := s.Content.GetMetadataItem(ctx, operations.GetMetadataItemRequest{\n        Ids: []string{},\n        AsyncCheckFiles: components.BoolIntTrue.ToPointer(),\n        AsyncRefreshLocalMediaAgent: components.BoolIntTrue.ToPointer(),\n        AsyncRefreshAnalysis: components.BoolIntTrue.ToPointer(),\n        CheckFiles: components.BoolIntTrue.ToPointer(),\n        SkipRefresh: components.BoolIntTrue.ToPointer(),\n        CheckFileAvailability: components.BoolIntTrue.ToPointer(),\n        AsyncAugmentMetadata: components.BoolIntTrue.ToPointer(),\n        AugmentCount: components.BoolIntTrue.ToPointer(),\n    })\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res.MediaContainerWithMetadata != nil {\n        // handle response\n    }\n}"
+          },
+          {
+            "lang": "java",
+            "label": "PlexJava",
+            "source": "package hello.world;\n\nimport dev.plexapi.sdk.PlexAPI;\nimport dev.plexapi.sdk.models.operations.GetMetadataItemRequest;\nimport dev.plexapi.sdk.models.operations.GetMetadataItemResponse;\nimport dev.plexapi.sdk.models.shared.Accepts;\nimport dev.plexapi.sdk.models.shared.BoolInt;\nimport java.lang.Exception;\nimport java.util.List;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        PlexAPI sdk = PlexAPI.builder()\n                .accepts(Accepts.APPLICATION_XML)\n                .clientIdentifier(\"abc123\")\n                .product(\"Plex for Roku\")\n                .version(\"2.4.1\")\n                .platform(\"Roku\")\n                .platformVersion(\"4.3 build 1057\")\n                .device(\"Roku 3\")\n                .model(\"4200X\")\n                .deviceVendor(\"Roku\")\n                .deviceName(\"Living Room TV\")\n                .marketplace(\"googlePlay\")\n                .token(System.getenv().getOrDefault(\"TOKEN\", \"\"))\n            .build();\n\n        GetMetadataItemRequest req = GetMetadataItemRequest.builder()\n                .ids(List.of())\n                .asyncCheckFiles(BoolInt.True)\n                .asyncRefreshLocalMediaAgent(BoolInt.True)\n                .asyncRefreshAnalysis(BoolInt.True)\n                .checkFiles(BoolInt.True)\n                .skipRefresh(BoolInt.True)\n                .checkFileAvailability(BoolInt.True)\n                .asyncAugmentMetadata(BoolInt.True)\n                .augmentCount(BoolInt.True)\n                .build();\n\n        GetMetadataItemResponse res = sdk.content().getMetadataItem()\n                .request(req)\n                .call();\n\n        if (res.mediaContainerWithMetadata().isPresent()) {\n            // handle response\n        }\n    }\n}"
+          },
+          {
+            "lang": "typescript",
+            "label": "PlexJS",
+            "source": "import { PlexAPI } from \"@lukehagar/plexjs\";\nimport { Accepts, BoolInt } from \"@lukehagar/plexjs/models/shared\";\n\nconst plexAPI = new PlexAPI({\n  accepts: Accepts.ApplicationXml,\n  clientIdentifier: \"abc123\",\n  product: \"Plex for Roku\",\n  version: \"2.4.1\",\n  platform: \"Roku\",\n  platformVersion: \"4.3 build 1057\",\n  device: \"Roku 3\",\n  model: \"4200X\",\n  deviceVendor: \"Roku\",\n  deviceName: \"Living Room TV\",\n  marketplace: \"googlePlay\",\n  token: \"<YOUR_API_KEY_HERE>\",\n});\n\nasync function run() {\n  const result = await plexAPI.content.getMetadataItem({\n    ids: [],\n    asyncCheckFiles: BoolInt.True,\n    asyncRefreshLocalMediaAgent: BoolInt.True,\n    asyncRefreshAnalysis: BoolInt.True,\n    checkFiles: BoolInt.True,\n    skipRefresh: BoolInt.True,\n    checkFileAvailability: BoolInt.True,\n    asyncAugmentMetadata: BoolInt.True,\n    augmentCount: BoolInt.True,\n  });\n\n  console.log(result);\n}\n\nrun();"
+          }
+        ]
+      },
+      "put": {
+        "operationId": "updateMetadata",
+        "summary": "Update metadata",
+        "description": "Updates metadata fields for an item.",
+        "tags": [
+          "Metadata"
+        ],
+        "x-plex-resource": "Metadata",
+        "parameters": [
+          {
+            "name": "ratingKey",
+            "in": "path",
+            "required": true,
+            "description": "The rating key of the item.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/AcceptHeader"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaContainerMetadata"
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "go",
+            "label": "PlexGO",
+            "source": "package main\n\nimport(\n\t\"context\"\n\t\"github.com/LukeHagar/plexgo/models/components\"\n\t\"github.com/LukeHagar/plexgo\"\n\t\"github.com/LukeHagar/plexgo/models/operations\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n\n    s := plexgo.New(\n        plexgo.WithAccepts(components.AcceptsApplicationXML),\n        plexgo.WithClientIdentifier(\"abc123\"),\n        plexgo.WithProduct(\"Plex for Roku\"),\n        plexgo.WithVersion(\"2.4.1\"),\n        plexgo.WithPlatform(\"Roku\"),\n        plexgo.WithPlatformVersion(\"4.3 build 1057\"),\n        plexgo.WithDevice(\"Roku 3\"),\n        plexgo.WithModel(\"4200X\"),\n        plexgo.WithDeviceVendor(\"Roku\"),\n        plexgo.WithDeviceName(\"Living Room TV\"),\n        plexgo.WithMarketplace(\"googlePlay\"),\n        plexgo.WithSecurity(\"<YOUR_API_KEY_HERE>\"),\n    )\n\n    res, err := s.Library.EditMetadataItem(ctx, operations.EditMetadataItemRequest{\n        Ids: []string{\n            \"<value 1>\",\n            \"<value 2>\",\n        },\n    })\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res != nil {\n        // handle response\n    }\n}"
+          },
+          {
+            "lang": "java",
+            "label": "PlexJava",
+            "source": "package hello.world;\n\nimport dev.plexapi.sdk.PlexAPI;\nimport dev.plexapi.sdk.models.operations.EditMetadataItemRequest;\nimport dev.plexapi.sdk.models.operations.EditMetadataItemResponse;\nimport dev.plexapi.sdk.models.shared.Accepts;\nimport java.lang.Exception;\nimport java.util.List;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        PlexAPI sdk = PlexAPI.builder()\n                .accepts(Accepts.APPLICATION_XML)\n                .clientIdentifier(\"abc123\")\n                .product(\"Plex for Roku\")\n                .version(\"2.4.1\")\n                .platform(\"Roku\")\n                .platformVersion(\"4.3 build 1057\")\n                .device(\"Roku 3\")\n                .model(\"4200X\")\n                .deviceVendor(\"Roku\")\n                .deviceName(\"Living Room TV\")\n                .marketplace(\"googlePlay\")\n                .token(System.getenv().getOrDefault(\"TOKEN\", \"\"))\n            .build();\n\n        EditMetadataItemRequest req = EditMetadataItemRequest.builder()\n                .ids(List.of(\n                    \"<value 1>\",\n                    \"<value 2>\"))\n                .build();\n\n        EditMetadataItemResponse res = sdk.library().editMetadataItem()\n                .request(req)\n                .call();\n\n        // handle response\n    }\n}"
+          },
+          {
+            "lang": "typescript",
+            "label": "PlexJS",
+            "source": "import { PlexAPI } from \"@lukehagar/plexjs\";\nimport { Accepts } from \"@lukehagar/plexjs/models/shared\";\n\nconst plexAPI = new PlexAPI({\n  accepts: Accepts.ApplicationXml,\n  clientIdentifier: \"abc123\",\n  product: \"Plex for Roku\",\n  version: \"2.4.1\",\n  platform: \"Roku\",\n  platformVersion: \"4.3 build 1057\",\n  device: \"Roku 3\",\n  model: \"4200X\",\n  deviceVendor: \"Roku\",\n  deviceName: \"Living Room TV\",\n  marketplace: \"googlePlay\",\n  token: \"<YOUR_API_KEY_HERE>\",\n});\n\nasync function run() {\n  await plexAPI.library.editMetadataItem({\n    ids: [\n      \"<value 1>\",\n      \"<value 2>\",\n    ],\n  });\n\n\n}\n\nrun();"
+          }
+        ]
+      },
+      "delete": {
+        "operationId": "deleteMetadata",
+        "summary": "Delete metadata item",
+        "description": "Removes a metadata item from the library.",
+        "tags": [
+          "Metadata"
+        ],
+        "x-plex-resource": "Metadata",
+        "parameters": [
+          {
+            "name": "ratingKey",
+            "in": "path",
+            "required": true,
+            "description": "The rating key of the item.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/AcceptHeader"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Metadata item deleted."
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "go",
+            "label": "PlexGO",
+            "source": "package main\n\nimport(\n\t\"context\"\n\t\"github.com/LukeHagar/plexgo/models/components\"\n\t\"github.com/LukeHagar/plexgo\"\n\t\"github.com/LukeHagar/plexgo/models/operations\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n\n    s := plexgo.New(\n        plexgo.WithAccepts(components.AcceptsApplicationXML),\n        plexgo.WithClientIdentifier(\"abc123\"),\n        plexgo.WithProduct(\"Plex for Roku\"),\n        plexgo.WithVersion(\"2.4.1\"),\n        plexgo.WithPlatform(\"Roku\"),\n        plexgo.WithPlatformVersion(\"4.3 build 1057\"),\n        plexgo.WithDevice(\"Roku 3\"),\n        plexgo.WithModel(\"4200X\"),\n        plexgo.WithDeviceVendor(\"Roku\"),\n        plexgo.WithDeviceName(\"Living Room TV\"),\n        plexgo.WithMarketplace(\"googlePlay\"),\n        plexgo.WithSecurity(\"<YOUR_API_KEY_HERE>\"),\n    )\n\n    res, err := s.Library.DeleteMetadataItem(ctx, operations.DeleteMetadataItemRequest{\n        Ids: \"<value>\",\n        Proxy: components.BoolIntTrue.ToPointer(),\n    })\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res != nil {\n        // handle response\n    }\n}"
+          },
+          {
+            "lang": "java",
+            "label": "PlexJava",
+            "source": "package hello.world;\n\nimport dev.plexapi.sdk.PlexAPI;\nimport dev.plexapi.sdk.models.operations.DeleteMetadataItemRequest;\nimport dev.plexapi.sdk.models.operations.DeleteMetadataItemResponse;\nimport dev.plexapi.sdk.models.shared.Accepts;\nimport dev.plexapi.sdk.models.shared.BoolInt;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        PlexAPI sdk = PlexAPI.builder()\n                .accepts(Accepts.APPLICATION_XML)\n                .clientIdentifier(\"abc123\")\n                .product(\"Plex for Roku\")\n                .version(\"2.4.1\")\n                .platform(\"Roku\")\n                .platformVersion(\"4.3 build 1057\")\n                .device(\"Roku 3\")\n                .model(\"4200X\")\n                .deviceVendor(\"Roku\")\n                .deviceName(\"Living Room TV\")\n                .marketplace(\"googlePlay\")\n                .token(System.getenv().getOrDefault(\"TOKEN\", \"\"))\n            .build();\n\n        DeleteMetadataItemRequest req = DeleteMetadataItemRequest.builder()\n                .ids(\"<value>\")\n                .proxy(BoolInt.True)\n                .build();\n\n        DeleteMetadataItemResponse res = sdk.library().deleteMetadataItem()\n                .request(req)\n                .call();\n\n        // handle response\n    }\n}"
+          },
+          {
+            "lang": "typescript",
+            "label": "PlexJS",
+            "source": "import { PlexAPI } from \"@lukehagar/plexjs\";\nimport { Accepts, BoolInt } from \"@lukehagar/plexjs/models/shared\";\n\nconst plexAPI = new PlexAPI({\n  accepts: Accepts.ApplicationXml,\n  clientIdentifier: \"abc123\",\n  product: \"Plex for Roku\",\n  version: \"2.4.1\",\n  platform: \"Roku\",\n  platformVersion: \"4.3 build 1057\",\n  device: \"Roku 3\",\n  model: \"4200X\",\n  deviceVendor: \"Roku\",\n  deviceName: \"Living Room TV\",\n  marketplace: \"googlePlay\",\n  token: \"<YOUR_API_KEY_HERE>\",\n});\n\nasync function run() {\n  await plexAPI.library.deleteMetadataItem({\n    ids: \"<value>\",\n    proxy: BoolInt.True,\n  });\n\n\n}\n\nrun();"
+          }
+        ]
+      }
+    },
+    "/library/metadata/{ratingKey}/children": {
+      "get": {
+        "operationId": "getMetadataChildren",
+        "summary": "Get children of an item",
+        "description": "Returns child items for a metadata object, such as seasons of a show or episodes of a season.",
+        "tags": [
+          "Metadata"
+        ],
+        "x-plex-resource": "Metadata",
+        "parameters": [
+          {
+            "name": "ratingKey",
+            "in": "path",
+            "required": true,
+            "description": "The rating key of the parent item.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/AcceptHeader"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Child items.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaContainerMetadataChildren"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/status/sessions": {
+      "get": {
+        "operationId": "getSessions",
+        "summary": "List active sessions",
+        "description": "Returns currently active playback sessions, including player state, user, and media being played.",
+        "tags": [
+          "Sessions"
+        ],
+        "x-plex-resource": "Sessions",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AcceptHeader"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Active sessions.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaContainerSessions"
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "php",
+            "label": "PlexPHP",
+            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse LukeHagar\\Plex_API;\n\n$sdk = Plex_API\\PlexAPI::builder()\n    ->setSecurity(\n        '<YOUR_API_KEY_HERE>'\n    )\n    ->build();\n\n\n\n$response = $sdk->sessions->getSessions(\n\n);\n\nif ($response->object !== null) {\n    // handle response\n}"
+          },
+          {
+            "lang": "ruby",
+            "label": "PlexRuby",
+            "source": "require 'plex_ruby_sdk'\n\ns = ::PlexRubySDK::PlexAPI.new(\n      security: Models::Shared::Security.new(\n        access_token: \"<YOUR_API_KEY_HERE>\",\n      ),\n    )\n\nres = s.sessions.get_sessions()\n\nif ! res.object.nil?\n  # handle response\nend"
+          },
+          {
+            "lang": "go",
+            "label": "PlexGO",
+            "source": "package main\n\nimport(\n\t\"context\"\n\t\"github.com/LukeHagar/plexgo\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n\n    s := plexgo.New(\n        plexgo.WithSecurity(\"<YOUR_API_KEY_HERE>\"),\n    )\n\n    res, err := s.Status.ListSessions(ctx)\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res.Object != nil {\n        // handle response\n    }\n}"
+          },
+          {
+            "lang": "java",
+            "label": "PlexJava",
+            "source": "package hello.world;\n\nimport dev.plexapi.sdk.PlexAPI;\nimport dev.plexapi.sdk.models.operations.ListSessionsResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        PlexAPI sdk = PlexAPI.builder()\n                .token(System.getenv().getOrDefault(\"TOKEN\", \"\"))\n            .build();\n\n        ListSessionsResponse res = sdk.status().listSessions()\n                .call();\n\n        if (res.object().isPresent()) {\n            // handle response\n        }\n    }\n}"
+          },
+          {
+            "lang": "typescript",
+            "label": "PlexJS",
+            "source": "import { PlexAPI } from \"@lukehagar/plexjs\";\n\nconst plexAPI = new PlexAPI({\n  token: \"<YOUR_API_KEY_HERE>\",\n});\n\nasync function run() {\n  const result = await plexAPI.status.listSessions();\n\n  console.log(result);\n}\n\nrun();"
+          }
+        ]
+      }
+    },
+    "/playlists": {
+      "get": {
+        "operationId": "getPlaylists",
+        "summary": "List playlists",
+        "description": "Returns all playlists for the authenticated user.",
+        "tags": [
+          "Playlists"
+        ],
+        "x-plex-resource": "Playlists",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AcceptHeader"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Playlists.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaContainerPlaylists"
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "php",
+            "label": "PlexPHP",
+            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse LukeHagar\\Plex_API;\n\n$sdk = Plex_API\\PlexAPI::builder()\n    ->setSecurity(\n        '<YOUR_API_KEY_HERE>'\n    )\n    ->build();\n\n\n\n$response = $sdk->playlists->getPlaylists(\n\n);\n\nif ($response->object !== null) {\n    // handle response\n}"
+          },
+          {
+            "lang": "ruby",
+            "label": "PlexRuby",
+            "source": "require 'plex_ruby_sdk'\n\ns = ::PlexRubySDK::PlexAPI.new(\n      security: Models::Shared::Security.new(\n        access_token: \"<YOUR_API_KEY_HERE>\",\n      ),\n    )\n\nres = s.playlists.get_playlists(playlist_type=Models::Operations::PlaylistType::AUDIO, smart=Models::Operations::QueryParamSmart::ZERO)\n\nif ! res.object.nil?\n  # handle response\nend"
+          },
+          {
+            "lang": "go",
+            "label": "PlexGO",
+            "source": "package main\n\nimport(\n\t\"context\"\n\t\"github.com/LukeHagar/plexgo/models/components\"\n\t\"github.com/LukeHagar/plexgo\"\n\t\"github.com/LukeHagar/plexgo/models/operations\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n\n    s := plexgo.New(\n        plexgo.WithAccepts(components.AcceptsApplicationXML),\n        plexgo.WithClientIdentifier(\"abc123\"),\n        plexgo.WithProduct(\"Plex for Roku\"),\n        plexgo.WithVersion(\"2.4.1\"),\n        plexgo.WithPlatform(\"Roku\"),\n        plexgo.WithPlatformVersion(\"4.3 build 1057\"),\n        plexgo.WithDevice(\"Roku 3\"),\n        plexgo.WithModel(\"4200X\"),\n        plexgo.WithDeviceVendor(\"Roku\"),\n        plexgo.WithDeviceName(\"Living Room TV\"),\n        plexgo.WithMarketplace(\"googlePlay\"),\n        plexgo.WithSecurity(\"<YOUR_API_KEY_HERE>\"),\n    )\n\n    res, err := s.Playlist.ListPlaylists(ctx, operations.ListPlaylistsRequest{})\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res.MediaContainerWithPlaylistMetadata != nil {\n        // handle response\n    }\n}"
+          },
+          {
+            "lang": "java",
+            "label": "PlexJava",
+            "source": "package hello.world;\n\nimport dev.plexapi.sdk.PlexAPI;\nimport dev.plexapi.sdk.models.operations.ListPlaylistsRequest;\nimport dev.plexapi.sdk.models.operations.ListPlaylistsResponse;\nimport dev.plexapi.sdk.models.shared.Accepts;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        PlexAPI sdk = PlexAPI.builder()\n                .accepts(Accepts.APPLICATION_XML)\n                .clientIdentifier(\"abc123\")\n                .product(\"Plex for Roku\")\n                .version(\"2.4.1\")\n                .platform(\"Roku\")\n                .platformVersion(\"4.3 build 1057\")\n                .device(\"Roku 3\")\n                .model(\"4200X\")\n                .deviceVendor(\"Roku\")\n                .deviceName(\"Living Room TV\")\n                .marketplace(\"googlePlay\")\n                .token(System.getenv().getOrDefault(\"TOKEN\", \"\"))\n            .build();\n\n        ListPlaylistsRequest req = ListPlaylistsRequest.builder()\n                .build();\n\n        ListPlaylistsResponse res = sdk.playlist().listPlaylists()\n                .request(req)\n                .call();\n\n        if (res.mediaContainerWithPlaylistMetadata().isPresent()) {\n            // handle response\n        }\n    }\n}"
+          },
+          {
+            "lang": "typescript",
+            "label": "PlexJS",
+            "source": "import { PlexAPI } from \"@lukehagar/plexjs\";\nimport { Accepts } from \"@lukehagar/plexjs/models/shared\";\n\nconst plexAPI = new PlexAPI({\n  accepts: Accepts.ApplicationXml,\n  clientIdentifier: \"abc123\",\n  product: \"Plex for Roku\",\n  version: \"2.4.1\",\n  platform: \"Roku\",\n  platformVersion: \"4.3 build 1057\",\n  device: \"Roku 3\",\n  model: \"4200X\",\n  deviceVendor: \"Roku\",\n  deviceName: \"Living Room TV\",\n  marketplace: \"googlePlay\",\n  token: \"<YOUR_API_KEY_HERE>\",\n});\n\nasync function run() {\n  const result = await plexAPI.playlist.listPlaylists({});\n\n  console.log(result);\n}\n\nrun();"
+          }
+        ]
+      },
+      "post": {
+        "operationId": "createPlaylist",
+        "summary": "Create playlist",
+        "description": "Creates a new playlist.",
+        "tags": [
+          "Playlists"
+        ],
+        "x-plex-resource": "Playlists",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AcceptHeader"
+          },
+          {
+            "name": "title",
+            "in": "query",
+            "required": true,
+            "description": "Playlist title.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "required": true,
+            "description": "Playlist type (video, audio, photo).",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "video",
+                "audio",
+                "photo"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaContainerPlaylists"
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "php",
+            "label": "PlexPHP",
+            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse LukeHagar\\Plex_API;\nuse LukeHagar\\Plex_API\\Models\\Operations;\n\n$sdk = Plex_API\\PlexAPI::builder()\n    ->setSecurity(\n        '<YOUR_API_KEY_HERE>'\n    )\n    ->build();\n\n$request = new Operations\\CreatePlaylistRequest(\n    title: '<value>',\n    type: Operations\\CreatePlaylistQueryParamType::Audio,\n    smart: Operations\\Smart::One,\n    uri: 'https://short-term-disconnection.name/',\n);\n\n$response = $sdk->playlists->createPlaylist(\n    request: $request\n);\n\nif ($response->object !== null) {\n    // handle response\n}"
+          },
+          {
+            "lang": "ruby",
+            "label": "PlexRuby",
+            "source": "require 'plex_ruby_sdk'\n\ns = ::PlexRubySDK::PlexAPI.new(\n      security: Models::Shared::Security.new(\n        access_token: \"<YOUR_API_KEY_HERE>\",\n      ),\n    )\n\nreq = Models::Operations::CreatePlaylistRequest.new(\n  title: \"<value>\",\n  type: Models::Operations::CreatePlaylistQueryParamType::PHOTO,\n  smart: Models::Operations::Smart::ONE,\n  uri: \"https://hoarse-testing.info/\",\n)\n\nres = s.playlists.create_playlist(req)\n\nif ! res.object.nil?\n  # handle response\nend"
+          },
+          {
+            "lang": "go",
+            "label": "PlexGO",
+            "source": "package main\n\nimport(\n\t\"context\"\n\t\"github.com/LukeHagar/plexgo/models/components\"\n\t\"github.com/LukeHagar/plexgo\"\n\t\"github.com/LukeHagar/plexgo/models/operations\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n\n    s := plexgo.New(\n        plexgo.WithAccepts(components.AcceptsApplicationXML),\n        plexgo.WithClientIdentifier(\"abc123\"),\n        plexgo.WithProduct(\"Plex for Roku\"),\n        plexgo.WithVersion(\"2.4.1\"),\n        plexgo.WithPlatform(\"Roku\"),\n        plexgo.WithPlatformVersion(\"4.3 build 1057\"),\n        plexgo.WithDevice(\"Roku 3\"),\n        plexgo.WithModel(\"4200X\"),\n        plexgo.WithDeviceVendor(\"Roku\"),\n        plexgo.WithDeviceName(\"Living Room TV\"),\n        plexgo.WithMarketplace(\"googlePlay\"),\n        plexgo.WithSecurity(\"<YOUR_API_KEY_HERE>\"),\n    )\n\n    res, err := s.LibraryPlaylists.CreatePlaylist(ctx, operations.CreatePlaylistRequest{\n        URI: plexgo.Pointer(\"https://short-term-disconnection.name/\"),\n    })\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res.MediaContainerWithPlaylistMetadata != nil {\n        // handle response\n    }\n}"
+          },
+          {
+            "lang": "java",
+            "label": "PlexJava",
+            "source": "package hello.world;\n\nimport dev.plexapi.sdk.PlexAPI;\nimport dev.plexapi.sdk.models.operations.CreatePlaylistRequest;\nimport dev.plexapi.sdk.models.operations.CreatePlaylistResponse;\nimport dev.plexapi.sdk.models.shared.Accepts;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        PlexAPI sdk = PlexAPI.builder()\n                .accepts(Accepts.APPLICATION_XML)\n                .clientIdentifier(\"abc123\")\n                .product(\"Plex for Roku\")\n                .version(\"2.4.1\")\n                .platform(\"Roku\")\n                .platformVersion(\"4.3 build 1057\")\n                .device(\"Roku 3\")\n                .model(\"4200X\")\n                .deviceVendor(\"Roku\")\n                .deviceName(\"Living Room TV\")\n                .marketplace(\"googlePlay\")\n                .token(System.getenv().getOrDefault(\"TOKEN\", \"\"))\n            .build();\n\n        CreatePlaylistRequest req = CreatePlaylistRequest.builder()\n                .build();\n\n        CreatePlaylistResponse res = sdk.libraryPlaylists().createPlaylist()\n                .request(req)\n                .call();\n\n        if (res.mediaContainerWithPlaylistMetadata().isPresent()) {\n            // handle response\n        }\n    }\n}"
+          },
+          {
+            "lang": "typescript",
+            "label": "PlexJS",
+            "source": "import { PlexAPI } from \"@lukehagar/plexjs\";\nimport { Accepts } from \"@lukehagar/plexjs/models/shared\";\n\nconst plexAPI = new PlexAPI({\n  accepts: Accepts.ApplicationXml,\n  clientIdentifier: \"abc123\",\n  product: \"Plex for Roku\",\n  version: \"2.4.1\",\n  platform: \"Roku\",\n  platformVersion: \"4.3 build 1057\",\n  device: \"Roku 3\",\n  model: \"4200X\",\n  deviceVendor: \"Roku\",\n  deviceName: \"Living Room TV\",\n  marketplace: \"googlePlay\",\n  token: \"<YOUR_API_KEY_HERE>\",\n});\n\nasync function run() {\n  const result = await plexAPI.libraryPlaylists.createPlaylist({\n    uri: \"https://short-term-disconnection.name/\",\n  });\n\n  console.log(result);\n}\n\nrun();"
+          }
+        ]
+      }
+    },
+    "/playlists/{playlistKey}/items": {
+      "get": {
+        "operationId": "getPlaylistItems",
+        "summary": "Get playlist items",
+        "description": "Returns the items contained in a playlist.",
+        "tags": [
+          "Playlists"
+        ],
+        "x-plex-resource": "Playlists",
+        "parameters": [
+          {
+            "name": "playlistKey",
+            "in": "path",
+            "required": true,
+            "description": "The key of the playlist.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/AcceptHeader"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Playlist items.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaContainerPlaylistItems"
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "go",
+            "label": "PlexGO",
+            "source": "package main\n\nimport(\n\t\"context\"\n\t\"github.com/LukeHagar/plexgo/models/components\"\n\t\"github.com/LukeHagar/plexgo\"\n\t\"github.com/LukeHagar/plexgo/models/operations\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n\n    s := plexgo.New(\n        plexgo.WithAccepts(components.AcceptsApplicationXML),\n        plexgo.WithClientIdentifier(\"abc123\"),\n        plexgo.WithProduct(\"Plex for Roku\"),\n        plexgo.WithVersion(\"2.4.1\"),\n        plexgo.WithPlatform(\"Roku\"),\n        plexgo.WithPlatformVersion(\"4.3 build 1057\"),\n        plexgo.WithDevice(\"Roku 3\"),\n        plexgo.WithModel(\"4200X\"),\n        plexgo.WithDeviceVendor(\"Roku\"),\n        plexgo.WithDeviceName(\"Living Room TV\"),\n        plexgo.WithMarketplace(\"googlePlay\"),\n        plexgo.WithSecurity(\"<YOUR_API_KEY_HERE>\"),\n    )\n\n    res, err := s.Playlist.GetPlaylistItems(ctx, operations.GetPlaylistItemsRequest{\n        PlaylistID: 118195,\n    })\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res.MediaContainerWithMetadata != nil {\n        // handle response\n    }\n}"
+          },
+          {
+            "lang": "java",
+            "label": "PlexJava",
+            "source": "package hello.world;\n\nimport dev.plexapi.sdk.PlexAPI;\nimport dev.plexapi.sdk.models.operations.GetPlaylistItemsRequest;\nimport dev.plexapi.sdk.models.operations.GetPlaylistItemsResponse;\nimport dev.plexapi.sdk.models.shared.Accepts;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        PlexAPI sdk = PlexAPI.builder()\n                .accepts(Accepts.APPLICATION_XML)\n                .clientIdentifier(\"abc123\")\n                .product(\"Plex for Roku\")\n                .version(\"2.4.1\")\n                .platform(\"Roku\")\n                .platformVersion(\"4.3 build 1057\")\n                .device(\"Roku 3\")\n                .model(\"4200X\")\n                .deviceVendor(\"Roku\")\n                .deviceName(\"Living Room TV\")\n                .marketplace(\"googlePlay\")\n                .token(System.getenv().getOrDefault(\"TOKEN\", \"\"))\n            .build();\n\n        GetPlaylistItemsRequest req = GetPlaylistItemsRequest.builder()\n                .playlistId(118195L)\n                .build();\n\n        GetPlaylistItemsResponse res = sdk.playlist().getPlaylistItems()\n                .request(req)\n                .call();\n\n        if (res.mediaContainerWithMetadata().isPresent()) {\n            // handle response\n        }\n    }\n}"
+          },
+          {
+            "lang": "typescript",
+            "label": "PlexJS",
+            "source": "import { PlexAPI } from \"@lukehagar/plexjs\";\nimport { Accepts } from \"@lukehagar/plexjs/models/shared\";\n\nconst plexAPI = new PlexAPI({\n  accepts: Accepts.ApplicationXml,\n  clientIdentifier: \"abc123\",\n  product: \"Plex for Roku\",\n  version: \"2.4.1\",\n  platform: \"Roku\",\n  platformVersion: \"4.3 build 1057\",\n  device: \"Roku 3\",\n  model: \"4200X\",\n  deviceVendor: \"Roku\",\n  deviceName: \"Living Room TV\",\n  marketplace: \"googlePlay\",\n  token: \"<YOUR_API_KEY_HERE>\",\n});\n\nasync function run() {\n  const result = await plexAPI.playlist.getPlaylistItems({\n    playlistId: 118195,\n  });\n\n  console.log(result);\n}\n\nrun();"
+          }
+        ]
+      },
+      "post": {
+        "operationId": "addPlaylistItems",
+        "summary": "Add items to playlist",
+        "description": "Adds items to a playlist.",
+        "tags": [
+          "Playlists"
+        ],
+        "x-plex-resource": "Playlists",
+        "parameters": [
+          {
+            "name": "playlistKey",
+            "in": "path",
+            "required": true,
+            "description": "The key of the playlist.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/AcceptHeader"
+          },
+          {
+            "name": "uri",
+            "in": "query",
+            "required": true,
+            "description": "Item URI to add.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaContainerPlaylistItems"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/hubs/search": {
+      "get": {
+        "operationId": "searchHubs",
+        "summary": "Global search across hubs",
+        "description": "Returns search results grouped by hub across all libraries.",
+        "tags": [
+          "Hub"
+        ],
+        "x-plex-resource": "Hub",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "required": true,
+            "description": "Search query string.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Maximum results per hub.",
+            "schema": {
+              "type": "integer",
+              "default": 5
+            }
+          },
+          {
+            "$ref": "#/components/parameters/AcceptHeader"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Grouped search results.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaContainerHub"
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "php",
+            "label": "PlexPHP",
+            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse LukeHagar\\Plex_API;\n\n$sdk = Plex_API\\PlexAPI::builder()\n    ->setSecurity(\n        '<YOUR_API_KEY_HERE>'\n    )\n    ->build();\n\n\n\n$response = $sdk->search->performSearch(\n    query: 'arnold',\n    limit: 5\n\n);\n\nif ($response->statusCode === 200) {\n    // handle response\n}"
+          },
+          {
+            "lang": "ruby",
+            "label": "PlexRuby",
+            "source": "require 'plex_ruby_sdk'\n\ns = ::PlexRubySDK::PlexAPI.new(\n      security: Models::Shared::Security.new(\n        access_token: \"<YOUR_API_KEY_HERE>\",\n      ),\n    )\n\nres = s.search.perform_search(query=\"dylan\", section_id=9372.7, limit=5.0)\n\nif res.status_code == 200\n  # handle response\nend"
+          },
+          {
+            "lang": "go",
+            "label": "PlexGO",
+            "source": "package main\n\nimport(\n\t\"context\"\n\t\"github.com/LukeHagar/plexgo/models/components\"\n\t\"github.com/LukeHagar/plexgo\"\n\t\"github.com/LukeHagar/plexgo/models/operations\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n\n    s := plexgo.New(\n        plexgo.WithAccepts(components.AcceptsApplicationXML),\n        plexgo.WithClientIdentifier(\"abc123\"),\n        plexgo.WithProduct(\"Plex for Roku\"),\n        plexgo.WithVersion(\"2.4.1\"),\n        plexgo.WithPlatform(\"Roku\"),\n        plexgo.WithPlatformVersion(\"4.3 build 1057\"),\n        plexgo.WithDevice(\"Roku 3\"),\n        plexgo.WithModel(\"4200X\"),\n        plexgo.WithDeviceVendor(\"Roku\"),\n        plexgo.WithDeviceName(\"Living Room TV\"),\n        plexgo.WithMarketplace(\"googlePlay\"),\n        plexgo.WithSecurity(\"<YOUR_API_KEY_HERE>\"),\n    )\n\n    res, err := s.Search.SearchHubs(ctx, operations.SearchHubsRequest{\n        Query: \"<value>\",\n        SectionID: plexgo.Pointer[int64](1),\n    })\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res.Object != nil {\n        // handle response\n    }\n}"
+          },
+          {
+            "lang": "java",
+            "label": "PlexJava",
+            "source": "package hello.world;\n\nimport dev.plexapi.sdk.PlexAPI;\nimport dev.plexapi.sdk.models.operations.SearchHubsRequest;\nimport dev.plexapi.sdk.models.operations.SearchHubsResponse;\nimport dev.plexapi.sdk.models.shared.Accepts;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        PlexAPI sdk = PlexAPI.builder()\n                .accepts(Accepts.APPLICATION_XML)\n                .clientIdentifier(\"abc123\")\n                .product(\"Plex for Roku\")\n                .version(\"2.4.1\")\n                .platform(\"Roku\")\n                .platformVersion(\"4.3 build 1057\")\n                .device(\"Roku 3\")\n                .model(\"4200X\")\n                .deviceVendor(\"Roku\")\n                .deviceName(\"Living Room TV\")\n                .marketplace(\"googlePlay\")\n                .token(System.getenv().getOrDefault(\"TOKEN\", \"\"))\n            .build();\n\n        SearchHubsRequest req = SearchHubsRequest.builder()\n                .query(\"<value>\")\n                .sectionId(1L)\n                .build();\n\n        SearchHubsResponse res = sdk.search().searchHubs()\n                .request(req)\n                .call();\n\n        if (res.object().isPresent()) {\n            // handle response\n        }\n    }\n}"
+          },
+          {
+            "lang": "typescript",
+            "label": "PlexJS",
+            "source": "import { PlexAPI } from \"@lukehagar/plexjs\";\nimport { Accepts } from \"@lukehagar/plexjs/models/shared\";\n\nconst plexAPI = new PlexAPI({\n  accepts: Accepts.ApplicationXml,\n  clientIdentifier: \"abc123\",\n  product: \"Plex for Roku\",\n  version: \"2.4.1\",\n  platform: \"Roku\",\n  platformVersion: \"4.3 build 1057\",\n  device: \"Roku 3\",\n  model: \"4200X\",\n  deviceVendor: \"Roku\",\n  deviceName: \"Living Room TV\",\n  marketplace: \"googlePlay\",\n  token: \"<YOUR_API_KEY_HERE>\",\n});\n\nasync function run() {\n  const result = await plexAPI.search.searchHubs({\n    query: \"<value>\",\n    sectionId: 1,\n  });\n\n  console.log(result);\n}\n\nrun();"
+          }
+        ]
+      }
+    },
+    "/myplex/account": {
+      "get": {
+        "operationId": "getMyPlexAccount",
+        "summary": "Get Plex account",
+        "description": "Returns the Plex.tv account associated with the server.",
+        "tags": [
+          "Server"
+        ],
+        "x-plex-resource": "Server",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AcceptHeader"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaContainerAccount"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/accounts": {
+      "get": {
+        "operationId": "getAccounts",
+        "summary": "List managed accounts",
+        "description": "Returns managed accounts configured on the server.",
+        "tags": [
+          "Server"
+        ],
+        "x-plex-resource": "Server",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AcceptHeader"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaContainerAccounts"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/preferences": {
+      "get": {
+        "operationId": "getPreferences",
+        "summary": "Get server preferences",
+        "description": "Returns server preference settings.",
+        "tags": [
+          "Server"
+        ],
+        "x-plex-resource": "Server",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AcceptHeader"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaContainerPreferences"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/system/notification": {
+      "post": {
+        "operationId": "sendSystemNotification",
+        "summary": "Send system notification",
+        "description": "Sends a system notification to connected clients.",
+        "tags": [
+          "Server"
+        ],
+        "x-plex-resource": "Server",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AcceptHeader"
+          },
+          {
+            "name": "text",
+            "in": "query",
+            "required": true,
+            "description": "Notification text.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Notification sent."
+          }
+        }
+      }
+    },
+    "/statistics": {
+      "get": {
+        "operationId": "getStatistics",
+        "summary": "Get server statistics",
+        "description": "Returns server usage statistics.",
+        "tags": [
+          "Server"
+        ],
+        "x-plex-resource": "Server",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AcceptHeader"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaContainerStatistics"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/status/sessions/history": {
+      "get": {
+        "operationId": "getSessionHistory",
+        "summary": "Get session history",
+        "description": "Returns historical playback sessions.",
+        "tags": [
+          "Sessions"
+        ],
+        "x-plex-resource": "Sessions",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AcceptHeader"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaContainerSessionHistory"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/status/sessions/{sessionKey}": {
+      "delete": {
+        "operationId": "terminateSession",
+        "summary": "Terminate a session",
+        "description": "Stops an active playback session.",
+        "tags": [
+          "Sessions"
+        ],
+        "x-plex-resource": "Sessions",
+        "parameters": [
+          {
+            "name": "sessionKey",
+            "in": "path",
+            "required": true,
+            "description": "The session key.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/AcceptHeader"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Session terminated."
+          }
+        }
+      }
+    },
+    "/library/onDeck": {
+      "get": {
+        "operationId": "getOnDeck",
+        "summary": "Get global on deck",
+        "description": "Returns recently added, in-progress content across all libraries.",
+        "tags": [
+          "Library"
+        ],
+        "x-plex-resource": "Library",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AcceptHeader"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaContainerLibraryItems"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/library/recentlyAdded": {
+      "get": {
+        "operationId": "getRecentlyAdded",
+        "summary": "Get recently added",
+        "description": "Returns recently added items across all libraries.",
+        "tags": [
+          "Library"
+        ],
+        "x-plex-resource": "Library",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AcceptHeader"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaContainerLibraryItems"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/library/sections/{sectionKey}/collections": {
+      "get": {
+        "operationId": "getLibraryCollections",
+        "summary": "List library collections",
+        "description": "Returns collections within a library section.",
+        "tags": [
+          "Library"
+        ],
+        "x-plex-resource": "Library",
+        "parameters": [
+          {
+            "name": "sectionKey",
+            "in": "path",
+            "required": true,
+            "description": "The key of the library section.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/AcceptHeader"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaContainerLibraryItems"
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "go",
+            "label": "PlexGO",
+            "source": "package main\n\nimport(\n\t\"context\"\n\t\"github.com/LukeHagar/plexgo/models/components\"\n\t\"github.com/LukeHagar/plexgo\"\n\t\"github.com/LukeHagar/plexgo/models/operations\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n\n    s := plexgo.New(\n        plexgo.WithAccepts(components.AcceptsApplicationXML),\n        plexgo.WithClientIdentifier(\"abc123\"),\n        plexgo.WithProduct(\"Plex for Roku\"),\n        plexgo.WithVersion(\"2.4.1\"),\n        plexgo.WithPlatform(\"Roku\"),\n        plexgo.WithPlatformVersion(\"4.3 build 1057\"),\n        plexgo.WithDevice(\"Roku 3\"),\n        plexgo.WithModel(\"4200X\"),\n        plexgo.WithDeviceVendor(\"Roku\"),\n        plexgo.WithDeviceName(\"Living Room TV\"),\n        plexgo.WithMarketplace(\"googlePlay\"),\n        plexgo.WithSecurity(\"<YOUR_API_KEY_HERE>\"),\n    )\n\n    res, err := s.Library.GetCollections(ctx, operations.GetCollectionsRequest{\n        SectionID: 348838,\n        MediaQuery: &components.MediaQuery{\n            Type: components.MediaTypeEpisode.ToPointer(),\n            SourceType: plexgo.Pointer[int64](2),\n            Sort: plexgo.Pointer(\"duration:desc,index\"),\n        },\n    })\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res.MediaContainerWithMetadata != nil {\n        // handle response\n    }\n}"
+          },
+          {
+            "lang": "java",
+            "label": "PlexJava",
+            "source": "package hello.world;\n\nimport dev.plexapi.sdk.PlexAPI;\nimport dev.plexapi.sdk.models.operations.GetCollectionsRequest;\nimport dev.plexapi.sdk.models.operations.GetCollectionsResponse;\nimport dev.plexapi.sdk.models.shared.*;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        PlexAPI sdk = PlexAPI.builder()\n                .accepts(Accepts.APPLICATION_XML)\n                .clientIdentifier(\"abc123\")\n                .product(\"Plex for Roku\")\n                .version(\"2.4.1\")\n                .platform(\"Roku\")\n                .platformVersion(\"4.3 build 1057\")\n                .device(\"Roku 3\")\n                .model(\"4200X\")\n                .deviceVendor(\"Roku\")\n                .deviceName(\"Living Room TV\")\n                .marketplace(\"googlePlay\")\n                .token(System.getenv().getOrDefault(\"TOKEN\", \"\"))\n            .build();\n\n        GetCollectionsRequest req = GetCollectionsRequest.builder()\n                .sectionId(348838L)\n                .mediaQuery(MediaQuery.builder()\n                    .type(MediaType.Episode)\n                    .sourceType(2L)\n                    .sort(\"duration:desc,index\")\n                    .build())\n                .build();\n\n        GetCollectionsResponse res = sdk.library().getCollections()\n                .request(req)\n                .call();\n\n        if (res.mediaContainerWithMetadata().isPresent()) {\n            // handle response\n        }\n    }\n}"
+          },
+          {
+            "lang": "typescript",
+            "label": "PlexJS",
+            "source": "import { PlexAPI } from \"@lukehagar/plexjs\";\nimport { Accepts, MediaType } from \"@lukehagar/plexjs/models/shared\";\n\nconst plexAPI = new PlexAPI({\n  accepts: Accepts.ApplicationXml,\n  clientIdentifier: \"abc123\",\n  product: \"Plex for Roku\",\n  version: \"2.4.1\",\n  platform: \"Roku\",\n  platformVersion: \"4.3 build 1057\",\n  device: \"Roku 3\",\n  model: \"4200X\",\n  deviceVendor: \"Roku\",\n  deviceName: \"Living Room TV\",\n  marketplace: \"googlePlay\",\n  token: \"<YOUR_API_KEY_HERE>\",\n});\n\nasync function run() {\n  const result = await plexAPI.library.getCollections({\n    sectionId: 348838,\n    mediaQuery: {\n      type: MediaType.Episode,\n      sourceType: 2,\n      sort: \"duration:desc,index\",\n    },\n  });\n\n  console.log(result);\n}\n\nrun();"
+          }
+        ]
+      }
+    },
+    "/library/sections/{sectionKey}/newest": {
+      "get": {
+        "operationId": "getLibraryNewest",
+        "summary": "Get newest library items",
+        "description": "Returns newest items added to a library section.",
+        "tags": [
+          "Library"
+        ],
+        "x-plex-resource": "Library",
+        "parameters": [
+          {
+            "name": "sectionKey",
+            "in": "path",
+            "required": true,
+            "description": "The key of the library section.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/AcceptHeader"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaContainerLibraryItems"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/library/sections/{sectionKey}/unwatched": {
+      "get": {
+        "operationId": "getLibraryUnwatched",
+        "summary": "Get unwatched library items",
+        "description": "Returns unwatched items in a library section.",
+        "tags": [
+          "Library"
+        ],
+        "x-plex-resource": "Library",
+        "parameters": [
+          {
+            "name": "sectionKey",
+            "in": "path",
+            "required": true,
+            "description": "The key of the library section.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/AcceptHeader"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaContainerLibraryItems"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/library/sections/{sectionKey}/folder": {
+      "get": {
+        "operationId": "getLibraryFolder",
+        "summary": "Browse library folder",
+        "description": "Returns folder-based browsing results for a library section.",
+        "tags": [
+          "Library"
+        ],
+        "x-plex-resource": "Library",
+        "parameters": [
+          {
+            "name": "sectionKey",
+            "in": "path",
+            "required": true,
+            "description": "The key of the library section.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/AcceptHeader"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaContainerLibraryItems"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/library/sections/{sectionKey}/firstCharacter": {
+      "get": {
+        "operationId": "getLibraryFirstCharacter",
+        "summary": "Get first-character groups",
+        "description": "Returns first-character groupings for a library section.",
+        "tags": [
+          "Library"
+        ],
+        "x-plex-resource": "Library",
+        "parameters": [
+          {
+            "name": "sectionKey",
+            "in": "path",
+            "required": true,
+            "description": "The key of the library section.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/AcceptHeader"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaContainerLibraryItems"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/library/sections/{sectionKey}/prefs": {
+      "get": {
+        "operationId": "getLibrarySectionPreferences",
+        "summary": "Get library section preferences",
+        "description": "Returns preferences for a library section.",
+        "tags": [
+          "Library"
+        ],
+        "x-plex-resource": "Library",
+        "parameters": [
+          {
+            "name": "sectionKey",
+            "in": "path",
+            "required": true,
+            "description": "The key of the library section.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/AcceptHeader"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaContainerPreferences"
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "go",
+            "label": "PlexGO",
+            "source": "package main\n\nimport(\n\t\"context\"\n\t\"github.com/LukeHagar/plexgo/models/components\"\n\t\"github.com/LukeHagar/plexgo\"\n\t\"github.com/LukeHagar/plexgo/models/operations\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n\n    s := plexgo.New(\n        plexgo.WithAccepts(components.AcceptsApplicationXML),\n        plexgo.WithClientIdentifier(\"abc123\"),\n        plexgo.WithProduct(\"Plex for Roku\"),\n        plexgo.WithVersion(\"2.4.1\"),\n        plexgo.WithPlatform(\"Roku\"),\n        plexgo.WithPlatformVersion(\"4.3 build 1057\"),\n        plexgo.WithDevice(\"Roku 3\"),\n        plexgo.WithModel(\"4200X\"),\n        plexgo.WithDeviceVendor(\"Roku\"),\n        plexgo.WithDeviceName(\"Living Room TV\"),\n        plexgo.WithMarketplace(\"googlePlay\"),\n        plexgo.WithSecurity(\"<YOUR_API_KEY_HERE>\"),\n    )\n\n    res, err := s.Library.GetSectionPreferences(ctx, operations.GetSectionPreferencesRequest{\n        SectionID: 754869,\n    })\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res.MediaContainerWithSettings != nil {\n        // handle response\n    }\n}"
+          },
+          {
+            "lang": "java",
+            "label": "PlexJava",
+            "source": "package hello.world;\n\nimport dev.plexapi.sdk.PlexAPI;\nimport dev.plexapi.sdk.models.operations.GetSectionPreferencesRequest;\nimport dev.plexapi.sdk.models.operations.GetSectionPreferencesResponse;\nimport dev.plexapi.sdk.models.shared.Accepts;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        PlexAPI sdk = PlexAPI.builder()\n                .accepts(Accepts.APPLICATION_XML)\n                .clientIdentifier(\"abc123\")\n                .product(\"Plex for Roku\")\n                .version(\"2.4.1\")\n                .platform(\"Roku\")\n                .platformVersion(\"4.3 build 1057\")\n                .device(\"Roku 3\")\n                .model(\"4200X\")\n                .deviceVendor(\"Roku\")\n                .deviceName(\"Living Room TV\")\n                .marketplace(\"googlePlay\")\n                .token(System.getenv().getOrDefault(\"TOKEN\", \"\"))\n            .build();\n\n        GetSectionPreferencesRequest req = GetSectionPreferencesRequest.builder()\n                .sectionId(754869L)\n                .build();\n\n        GetSectionPreferencesResponse res = sdk.library().getSectionPreferences()\n                .request(req)\n                .call();\n\n        if (res.mediaContainerWithSettings().isPresent()) {\n            // handle response\n        }\n    }\n}"
+          },
+          {
+            "lang": "typescript",
+            "label": "PlexJS",
+            "source": "import { PlexAPI } from \"@lukehagar/plexjs\";\nimport { Accepts } from \"@lukehagar/plexjs/models/shared\";\n\nconst plexAPI = new PlexAPI({\n  accepts: Accepts.ApplicationXml,\n  clientIdentifier: \"abc123\",\n  product: \"Plex for Roku\",\n  version: \"2.4.1\",\n  platform: \"Roku\",\n  platformVersion: \"4.3 build 1057\",\n  device: \"Roku 3\",\n  model: \"4200X\",\n  deviceVendor: \"Roku\",\n  deviceName: \"Living Room TV\",\n  marketplace: \"googlePlay\",\n  token: \"<YOUR_API_KEY_HERE>\",\n});\n\nasync function run() {\n  const result = await plexAPI.library.getSectionPreferences({\n    sectionId: 754869,\n  });\n\n  console.log(result);\n}\n\nrun();"
+          }
+        ]
+      },
+      "put": {
+        "operationId": "setLibrarySectionPreferences",
+        "summary": "Set library section preferences",
+        "description": "Updates preferences for a library section.",
+        "tags": [
+          "Library"
+        ],
+        "x-plex-resource": "Library",
+        "parameters": [
+          {
+            "name": "sectionKey",
+            "in": "path",
+            "required": true,
+            "description": "The key of the library section.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/AcceptHeader"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Preferences updated."
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "go",
+            "label": "PlexGO",
+            "source": "package main\n\nimport(\n\t\"context\"\n\t\"github.com/LukeHagar/plexgo/models/components\"\n\t\"github.com/LukeHagar/plexgo\"\n\t\"github.com/LukeHagar/plexgo/models/operations\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n\n    s := plexgo.New(\n        plexgo.WithAccepts(components.AcceptsApplicationXML),\n        plexgo.WithClientIdentifier(\"abc123\"),\n        plexgo.WithProduct(\"Plex for Roku\"),\n        plexgo.WithVersion(\"2.4.1\"),\n        plexgo.WithPlatform(\"Roku\"),\n        plexgo.WithPlatformVersion(\"4.3 build 1057\"),\n        plexgo.WithDevice(\"Roku 3\"),\n        plexgo.WithModel(\"4200X\"),\n        plexgo.WithDeviceVendor(\"Roku\"),\n        plexgo.WithDeviceName(\"Living Room TV\"),\n        plexgo.WithMarketplace(\"googlePlay\"),\n        plexgo.WithSecurity(\"<YOUR_API_KEY_HERE>\"),\n    )\n\n    res, err := s.Library.SetSectionPreferences(ctx, operations.SetSectionPreferencesRequest{\n        SectionID: 349936,\n        Prefs: operations.SetSectionPreferencesQueryParamPrefs{},\n    })\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res != nil {\n        // handle response\n    }\n}"
+          },
+          {
+            "lang": "java",
+            "label": "PlexJava",
+            "source": "package hello.world;\n\nimport dev.plexapi.sdk.PlexAPI;\nimport dev.plexapi.sdk.models.operations.*;\nimport dev.plexapi.sdk.models.shared.Accepts;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        PlexAPI sdk = PlexAPI.builder()\n                .accepts(Accepts.APPLICATION_XML)\n                .clientIdentifier(\"abc123\")\n                .product(\"Plex for Roku\")\n                .version(\"2.4.1\")\n                .platform(\"Roku\")\n                .platformVersion(\"4.3 build 1057\")\n                .device(\"Roku 3\")\n                .model(\"4200X\")\n                .deviceVendor(\"Roku\")\n                .deviceName(\"Living Room TV\")\n                .marketplace(\"googlePlay\")\n                .token(System.getenv().getOrDefault(\"TOKEN\", \"\"))\n            .build();\n\n        SetSectionPreferencesRequest req = SetSectionPreferencesRequest.builder()\n                .sectionId(349936L)\n                .prefs(SetSectionPreferencesQueryParamPrefs.builder()\n                    .build())\n                .build();\n\n        SetSectionPreferencesResponse res = sdk.library().setSectionPreferences()\n                .request(req)\n                .call();\n\n        // handle response\n    }\n}"
+          },
+          {
+            "lang": "typescript",
+            "label": "PlexJS",
+            "source": "import { PlexAPI } from \"@lukehagar/plexjs\";\nimport { Accepts } from \"@lukehagar/plexjs/models/shared\";\n\nconst plexAPI = new PlexAPI({\n  accepts: Accepts.ApplicationXml,\n  clientIdentifier: \"abc123\",\n  product: \"Plex for Roku\",\n  version: \"2.4.1\",\n  platform: \"Roku\",\n  platformVersion: \"4.3 build 1057\",\n  device: \"Roku 3\",\n  model: \"4200X\",\n  deviceVendor: \"Roku\",\n  deviceName: \"Living Room TV\",\n  marketplace: \"googlePlay\",\n  token: \"<YOUR_API_KEY_HERE>\",\n});\n\nasync function run() {\n  await plexAPI.library.setSectionPreferences({\n    sectionId: 349936,\n    prefs: {},\n  });\n\n\n}\n\nrun();"
+          }
+        ]
+      }
+    },
+    "/library/sections/{sectionKey}/onDeck": {
+      "get": {
+        "operationId": "getSectionOnDeck",
+        "summary": "Get section on deck",
+        "description": "Returns on-deck items for a library section.",
+        "tags": [
+          "Library"
+        ],
+        "x-plex-resource": "Library",
+        "parameters": [
+          {
+            "name": "sectionKey",
+            "in": "path",
+            "required": true,
+            "description": "The key of the library section.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/AcceptHeader"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaContainerLibraryItems"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/library/sections/{sectionKey}/recentlyAdded": {
+      "get": {
+        "operationId": "getSectionRecentlyAdded",
+        "summary": "Get section recently added",
+        "description": "Returns recently added items for a library section.",
+        "tags": [
+          "Library"
+        ],
+        "x-plex-resource": "Library",
+        "parameters": [
+          {
+            "name": "sectionKey",
+            "in": "path",
+            "required": true,
+            "description": "The key of the library section.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/AcceptHeader"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaContainerLibraryItems"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/library/sections/{sectionKey}": {
+      "delete": {
+        "operationId": "deleteLibrarySection",
+        "summary": "Delete a library section",
+        "description": "Removes a library section from the server.",
+        "tags": [
+          "Library"
+        ],
+        "x-plex-resource": "Library",
+        "parameters": [
+          {
+            "name": "sectionKey",
+            "in": "path",
+            "required": true,
+            "description": "The key of the library section.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/AcceptHeader"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Library section deleted."
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "go",
+            "label": "PlexGO",
+            "source": "package main\n\nimport(\n\t\"context\"\n\t\"github.com/LukeHagar/plexgo/models/components\"\n\t\"github.com/LukeHagar/plexgo\"\n\t\"github.com/LukeHagar/plexgo/models/operations\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n\n    s := plexgo.New(\n        plexgo.WithAccepts(components.AcceptsApplicationXML),\n        plexgo.WithClientIdentifier(\"abc123\"),\n        plexgo.WithProduct(\"Plex for Roku\"),\n        plexgo.WithVersion(\"2.4.1\"),\n        plexgo.WithPlatform(\"Roku\"),\n        plexgo.WithPlatformVersion(\"4.3 build 1057\"),\n        plexgo.WithDevice(\"Roku 3\"),\n        plexgo.WithModel(\"4200X\"),\n        plexgo.WithDeviceVendor(\"Roku\"),\n        plexgo.WithDeviceName(\"Living Room TV\"),\n        plexgo.WithMarketplace(\"googlePlay\"),\n        plexgo.WithSecurity(\"<YOUR_API_KEY_HERE>\"),\n    )\n\n    res, err := s.Library.DeleteLibrarySection(ctx, operations.DeleteLibrarySectionRequest{\n        SectionID: \"<id>\",\n        Async: components.BoolIntTrue.ToPointer(),\n    })\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res != nil {\n        // handle response\n    }\n}"
+          },
+          {
+            "lang": "java",
+            "label": "PlexJava",
+            "source": "package hello.world;\n\nimport dev.plexapi.sdk.PlexAPI;\nimport dev.plexapi.sdk.models.operations.DeleteLibrarySectionRequest;\nimport dev.plexapi.sdk.models.operations.DeleteLibrarySectionResponse;\nimport dev.plexapi.sdk.models.shared.Accepts;\nimport dev.plexapi.sdk.models.shared.BoolInt;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        PlexAPI sdk = PlexAPI.builder()\n                .accepts(Accepts.APPLICATION_XML)\n                .clientIdentifier(\"abc123\")\n                .product(\"Plex for Roku\")\n                .version(\"2.4.1\")\n                .platform(\"Roku\")\n                .platformVersion(\"4.3 build 1057\")\n                .device(\"Roku 3\")\n                .model(\"4200X\")\n                .deviceVendor(\"Roku\")\n                .deviceName(\"Living Room TV\")\n                .marketplace(\"googlePlay\")\n                .token(System.getenv().getOrDefault(\"TOKEN\", \"\"))\n            .build();\n\n        DeleteLibrarySectionRequest req = DeleteLibrarySectionRequest.builder()\n                .sectionId(\"<id>\")\n                .async(BoolInt.True)\n                .build();\n\n        DeleteLibrarySectionResponse res = sdk.library().deleteLibrarySection()\n                .request(req)\n                .call();\n\n        // handle response\n    }\n}"
+          },
+          {
+            "lang": "typescript",
+            "label": "PlexJS",
+            "source": "import { PlexAPI } from \"@lukehagar/plexjs\";\nimport { Accepts, BoolInt } from \"@lukehagar/plexjs/models/shared\";\n\nconst plexAPI = new PlexAPI({\n  accepts: Accepts.ApplicationXml,\n  clientIdentifier: \"abc123\",\n  product: \"Plex for Roku\",\n  version: \"2.4.1\",\n  platform: \"Roku\",\n  platformVersion: \"4.3 build 1057\",\n  device: \"Roku 3\",\n  model: \"4200X\",\n  deviceVendor: \"Roku\",\n  deviceName: \"Living Room TV\",\n  marketplace: \"googlePlay\",\n  token: \"<YOUR_API_KEY_HERE>\",\n});\n\nasync function run() {\n  await plexAPI.library.deleteLibrarySection({\n    sectionId: \"<id>\",\n    async: BoolInt.True,\n  });\n\n\n}\n\nrun();"
+          }
+        ]
+      }
+    },
+    "/library/metadata/{ratingKey}/tree": {
+      "get": {
+        "operationId": "getMetadataTree",
+        "summary": "Get metadata tree",
+        "description": "Returns the full ancestor/descendant tree for a metadata item.",
+        "tags": [
+          "Metadata"
+        ],
+        "x-plex-resource": "Metadata",
+        "parameters": [
+          {
+            "name": "ratingKey",
+            "in": "path",
+            "required": true,
+            "description": "The rating key of the item.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/AcceptHeader"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaContainerMetadataChildren"
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "go",
+            "label": "PlexGO",
+            "source": "package main\n\nimport(\n\t\"context\"\n\t\"github.com/LukeHagar/plexgo/models/components\"\n\t\"github.com/LukeHagar/plexgo\"\n\t\"github.com/LukeHagar/plexgo/models/operations\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n\n    s := plexgo.New(\n        plexgo.WithAccepts(components.AcceptsApplicationXML),\n        plexgo.WithClientIdentifier(\"abc123\"),\n        plexgo.WithProduct(\"Plex for Roku\"),\n        plexgo.WithVersion(\"2.4.1\"),\n        plexgo.WithPlatform(\"Roku\"),\n        plexgo.WithPlatformVersion(\"4.3 build 1057\"),\n        plexgo.WithDevice(\"Roku 3\"),\n        plexgo.WithModel(\"4200X\"),\n        plexgo.WithDeviceVendor(\"Roku\"),\n        plexgo.WithDeviceName(\"Living Room TV\"),\n        plexgo.WithMarketplace(\"googlePlay\"),\n        plexgo.WithSecurity(\"<YOUR_API_KEY_HERE>\"),\n    )\n\n    res, err := s.Library.GetItemTree(ctx, operations.GetItemTreeRequest{\n        Ids: \"<value>\",\n    })\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res.MediaContainerWithNestedMetadata != nil {\n        // handle response\n    }\n}"
+          },
+          {
+            "lang": "java",
+            "label": "PlexJava",
+            "source": "package hello.world;\n\nimport dev.plexapi.sdk.PlexAPI;\nimport dev.plexapi.sdk.models.operations.GetItemTreeRequest;\nimport dev.plexapi.sdk.models.operations.GetItemTreeResponse;\nimport dev.plexapi.sdk.models.shared.Accepts;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        PlexAPI sdk = PlexAPI.builder()\n                .accepts(Accepts.APPLICATION_XML)\n                .clientIdentifier(\"abc123\")\n                .product(\"Plex for Roku\")\n                .version(\"2.4.1\")\n                .platform(\"Roku\")\n                .platformVersion(\"4.3 build 1057\")\n                .device(\"Roku 3\")\n                .model(\"4200X\")\n                .deviceVendor(\"Roku\")\n                .deviceName(\"Living Room TV\")\n                .marketplace(\"googlePlay\")\n                .token(System.getenv().getOrDefault(\"TOKEN\", \"\"))\n            .build();\n\n        GetItemTreeRequest req = GetItemTreeRequest.builder()\n                .ids(\"<value>\")\n                .build();\n\n        GetItemTreeResponse res = sdk.library().getItemTree()\n                .request(req)\n                .call();\n\n        if (res.mediaContainerWithNestedMetadata().isPresent()) {\n            // handle response\n        }\n    }\n}"
+          },
+          {
+            "lang": "typescript",
+            "label": "PlexJS",
+            "source": "import { PlexAPI } from \"@lukehagar/plexjs\";\nimport { Accepts } from \"@lukehagar/plexjs/models/shared\";\n\nconst plexAPI = new PlexAPI({\n  accepts: Accepts.ApplicationXml,\n  clientIdentifier: \"abc123\",\n  product: \"Plex for Roku\",\n  version: \"2.4.1\",\n  platform: \"Roku\",\n  platformVersion: \"4.3 build 1057\",\n  device: \"Roku 3\",\n  model: \"4200X\",\n  deviceVendor: \"Roku\",\n  deviceName: \"Living Room TV\",\n  marketplace: \"googlePlay\",\n  token: \"<YOUR_API_KEY_HERE>\",\n});\n\nasync function run() {\n  const result = await plexAPI.library.getItemTree({\n    ids: \"<value>\",\n  });\n\n  console.log(result);\n}\n\nrun();"
+          }
+        ]
+      }
+    },
+    "/library/metadata/{ratingKey}/posters": {
+      "get": {
+        "operationId": "getMetadataPosters",
+        "summary": "Get metadata posters",
+        "description": "Returns available poster images for a metadata item.",
+        "tags": [
+          "Metadata"
+        ],
+        "x-plex-resource": "Metadata",
+        "parameters": [
+          {
+            "name": "ratingKey",
+            "in": "path",
+            "required": true,
+            "description": "The rating key of the item.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/AcceptHeader"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaContainerImages"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/library/metadata/{ratingKey}/arts": {
+      "get": {
+        "operationId": "getMetadataArts",
+        "summary": "Get metadata arts",
+        "description": "Returns available background art for a metadata item.",
+        "tags": [
+          "Metadata"
+        ],
+        "x-plex-resource": "Metadata",
+        "parameters": [
+          {
+            "name": "ratingKey",
+            "in": "path",
+            "required": true,
+            "description": "The rating key of the item.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/AcceptHeader"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaContainerImages"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/library/metadata/{ratingKey}/similar": {
+      "get": {
+        "operationId": "getMetadataSimilar",
+        "summary": "Get similar items",
+        "description": "Returns items similar to the given metadata item.",
+        "tags": [
+          "Metadata"
+        ],
+        "x-plex-resource": "Metadata",
+        "parameters": [
+          {
+            "name": "ratingKey",
+            "in": "path",
+            "required": true,
+            "description": "The rating key of the item.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/AcceptHeader"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaContainerLibraryItems"
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "go",
+            "label": "PlexGO",
+            "source": "package main\n\nimport(\n\t\"context\"\n\t\"github.com/LukeHagar/plexgo/models/components\"\n\t\"github.com/LukeHagar/plexgo\"\n\t\"github.com/LukeHagar/plexgo/models/operations\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n\n    s := plexgo.New(\n        plexgo.WithAccepts(components.AcceptsApplicationXML),\n        plexgo.WithClientIdentifier(\"abc123\"),\n        plexgo.WithProduct(\"Plex for Roku\"),\n        plexgo.WithVersion(\"2.4.1\"),\n        plexgo.WithPlatform(\"Roku\"),\n        plexgo.WithPlatformVersion(\"4.3 build 1057\"),\n        plexgo.WithDevice(\"Roku 3\"),\n        plexgo.WithModel(\"4200X\"),\n        plexgo.WithDeviceVendor(\"Roku\"),\n        plexgo.WithDeviceName(\"Living Room TV\"),\n        plexgo.WithMarketplace(\"googlePlay\"),\n        plexgo.WithSecurity(\"<YOUR_API_KEY_HERE>\"),\n    )\n\n    res, err := s.Library.ListSimilar(ctx, operations.ListSimilarRequest{\n        Ids: \"<value>\",\n    })\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res.MediaContainerWithMetadata != nil {\n        // handle response\n    }\n}"
+          },
+          {
+            "lang": "java",
+            "label": "PlexJava",
+            "source": "package hello.world;\n\nimport dev.plexapi.sdk.PlexAPI;\nimport dev.plexapi.sdk.models.operations.ListSimilarRequest;\nimport dev.plexapi.sdk.models.operations.ListSimilarResponse;\nimport dev.plexapi.sdk.models.shared.Accepts;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        PlexAPI sdk = PlexAPI.builder()\n                .accepts(Accepts.APPLICATION_XML)\n                .clientIdentifier(\"abc123\")\n                .product(\"Plex for Roku\")\n                .version(\"2.4.1\")\n                .platform(\"Roku\")\n                .platformVersion(\"4.3 build 1057\")\n                .device(\"Roku 3\")\n                .model(\"4200X\")\n                .deviceVendor(\"Roku\")\n                .deviceName(\"Living Room TV\")\n                .marketplace(\"googlePlay\")\n                .token(System.getenv().getOrDefault(\"TOKEN\", \"\"))\n            .build();\n\n        ListSimilarRequest req = ListSimilarRequest.builder()\n                .ids(\"<value>\")\n                .build();\n\n        ListSimilarResponse res = sdk.library().listSimilar()\n                .request(req)\n                .call();\n\n        if (res.mediaContainerWithMetadata().isPresent()) {\n            // handle response\n        }\n    }\n}"
+          },
+          {
+            "lang": "typescript",
+            "label": "PlexJS",
+            "source": "import { PlexAPI } from \"@lukehagar/plexjs\";\nimport { Accepts } from \"@lukehagar/plexjs/models/shared\";\n\nconst plexAPI = new PlexAPI({\n  accepts: Accepts.ApplicationXml,\n  clientIdentifier: \"abc123\",\n  product: \"Plex for Roku\",\n  version: \"2.4.1\",\n  platform: \"Roku\",\n  platformVersion: \"4.3 build 1057\",\n  device: \"Roku 3\",\n  model: \"4200X\",\n  deviceVendor: \"Roku\",\n  deviceName: \"Living Room TV\",\n  marketplace: \"googlePlay\",\n  token: \"<YOUR_API_KEY_HERE>\",\n});\n\nasync function run() {\n  const result = await plexAPI.library.listSimilar({\n    ids: \"<value>\",\n  });\n\n  console.log(result);\n}\n\nrun();"
+          }
+        ]
+      }
+    },
+    "/library/metadata/{ratingKey}/banner": {
+      "get": {
+        "operationId": "getMetadataBanner",
+        "summary": "Get metadata banner",
+        "description": "Returns the banner image for a metadata item.",
+        "tags": [
+          "Metadata"
+        ],
+        "x-plex-resource": "Metadata",
+        "parameters": [
+          {
+            "name": "ratingKey",
+            "in": "path",
+            "required": true,
+            "description": "The rating key of the item.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/AcceptHeader"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Banner image."
+          }
+        }
+      }
+    },
+    "/library/parts/{partKey}": {
+      "get": {
+        "operationId": "getLibraryPart",
+        "summary": "Get media part details",
+        "description": "Returns details for a specific media part.",
+        "tags": [
+          "Metadata"
+        ],
+        "x-plex-resource": "Metadata",
+        "parameters": [
+          {
+            "name": "partKey",
+            "in": "path",
+            "required": true,
+            "description": "The key of the media part.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/AcceptHeader"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaContainerParts"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/playlists/{playlistKey}": {
+      "put": {
+        "operationId": "updatePlaylist",
+        "summary": "Update playlist",
+        "description": "Updates playlist metadata.",
+        "tags": [
+          "Playlists"
+        ],
+        "x-plex-resource": "Playlists",
+        "parameters": [
+          {
+            "name": "playlistKey",
+            "in": "path",
+            "required": true,
+            "description": "The key of the playlist.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/AcceptHeader"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaContainerPlaylists"
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "go",
+            "label": "PlexGO",
+            "source": "package main\n\nimport(\n\t\"context\"\n\t\"github.com/LukeHagar/plexgo/models/components\"\n\t\"github.com/LukeHagar/plexgo\"\n\t\"github.com/LukeHagar/plexgo/models/operations\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n\n    s := plexgo.New(\n        plexgo.WithAccepts(components.AcceptsApplicationXML),\n        plexgo.WithClientIdentifier(\"abc123\"),\n        plexgo.WithProduct(\"Plex for Roku\"),\n        plexgo.WithVersion(\"2.4.1\"),\n        plexgo.WithPlatform(\"Roku\"),\n        plexgo.WithPlatformVersion(\"4.3 build 1057\"),\n        plexgo.WithDevice(\"Roku 3\"),\n        plexgo.WithModel(\"4200X\"),\n        plexgo.WithDeviceVendor(\"Roku\"),\n        plexgo.WithDeviceName(\"Living Room TV\"),\n        plexgo.WithMarketplace(\"googlePlay\"),\n        plexgo.WithSecurity(\"<YOUR_API_KEY_HERE>\"),\n    )\n\n    res, err := s.LibraryPlaylists.UpdatePlaylist(ctx, operations.UpdatePlaylistRequest{\n        PlaylistID: 157966,\n    })\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res != nil {\n        // handle response\n    }\n}"
+          },
+          {
+            "lang": "java",
+            "label": "PlexJava",
+            "source": "package hello.world;\n\nimport dev.plexapi.sdk.PlexAPI;\nimport dev.plexapi.sdk.models.operations.UpdatePlaylistRequest;\nimport dev.plexapi.sdk.models.operations.UpdatePlaylistResponse;\nimport dev.plexapi.sdk.models.shared.Accepts;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        PlexAPI sdk = PlexAPI.builder()\n                .accepts(Accepts.APPLICATION_XML)\n                .clientIdentifier(\"abc123\")\n                .product(\"Plex for Roku\")\n                .version(\"2.4.1\")\n                .platform(\"Roku\")\n                .platformVersion(\"4.3 build 1057\")\n                .device(\"Roku 3\")\n                .model(\"4200X\")\n                .deviceVendor(\"Roku\")\n                .deviceName(\"Living Room TV\")\n                .marketplace(\"googlePlay\")\n                .token(System.getenv().getOrDefault(\"TOKEN\", \"\"))\n            .build();\n\n        UpdatePlaylistRequest req = UpdatePlaylistRequest.builder()\n                .playlistId(157966L)\n                .build();\n\n        UpdatePlaylistResponse res = sdk.libraryPlaylists().updatePlaylist()\n                .request(req)\n                .call();\n\n        // handle response\n    }\n}"
+          },
+          {
+            "lang": "typescript",
+            "label": "PlexJS",
+            "source": "import { PlexAPI } from \"@lukehagar/plexjs\";\nimport { Accepts } from \"@lukehagar/plexjs/models/shared\";\n\nconst plexAPI = new PlexAPI({\n  accepts: Accepts.ApplicationXml,\n  clientIdentifier: \"abc123\",\n  product: \"Plex for Roku\",\n  version: \"2.4.1\",\n  platform: \"Roku\",\n  platformVersion: \"4.3 build 1057\",\n  device: \"Roku 3\",\n  model: \"4200X\",\n  deviceVendor: \"Roku\",\n  deviceName: \"Living Room TV\",\n  marketplace: \"googlePlay\",\n  token: \"<YOUR_API_KEY_HERE>\",\n});\n\nasync function run() {\n  await plexAPI.libraryPlaylists.updatePlaylist({\n    playlistId: 157966,\n  });\n\n\n}\n\nrun();"
+          }
+        ]
+      },
+      "delete": {
+        "operationId": "deletePlaylist",
+        "summary": "Delete playlist",
+        "description": "Deletes a playlist.",
+        "tags": [
+          "Playlists"
+        ],
+        "x-plex-resource": "Playlists",
+        "parameters": [
+          {
+            "name": "playlistKey",
+            "in": "path",
+            "required": true,
+            "description": "The key of the playlist.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/AcceptHeader"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Playlist deleted."
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "go",
+            "label": "PlexGO",
+            "source": "package main\n\nimport(\n\t\"context\"\n\t\"github.com/LukeHagar/plexgo/models/components\"\n\t\"github.com/LukeHagar/plexgo\"\n\t\"github.com/LukeHagar/plexgo/models/operations\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n\n    s := plexgo.New(\n        plexgo.WithAccepts(components.AcceptsApplicationXML),\n        plexgo.WithClientIdentifier(\"abc123\"),\n        plexgo.WithProduct(\"Plex for Roku\"),\n        plexgo.WithVersion(\"2.4.1\"),\n        plexgo.WithPlatform(\"Roku\"),\n        plexgo.WithPlatformVersion(\"4.3 build 1057\"),\n        plexgo.WithDevice(\"Roku 3\"),\n        plexgo.WithModel(\"4200X\"),\n        plexgo.WithDeviceVendor(\"Roku\"),\n        plexgo.WithDeviceName(\"Living Room TV\"),\n        plexgo.WithMarketplace(\"googlePlay\"),\n        plexgo.WithSecurity(\"<YOUR_API_KEY_HERE>\"),\n    )\n\n    res, err := s.LibraryPlaylists.DeletePlaylist(ctx, operations.DeletePlaylistRequest{\n        PlaylistID: 343293,\n    })\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res != nil {\n        // handle response\n    }\n}"
+          },
+          {
+            "lang": "java",
+            "label": "PlexJava",
+            "source": "package hello.world;\n\nimport dev.plexapi.sdk.PlexAPI;\nimport dev.plexapi.sdk.models.operations.DeletePlaylistRequest;\nimport dev.plexapi.sdk.models.operations.DeletePlaylistResponse;\nimport dev.plexapi.sdk.models.shared.Accepts;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        PlexAPI sdk = PlexAPI.builder()\n                .accepts(Accepts.APPLICATION_XML)\n                .clientIdentifier(\"abc123\")\n                .product(\"Plex for Roku\")\n                .version(\"2.4.1\")\n                .platform(\"Roku\")\n                .platformVersion(\"4.3 build 1057\")\n                .device(\"Roku 3\")\n                .model(\"4200X\")\n                .deviceVendor(\"Roku\")\n                .deviceName(\"Living Room TV\")\n                .marketplace(\"googlePlay\")\n                .token(System.getenv().getOrDefault(\"TOKEN\", \"\"))\n            .build();\n\n        DeletePlaylistRequest req = DeletePlaylistRequest.builder()\n                .playlistId(343293L)\n                .build();\n\n        DeletePlaylistResponse res = sdk.libraryPlaylists().deletePlaylist()\n                .request(req)\n                .call();\n\n        // handle response\n    }\n}"
+          },
+          {
+            "lang": "typescript",
+            "label": "PlexJS",
+            "source": "import { PlexAPI } from \"@lukehagar/plexjs\";\nimport { Accepts } from \"@lukehagar/plexjs/models/shared\";\n\nconst plexAPI = new PlexAPI({\n  accepts: Accepts.ApplicationXml,\n  clientIdentifier: \"abc123\",\n  product: \"Plex for Roku\",\n  version: \"2.4.1\",\n  platform: \"Roku\",\n  platformVersion: \"4.3 build 1057\",\n  device: \"Roku 3\",\n  model: \"4200X\",\n  deviceVendor: \"Roku\",\n  deviceName: \"Living Room TV\",\n  marketplace: \"googlePlay\",\n  token: \"<YOUR_API_KEY_HERE>\",\n});\n\nasync function run() {\n  await plexAPI.libraryPlaylists.deletePlaylist({\n    playlistId: 343293,\n  });\n\n\n}\n\nrun();"
+          }
+        ]
+      }
+    },
+    "/playlists/{playlistKey}/items/{itemKey}": {
+      "delete": {
+        "operationId": "removePlaylistItem",
+        "summary": "Remove item from playlist",
+        "description": "Removes an item from a playlist.",
+        "tags": [
+          "Playlists"
+        ],
+        "x-plex-resource": "Playlists",
+        "parameters": [
+          {
+            "name": "playlistKey",
+            "in": "path",
+            "required": true,
+            "description": "The key of the playlist.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "itemKey",
+            "in": "path",
+            "required": true,
+            "description": "The key of the playlist item.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/AcceptHeader"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaContainerPlaylistItems"
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "go",
+            "label": "PlexGO",
+            "source": "package main\n\nimport(\n\t\"context\"\n\t\"github.com/LukeHagar/plexgo/models/components\"\n\t\"github.com/LukeHagar/plexgo\"\n\t\"github.com/LukeHagar/plexgo/models/operations\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n\n    s := plexgo.New(\n        plexgo.WithAccepts(components.AcceptsApplicationXML),\n        plexgo.WithClientIdentifier(\"abc123\"),\n        plexgo.WithProduct(\"Plex for Roku\"),\n        plexgo.WithVersion(\"2.4.1\"),\n        plexgo.WithPlatform(\"Roku\"),\n        plexgo.WithPlatformVersion(\"4.3 build 1057\"),\n        plexgo.WithDevice(\"Roku 3\"),\n        plexgo.WithModel(\"4200X\"),\n        plexgo.WithDeviceVendor(\"Roku\"),\n        plexgo.WithDeviceName(\"Living Room TV\"),\n        plexgo.WithMarketplace(\"googlePlay\"),\n        plexgo.WithSecurity(\"<YOUR_API_KEY_HERE>\"),\n    )\n\n    res, err := s.LibraryPlaylists.DeletePlaylistItem(ctx, operations.DeletePlaylistItemRequest{\n        PlaylistID: 981646,\n        GeneratorID: 194010,\n    })\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res.MediaContainerWithPlaylistMetadata != nil {\n        // handle response\n    }\n}"
+          },
+          {
+            "lang": "java",
+            "label": "PlexJava",
+            "source": "package hello.world;\n\nimport dev.plexapi.sdk.PlexAPI;\nimport dev.plexapi.sdk.models.operations.DeletePlaylistItemRequest;\nimport dev.plexapi.sdk.models.operations.DeletePlaylistItemResponse;\nimport dev.plexapi.sdk.models.shared.Accepts;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        PlexAPI sdk = PlexAPI.builder()\n                .accepts(Accepts.APPLICATION_XML)\n                .clientIdentifier(\"abc123\")\n                .product(\"Plex for Roku\")\n                .version(\"2.4.1\")\n                .platform(\"Roku\")\n                .platformVersion(\"4.3 build 1057\")\n                .device(\"Roku 3\")\n                .model(\"4200X\")\n                .deviceVendor(\"Roku\")\n                .deviceName(\"Living Room TV\")\n                .marketplace(\"googlePlay\")\n                .token(System.getenv().getOrDefault(\"TOKEN\", \"\"))\n            .build();\n\n        DeletePlaylistItemRequest req = DeletePlaylistItemRequest.builder()\n                .playlistId(981646L)\n                .generatorId(194010L)\n                .build();\n\n        DeletePlaylistItemResponse res = sdk.libraryPlaylists().deletePlaylistItem()\n                .request(req)\n                .call();\n\n        if (res.mediaContainerWithPlaylistMetadata().isPresent()) {\n            // handle response\n        }\n    }\n}"
+          },
+          {
+            "lang": "typescript",
+            "label": "PlexJS",
+            "source": "import { PlexAPI } from \"@lukehagar/plexjs\";\nimport { Accepts } from \"@lukehagar/plexjs/models/shared\";\n\nconst plexAPI = new PlexAPI({\n  accepts: Accepts.ApplicationXml,\n  clientIdentifier: \"abc123\",\n  product: \"Plex for Roku\",\n  version: \"2.4.1\",\n  platform: \"Roku\",\n  platformVersion: \"4.3 build 1057\",\n  device: \"Roku 3\",\n  model: \"4200X\",\n  deviceVendor: \"Roku\",\n  deviceName: \"Living Room TV\",\n  marketplace: \"googlePlay\",\n  token: \"<YOUR_API_KEY_HERE>\",\n});\n\nasync function run() {\n  const result = await plexAPI.libraryPlaylists.deletePlaylistItem({\n    playlistId: 981646,\n    generatorId: 194010,\n  });\n\n  console.log(result);\n}\n\nrun();"
+          }
+        ]
+      }
+    },
+    "/hubs/sections/{sectionKey}/search": {
+      "get": {
+        "operationId": "searchSectionHubs",
+        "summary": "Search within a section hub",
+        "description": "Returns hub search results scoped to a library section.",
+        "tags": [
+          "Hub"
+        ],
+        "x-plex-resource": "Hub",
+        "parameters": [
+          {
+            "name": "sectionKey",
+            "in": "path",
+            "required": true,
+            "description": "The key of the library section.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/AcceptHeader"
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "required": true,
+            "description": "Search query string.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Maximum results per hub.",
+            "schema": {
+              "type": "integer",
+              "default": 5
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaContainerHub"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/hubs/promoted": {
+      "get": {
+        "operationId": "getPromotedHubs",
+        "summary": "Get promoted hubs",
+        "description": "Returns promoted hub content.",
+        "tags": [
+          "Hub"
+        ],
+        "x-plex-resource": "Hub",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AcceptHeader"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaContainerHub"
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "go",
+            "label": "PlexGO",
+            "source": "package main\n\nimport(\n\t\"context\"\n\t\"github.com/LukeHagar/plexgo/models/components\"\n\t\"github.com/LukeHagar/plexgo\"\n\t\"github.com/LukeHagar/plexgo/models/operations\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n\n    s := plexgo.New(\n        plexgo.WithAccepts(components.AcceptsApplicationXML),\n        plexgo.WithClientIdentifier(\"abc123\"),\n        plexgo.WithProduct(\"Plex for Roku\"),\n        plexgo.WithVersion(\"2.4.1\"),\n        plexgo.WithPlatform(\"Roku\"),\n        plexgo.WithPlatformVersion(\"4.3 build 1057\"),\n        plexgo.WithDevice(\"Roku 3\"),\n        plexgo.WithModel(\"4200X\"),\n        plexgo.WithDeviceVendor(\"Roku\"),\n        plexgo.WithDeviceName(\"Living Room TV\"),\n        plexgo.WithMarketplace(\"googlePlay\"),\n        plexgo.WithSecurity(\"<YOUR_API_KEY_HERE>\"),\n    )\n\n    res, err := s.Hubs.GetPromotedHubs(ctx, operations.GetPromotedHubsRequest{})\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res.Object != nil {\n        // handle response\n    }\n}"
+          },
+          {
+            "lang": "java",
+            "label": "PlexJava",
+            "source": "package hello.world;\n\nimport dev.plexapi.sdk.PlexAPI;\nimport dev.plexapi.sdk.models.operations.GetPromotedHubsRequest;\nimport dev.plexapi.sdk.models.operations.GetPromotedHubsResponse;\nimport dev.plexapi.sdk.models.shared.Accepts;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        PlexAPI sdk = PlexAPI.builder()\n                .accepts(Accepts.APPLICATION_XML)\n                .clientIdentifier(\"abc123\")\n                .product(\"Plex for Roku\")\n                .version(\"2.4.1\")\n                .platform(\"Roku\")\n                .platformVersion(\"4.3 build 1057\")\n                .device(\"Roku 3\")\n                .model(\"4200X\")\n                .deviceVendor(\"Roku\")\n                .deviceName(\"Living Room TV\")\n                .marketplace(\"googlePlay\")\n                .token(System.getenv().getOrDefault(\"TOKEN\", \"\"))\n            .build();\n\n        GetPromotedHubsRequest req = GetPromotedHubsRequest.builder()\n                .build();\n\n        GetPromotedHubsResponse res = sdk.hubs().getPromotedHubs()\n                .request(req)\n                .call();\n\n        if (res.object().isPresent()) {\n            // handle response\n        }\n    }\n}"
+          },
+          {
+            "lang": "typescript",
+            "label": "PlexJS",
+            "source": "import { PlexAPI } from \"@lukehagar/plexjs\";\nimport { Accepts } from \"@lukehagar/plexjs/models/shared\";\n\nconst plexAPI = new PlexAPI({\n  accepts: Accepts.ApplicationXml,\n  clientIdentifier: \"abc123\",\n  product: \"Plex for Roku\",\n  version: \"2.4.1\",\n  platform: \"Roku\",\n  platformVersion: \"4.3 build 1057\",\n  device: \"Roku 3\",\n  model: \"4200X\",\n  deviceVendor: \"Roku\",\n  deviceName: \"Living Room TV\",\n  marketplace: \"googlePlay\",\n  token: \"<YOUR_API_KEY_HERE>\",\n});\n\nasync function run() {\n  const result = await plexAPI.hubs.getPromotedHubs({});\n\n  console.log(result);\n}\n\nrun();"
+          }
+        ]
+      }
+    },
+    "/hubs/home": {
+      "get": {
+        "operationId": "getHomeHubs",
+        "summary": "Get home hubs",
+        "description": "Returns home screen hub content.",
+        "tags": [
+          "Hub"
+        ],
+        "x-plex-resource": "Hub",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AcceptHeader"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaContainerHub"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/photo/:/transcode": {
+      "get": {
+        "operationId": "transcodePhoto",
+        "summary": "Transcode a photo",
+        "description": "Returns a transcoded photo asset.",
+        "tags": [
+          "Media"
+        ],
+        "x-plex-resource": "Media",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AcceptHeader"
+          },
+          {
+            "name": "url",
+            "in": "query",
+            "required": true,
+            "description": "Photo URL to transcode.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "width",
+            "in": "query",
+            "description": "Target width.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "height",
+            "in": "query",
+            "description": "Target height.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Transcoded image."
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "php",
+            "label": "PlexPHP",
+            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse LukeHagar\\Plex_API;\nuse LukeHagar\\Plex_API\\Models\\Operations;\n\n$sdk = Plex_API\\PlexAPI::builder()\n    ->setSecurity(\n        '<YOUR_API_KEY_HERE>'\n    )\n    ->build();\n\n$request = new Operations\\GetResizedPhotoRequest(\n    width: 110,\n    height: 165,\n    blur: 0,\n    minSize: Operations\\MinSize::Zero,\n    upscale: Operations\\Upscale::Zero,\n    url: '/library/metadata/49564/thumb/1654258204',\n);\n\n$response = $sdk->server->getResizedPhoto(\n    request: $request\n);\n\nif ($response->statusCode === 200) {\n    // handle response\n}"
+          },
+          {
+            "lang": "ruby",
+            "label": "PlexRuby",
+            "source": "require 'plex_ruby_sdk'\n\ns = ::PlexRubySDK::PlexAPI.new(\n      security: Models::Shared::Security.new(\n        access_token: \"<YOUR_API_KEY_HERE>\",\n      ),\n    )\n\nreq = Models::Operations::GetResizedPhotoRequest.new(\n  width: 110.0,\n  height: 165.0,\n  opacity: 643_869,\n  blur: 0.0,\n  min_size: Models::Operations::MinSize::ONE,\n  upscale: Models::Operations::Upscale::ONE,\n  url: \"/library/metadata/49564/thumb/1654258204\",\n)\n\nres = s.server.get_resized_photo(req)\n\nif res.status_code == 200\n  # handle response\nend"
+          },
+          {
+            "lang": "go",
+            "label": "PlexGO",
+            "source": "package main\n\nimport(\n\t\"context\"\n\t\"github.com/LukeHagar/plexgo/models/components\"\n\t\"github.com/LukeHagar/plexgo\"\n\t\"github.com/LukeHagar/plexgo/models/operations\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n\n    s := plexgo.New(\n        plexgo.WithAccepts(components.AcceptsApplicationXML),\n        plexgo.WithClientIdentifier(\"abc123\"),\n        plexgo.WithProduct(\"Plex for Roku\"),\n        plexgo.WithVersion(\"2.4.1\"),\n        plexgo.WithPlatform(\"Roku\"),\n        plexgo.WithPlatformVersion(\"4.3 build 1057\"),\n        plexgo.WithDevice(\"Roku 3\"),\n        plexgo.WithModel(\"4200X\"),\n        plexgo.WithDeviceVendor(\"Roku\"),\n        plexgo.WithDeviceName(\"Living Room TV\"),\n        plexgo.WithMarketplace(\"googlePlay\"),\n        plexgo.WithSecurity(\"<YOUR_API_KEY_HERE>\"),\n    )\n\n    res, err := s.Transcoder.TranscodeImage(ctx, operations.TranscodeImageRequest{\n        URL: plexgo.Pointer(\"/library/metadata/265/thumb/1715112705\"),\n        Background: plexgo.Pointer(\"#ff5522\"),\n        Upscale: components.BoolIntTrue.ToPointer(),\n        MinSize: components.BoolIntTrue.ToPointer(),\n        Rotate: components.BoolIntTrue.ToPointer(),\n        BlendColor: plexgo.Pointer(\"#ff5522\"),\n    })\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res.TwoHundredImageJpegResponseStream != nil {\n        // handle response\n    }\n}"
+          },
+          {
+            "lang": "java",
+            "label": "PlexJava",
+            "source": "package hello.world;\n\nimport dev.plexapi.sdk.PlexAPI;\nimport dev.plexapi.sdk.models.operations.TranscodeImageRequest;\nimport dev.plexapi.sdk.models.operations.TranscodeImageResponse;\nimport dev.plexapi.sdk.models.shared.Accepts;\nimport dev.plexapi.sdk.models.shared.BoolInt;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        PlexAPI sdk = PlexAPI.builder()\n                .accepts(Accepts.APPLICATION_XML)\n                .clientIdentifier(\"abc123\")\n                .product(\"Plex for Roku\")\n                .version(\"2.4.1\")\n                .platform(\"Roku\")\n                .platformVersion(\"4.3 build 1057\")\n                .device(\"Roku 3\")\n                .model(\"4200X\")\n                .deviceVendor(\"Roku\")\n                .deviceName(\"Living Room TV\")\n                .marketplace(\"googlePlay\")\n                .token(System.getenv().getOrDefault(\"TOKEN\", \"\"))\n            .build();\n\n        TranscodeImageRequest req = TranscodeImageRequest.builder()\n                .url(\"/library/metadata/265/thumb/1715112705\")\n                .background(\"#ff5522\")\n                .upscale(BoolInt.True)\n                .minSize(BoolInt.True)\n                .rotate(BoolInt.True)\n                .blendColor(\"#ff5522\")\n                .build();\n\n        TranscodeImageResponse res = sdk.transcoder().transcodeImage()\n                .request(req)\n                .call();\n\n        if (res.twoHundredImageJpegResponseStream().isPresent()) {\n            // handle response\n        }\n    }\n}"
+          },
+          {
+            "lang": "typescript",
+            "label": "PlexJS",
+            "source": "import { PlexAPI } from \"@lukehagar/plexjs\";\nimport { Accepts, BoolInt } from \"@lukehagar/plexjs/models/shared\";\n\nconst plexAPI = new PlexAPI({\n  accepts: Accepts.ApplicationXml,\n  clientIdentifier: \"abc123\",\n  product: \"Plex for Roku\",\n  version: \"2.4.1\",\n  platform: \"Roku\",\n  platformVersion: \"4.3 build 1057\",\n  device: \"Roku 3\",\n  model: \"4200X\",\n  deviceVendor: \"Roku\",\n  deviceName: \"Living Room TV\",\n  marketplace: \"googlePlay\",\n  token: \"<YOUR_API_KEY_HERE>\",\n});\n\nasync function run() {\n  const result = await plexAPI.transcoder.transcodeImage({\n    url: \"/library/metadata/265/thumb/1715112705\",\n    background: \"#ff5522\",\n    upscale: BoolInt.True,\n    minSize: BoolInt.True,\n    rotate: BoolInt.True,\n    blendColor: \"#ff5522\",\n  });\n\n  console.log(result);\n}\n\nrun();"
+          }
+        ]
+      }
+    },
+    "/video/:/transcode/universal/decision": {
+      "get": {
+        "operationId": "getTranscodeDecision",
+        "summary": "Get transcode decision",
+        "description": "Returns a playback transcode decision.",
+        "tags": [
+          "Media"
+        ],
+        "x-plex-resource": "Media",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AcceptHeader"
+          },
+          {
+            "name": "hasMDE",
+            "in": "query",
+            "description": "Has media decision engine data.",
+            "schema": {
+              "type": "integer",
+              "enum": [
+                0,
+                1
+              ]
+            }
+          },
+          {
+            "name": "path",
+            "in": "query",
+            "description": "Media path.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaContainerTranscodeDecision"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/video/:/transcode/sessions/{sessionId}": {
+      "get": {
+        "operationId": "getTranscodeSession",
+        "summary": "Get transcode session",
+        "description": "Returns details for an active transcode session.",
+        "tags": [
+          "Media"
+        ],
+        "x-plex-resource": "Media",
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "path",
+            "required": true,
+            "description": "The transcode session ID.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/AcceptHeader"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaContainerTranscodeSession"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/:/timeline": {
+      "post": {
+        "operationId": "postTimeline",
+        "summary": "Post playback timeline",
+        "description": "Reports playback progress to the server.",
+        "tags": [
+          "Media"
+        ],
+        "x-plex-resource": "Media",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AcceptHeader"
+          },
+          {
+            "name": "ratingKey",
+            "in": "query",
+            "required": true,
+            "description": "Rating key of the item.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "required": true,
+            "description": "Playback state.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "playing",
+                "paused",
+                "stopped"
+              ]
+            }
+          },
+          {
+            "name": "time",
+            "in": "query",
+            "required": true,
+            "description": "Current playback position in milliseconds.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Timeline recorded."
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "go",
+            "label": "PlexGO",
+            "source": "package main\n\nimport(\n\t\"context\"\n\t\"github.com/LukeHagar/plexgo/models/components\"\n\t\"github.com/LukeHagar/plexgo\"\n\t\"github.com/LukeHagar/plexgo/models/operations\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n\n    s := plexgo.New(\n        plexgo.WithAccepts(components.AcceptsApplicationXML),\n        plexgo.WithClientIdentifier(\"abc123\"),\n        plexgo.WithProduct(\"Plex for Roku\"),\n        plexgo.WithVersion(\"2.4.1\"),\n        plexgo.WithPlatform(\"Roku\"),\n        plexgo.WithPlatformVersion(\"4.3 build 1057\"),\n        plexgo.WithDevice(\"Roku 3\"),\n        plexgo.WithModel(\"4200X\"),\n        plexgo.WithDeviceVendor(\"Roku\"),\n        plexgo.WithDeviceName(\"Living Room TV\"),\n        plexgo.WithMarketplace(\"googlePlay\"),\n        plexgo.WithSecurity(\"<YOUR_API_KEY_HERE>\"),\n    )\n\n    res, err := s.Timeline.Report(ctx, operations.ReportRequest{\n        Key: plexgo.Pointer(\"/foo\"),\n        RatingKey: plexgo.Pointer(\"xyz\"),\n        State: operations.StatePlaying.ToPointer(),\n        PlayQueueItemID: plexgo.Pointer(\"123\"),\n        Time: plexgo.Pointer[int64](0),\n        Duration: plexgo.Pointer[int64](10000),\n        Continuing: components.BoolIntTrue.ToPointer(),\n        Updated: plexgo.Pointer[int64](14200000),\n        Offline: components.BoolIntTrue.ToPointer(),\n        TimeToFirstFrame: plexgo.Pointer[int64](1000),\n        TimeStalled: plexgo.Pointer[int64](1000),\n        Bandwidth: plexgo.Pointer[int64](100),\n        BufferedTime: plexgo.Pointer[int64](100),\n        BufferedSize: plexgo.Pointer[int64](1024),\n    })\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res.Object != nil {\n        // handle response\n    }\n}"
+          },
+          {
+            "lang": "java",
+            "label": "PlexJava",
+            "source": "package hello.world;\n\nimport dev.plexapi.sdk.PlexAPI;\nimport dev.plexapi.sdk.models.operations.*;\nimport dev.plexapi.sdk.models.shared.Accepts;\nimport dev.plexapi.sdk.models.shared.BoolInt;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        PlexAPI sdk = PlexAPI.builder()\n                .accepts(Accepts.APPLICATION_XML)\n                .clientIdentifier(\"abc123\")\n                .product(\"Plex for Roku\")\n                .version(\"2.4.1\")\n                .platform(\"Roku\")\n                .platformVersion(\"4.3 build 1057\")\n                .device(\"Roku 3\")\n                .model(\"4200X\")\n                .deviceVendor(\"Roku\")\n                .deviceName(\"Living Room TV\")\n                .marketplace(\"googlePlay\")\n                .token(System.getenv().getOrDefault(\"TOKEN\", \"\"))\n            .build();\n\n        ReportRequest req = ReportRequest.builder()\n                .key(\"/foo\")\n                .ratingKey(\"xyz\")\n                .state(State.PLAYING)\n                .playQueueItemID(\"123\")\n                .time(0L)\n                .duration(10000L)\n                .continuing(BoolInt.True)\n                .updated(14200000L)\n                .offline(BoolInt.True)\n                .timeToFirstFrame(1000L)\n                .timeStalled(1000L)\n                .bandwidth(100L)\n                .bufferedTime(100L)\n                .bufferedSize(1024L)\n                .build();\n\n        ReportResponse res = sdk.timeline().report()\n                .request(req)\n                .call();\n\n        if (res.object().isPresent()) {\n            // handle response\n        }\n    }\n}"
+          },
+          {
+            "lang": "typescript",
+            "label": "PlexJS",
+            "source": "import { PlexAPI } from \"@lukehagar/plexjs\";\nimport { ReportState } from \"@lukehagar/plexjs/models/operations\";\nimport { Accepts, BoolInt } from \"@lukehagar/plexjs/models/shared\";\n\nconst plexAPI = new PlexAPI({\n  accepts: Accepts.ApplicationXml,\n  clientIdentifier: \"abc123\",\n  product: \"Plex for Roku\",\n  version: \"2.4.1\",\n  platform: \"Roku\",\n  platformVersion: \"4.3 build 1057\",\n  device: \"Roku 3\",\n  model: \"4200X\",\n  deviceVendor: \"Roku\",\n  deviceName: \"Living Room TV\",\n  marketplace: \"googlePlay\",\n  token: \"<YOUR_API_KEY_HERE>\",\n});\n\nasync function run() {\n  const result = await plexAPI.timeline.report({\n    key: \"/foo\",\n    ratingKey: \"xyz\",\n    state: ReportState.Playing,\n    playQueueItemID: \"123\",\n    time: 0,\n    duration: 10000,\n    continuing: BoolInt.True,\n    updated: 14200000,\n    offline: BoolInt.True,\n    timeToFirstFrame: 1000,\n    timeStalled: 1000,\n    bandwidth: 100,\n    bufferedTime: 100,\n    bufferedSize: 1024,\n  });\n\n  console.log(result);\n}\n\nrun();"
+          }
+        ]
+      }
+    },
+    "/:/scrobble": {
+      "post": {
+        "operationId": "scrobble",
+        "summary": "Scrobble item",
+        "description": "Marks an item as watched.",
+        "tags": [
+          "Media"
+        ],
+        "x-plex-resource": "Media",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AcceptHeader"
+          },
+          {
+            "name": "ratingKey",
+            "in": "query",
+            "required": true,
+            "description": "Rating key of the item.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Item scrobbled."
+          }
+        }
+      }
+    },
+    "/:/unscrobble": {
+      "post": {
+        "operationId": "unscrobble",
+        "summary": "Unscrobble item",
+        "description": "Marks an item as unwatched.",
+        "tags": [
+          "Media"
+        ],
+        "x-plex-resource": "Media",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AcceptHeader"
+          },
+          {
+            "name": "ratingKey",
+            "in": "query",
+            "required": true,
+            "description": "Rating key of the item.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Item unscrobbled."
+          }
+        }
+      }
+    },
+    "/:/progress": {
+      "post": {
+        "operationId": "postProgress",
+        "summary": "Post viewing progress",
+        "description": "Updates viewing progress for an item.",
+        "tags": [
+          "Media"
+        ],
+        "x-plex-resource": "Media",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AcceptHeader"
+          },
+          {
+            "name": "ratingKey",
+            "in": "query",
+            "required": true,
+            "description": "Rating key of the item.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "time",
+            "in": "query",
+            "required": true,
+            "description": "Progress position in milliseconds.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Progress recorded."
+          }
+        }
+      }
+    },
+    "/sync/items": {
+      "get": {
+        "operationId": "getSyncItems",
+        "summary": "List sync items",
+        "description": "Returns configured sync items.",
+        "tags": [
+          "Sync"
+        ],
+        "x-plex-resource": "Sync",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AcceptHeader"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaContainerSyncItems"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sync/refresh": {
+      "post": {
+        "operationId": "refreshSync",
+        "summary": "Refresh sync",
+        "description": "Triggers a refresh of sync items.",
+        "tags": [
+          "Sync"
+        ],
+        "x-plex-resource": "Sync",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AcceptHeader"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sync refresh triggered."
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "plexToken": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-Plex-Token",
+        "description": "Plex authentication token. Obtain from https://www.plex.tv/claim/ or a signed-in Plex account. Never commit tokens to source control."
+      }
+    },
+    "parameters": {
+      "AcceptHeader": {
+        "name": "Accept",
+        "in": "header",
+        "description": "Request JSON responses by setting `application/json`. Plex defaults to XML when omitted.",
+        "schema": {
+          "type": "string",
+          "enum": [
+            "application/json",
+            "application/xml"
+          ]
+        }
+      }
+    },
+    "schemas": {
+      "MediaContainerIdentity": {
+        "type": "object",
+        "description": "Root wrapper for identity responses.",
+        "properties": {
+          "MediaContainer": {
+            "$ref": "#/components/schemas/Identity"
+          }
+        }
+      },
+      "Identity": {
+        "type": "object",
+        "description": "Server identity details.",
+        "properties": {
+          "size": {
+            "type": "integer"
+          },
+          "claimed": {
+            "type": "boolean"
+          },
+          "machineIdentifier": {
+            "type": "string",
+            "description": "Unique machine identifier for this server."
+          },
+          "version": {
+            "type": "string"
+          }
+        }
+      },
+      "MediaContainerServer": {
+        "type": "object",
+        "description": "Root wrapper for server root responses.",
+        "properties": {
+          "MediaContainer": {
+            "$ref": "#/components/schemas/ServerInfo"
+          }
+        }
+      },
+      "ServerInfo": {
+        "type": "object",
+        "description": "Server-level status and capabilities.",
+        "properties": {
+          "size": {
+            "type": "integer"
+          },
+          "allowCameraUpload": {
+            "type": "boolean"
+          },
+          "allowMediaDeletion": {
+            "type": "boolean"
+          },
+          "allowSharing": {
+            "type": "boolean"
+          },
+          "allowSync": {
+            "type": "boolean"
+          },
+          "backgroundProcessing": {
+            "type": "boolean"
+          },
+          "certificate": {
+            "type": "boolean"
+          },
+          "companionProxy": {
+            "type": "boolean"
+          },
+          "countryCode": {
+            "type": "string"
+          },
+          "diagnostics": {
+            "type": "string"
+          },
+          "eventSource": {
+            "type": "boolean"
+          },
+          "friendlyName": {
+            "type": "string"
+          },
+          "livetv": {
+            "type": "integer"
+          },
+          "machineIdentifier": {
+            "type": "string"
+          },
+          "myPlex": {
+            "type": "boolean"
+          },
+          "myPlexMappingState": {
+            "type": "string"
+          },
+          "myPlexSigninState": {
+            "type": "string"
+          },
+          "myPlexSubscription": {
+            "type": "boolean"
+          },
+          "myPlexUsername": {
+            "type": "string"
+          },
+          "offlineTranscode": {
+            "type": "integer"
+          },
+          "ownerFeatures": {
+            "type": "string"
+          },
+          "photoAutoTag": {
+            "type": "boolean"
+          },
+          "platform": {
+            "type": "string"
+          },
+          "platformVersion": {
+            "type": "string"
+          },
+          "pluginHost": {
+            "type": "boolean"
+          },
+          "pushNotifications": {
+            "type": "boolean"
+          },
+          "readOnlyLibraries": {
+            "type": "boolean"
+          },
+          "streamingBrainVersion": {
+            "type": "integer"
+          },
+          "sync": {
+            "type": "boolean"
+          },
+          "transcoderActiveVideoSessions": {
+            "type": "integer"
+          },
+          "transcoderAudio": {
+            "type": "boolean"
+          },
+          "transcoderLyrics": {
+            "type": "boolean"
+          },
+          "transcoderPhoto": {
+            "type": "boolean"
+          },
+          "transcoderSubtitles": {
+            "type": "boolean"
+          },
+          "transcoderVideo": {
+            "type": "boolean"
+          },
+          "updatedAt": {
+            "type": "integer",
+            "description": "Unix timestamp of the last server update."
+          },
+          "updater": {
+            "type": "boolean"
+          },
+          "version": {
+            "type": "string"
+          },
+          "voiceSearch": {
+            "type": "boolean"
+          },
+          "Directory": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ServerCapability"
+            }
+          }
+        }
+      },
+      "ServerCapability": {
+        "type": "object",
+        "description": "A capability or service exposed by the server root.",
+        "properties": {
+          "count": {
+            "type": "integer"
+          },
+          "key": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          }
+        }
+      },
+      "MediaContainerLibrarySections": {
+        "type": "object",
+        "description": "Root wrapper for library section listings.",
+        "properties": {
+          "MediaContainer": {
+            "$ref": "#/components/schemas/LibrarySections"
+          }
+        }
+      },
+      "LibrarySections": {
+        "type": "object",
+        "description": "Collection of library sections.",
+        "properties": {
+          "size": {
+            "type": "integer"
+          },
+          "allowSync": {
+            "type": "boolean"
+          },
+          "art": {
+            "type": "string"
+          },
+          "identifier": {
+            "type": "string"
+          },
+          "mediaTagPrefix": {
+            "type": "string"
+          },
+          "mediaTagVersion": {
+            "type": "integer"
+          },
+          "title1": {
+            "type": "string"
+          },
+          "title2": {
+            "type": "string"
+          },
+          "Directory": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LibrarySection"
+            }
+          }
+        }
+      },
+      "LibrarySection": {
+        "type": "object",
+        "description": "A single library section (movie, show, artist, photo).",
+        "properties": {
+          "allowSync": {
+            "type": "boolean"
+          },
+          "art": {
+            "type": "string"
+          },
+          "composite": {
+            "type": "string"
+          },
+          "filters": {
+            "type": "boolean"
+          },
+          "refreshing": {
+            "type": "boolean"
+          },
+          "thumb": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "movie",
+              "show",
+              "artist",
+              "photo"
+            ]
+          },
+          "title": {
+            "type": "string"
+          },
+          "agent": {
+            "type": "string"
+          },
+          "scanner": {
+            "type": "string"
+          },
+          "language": {
+            "type": "string"
+          },
+          "uuid": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "integer"
+          },
+          "createdAt": {
+            "type": "integer"
+          },
+          "scannedAt": {
+            "type": "integer"
+          },
+          "content": {
+            "type": "boolean"
+          },
+          "directory": {
+            "type": "boolean"
+          },
+          "contentChangedAt": {
+            "type": "integer"
+          },
+          "hidden": {
+            "type": "integer"
+          },
+          "Location": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LibrarySectionLocation"
+            }
+          }
+        }
+      },
+      "LibrarySectionLocation": {
+        "type": "object",
+        "description": "Filesystem location backing a library section.",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "path": {
+            "type": "string"
+          }
+        }
+      },
+      "MediaContainerLibraryItems": {
+        "type": "object",
+        "description": "Root wrapper for library item listings.",
+        "properties": {
+          "MediaContainer": {
+            "$ref": "#/components/schemas/LibraryItems"
+          }
+        }
+      },
+      "LibraryItems": {
+        "type": "object",
+        "description": "Collection of items within a library section.",
+        "properties": {
+          "size": {
+            "type": "integer"
+          },
+          "allowSync": {
+            "type": "boolean"
+          },
+          "art": {
+            "type": "string"
+          },
+          "identifier": {
+            "type": "string"
+          },
+          "librarySectionID": {
+            "type": "integer"
+          },
+          "librarySectionTitle": {
+            "type": "string"
+          },
+          "librarySectionUUID": {
+            "type": "string"
+          },
+          "mediaTagPrefix": {
+            "type": "string"
+          },
+          "mediaTagVersion": {
+            "type": "integer"
+          },
+          "nocache": {
+            "type": "boolean"
+          },
+          "offset": {
+            "type": "integer"
+          },
+          "totalSize": {
+            "type": "integer"
+          },
+          "title1": {
+            "type": "string"
+          },
+          "title2": {
+            "type": "string"
+          },
+          "viewGroup": {
+            "type": "string"
+          },
+          "viewMode": {
+            "type": "integer"
+          },
+          "Metadata": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MediaItem"
+            }
+          }
+        }
+      },
+      "MediaItem": {
+        "type": "object",
+        "description": "Base fields common to movies, episodes, tracks, and photos.",
+        "properties": {
+          "ratingKey": {
+            "type": "string"
+          },
+          "key": {
+            "type": "string"
+          },
+          "parentRatingKey": {
+            "type": "string"
+          },
+          "grandparentRatingKey": {
+            "type": "string"
+          },
+          "guid": {
+            "type": "string"
+          },
+          "parentGuid": {
+            "type": "string"
+          },
+          "grandparentGuid": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "movie",
+              "show",
+              "season",
+              "episode",
+              "artist",
+              "album",
+              "track",
+              "photo",
+              "photoalbum"
+            ]
+          },
+          "title": {
+            "type": "string"
+          },
+          "titleSort": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "string"
+          },
+          "thumb": {
+            "type": "string"
+          },
+          "art": {
+            "type": "string"
+          },
+          "banner": {
+            "type": "string"
+          },
+          "theme": {
+            "type": "string"
+          },
+          "duration": {
+            "type": "integer"
+          },
+          "addedAt": {
+            "type": "integer"
+          },
+          "updatedAt": {
+            "type": "integer"
+          },
+          "originallyAvailableAt": {
+            "type": "string",
+            "format": "date"
+          },
+          "rating": {
+            "type": "number"
+          },
+          "userRating": {
+            "type": "number"
+          },
+          "viewCount": {
+            "type": "integer"
+          },
+          "lastViewedAt": {
+            "type": "integer"
+          },
+          "year": {
+            "type": "integer"
+          },
+          "studio": {
+            "type": "string"
+          },
+          "tagline": {
+            "type": "string"
+          },
+          "contentRating": {
+            "type": "string"
+          },
+          "audienceRating": {
+            "type": "number"
+          },
+          "audienceRatingImage": {
+            "type": "string"
+          },
+          "chapterSource": {
+            "type": "string"
+          },
+          "primaryExtraKey": {
+            "type": "string"
+          },
+          "Media": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Media"
+            }
+          },
+          "Genre": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Tag"
+            }
+          },
+          "Director": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Tag"
+            }
+          },
+          "Writer": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Tag"
+            }
+          },
+          "Role": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Tag"
+            }
+          }
+        }
+      },
+      "Media": {
+        "type": "object",
+        "description": "Media container describing one or more file parts for a metadata item.",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "duration": {
+            "type": "integer"
+          },
+          "bitrate": {
+            "type": "integer"
+          },
+          "width": {
+            "type": "integer"
+          },
+          "height": {
+            "type": "integer"
+          },
+          "aspectRatio": {
+            "type": "number"
+          },
+          "audioChannels": {
+            "type": "integer"
+          },
+          "audioCodec": {
+            "type": "string"
+          },
+          "videoCodec": {
+            "type": "string"
+          },
+          "videoResolution": {
+            "type": "string"
+          },
+          "container": {
+            "type": "string"
+          },
+          "videoFrameRate": {
+            "type": "string"
+          },
+          "Part": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Part"
+            }
+          }
+        }
+      },
+      "Part": {
+        "type": "object",
+        "description": "A single media file part.",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "key": {
+            "type": "string"
+          },
+          "duration": {
+            "type": "integer"
+          },
+          "file": {
+            "type": "string"
+          },
+          "size": {
+            "type": "integer"
+          },
+          "container": {
+            "type": "string"
+          },
+          "videoProfile": {
+            "type": "string"
+          }
+        }
+      },
+      "Tag": {
+        "type": "object",
+        "description": "A tag such as a genre, director, writer, or actor.",
+        "properties": {
+          "tag": {
+            "type": "string"
+          },
+          "id": {
+            "type": "integer"
+          }
+        }
+      },
+      "MediaContainerMetadata": {
+        "type": "object",
+        "description": "Root wrapper for a single metadata item response.",
+        "properties": {
+          "MediaContainer": {
+            "$ref": "#/components/schemas/MetadataItem"
+          }
+        }
+      },
+      "MetadataItem": {
+        "type": "object",
+        "description": "A single metadata item wrapper.",
+        "properties": {
+          "size": {
+            "type": "integer"
+          },
+          "allowSync": {
+            "type": "boolean"
+          },
+          "identifier": {
+            "type": "string"
+          },
+          "librarySectionID": {
+            "type": "integer"
+          },
+          "librarySectionTitle": {
+            "type": "string"
+          },
+          "librarySectionUUID": {
+            "type": "string"
+          },
+          "mediaTagPrefix": {
+            "type": "string"
+          },
+          "mediaTagVersion": {
+            "type": "integer"
+          },
+          "Metadata": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MediaItem"
+            }
+          }
+        }
+      },
+      "MediaContainerMetadataChildren": {
+        "type": "object",
+        "description": "Root wrapper for metadata child item listings.",
+        "properties": {
+          "MediaContainer": {
+            "$ref": "#/components/schemas/MetadataChildren"
+          }
+        }
+      },
+      "MetadataChildren": {
+        "type": "object",
+        "description": "Collection of child metadata items.",
+        "properties": {
+          "size": {
+            "type": "integer"
+          },
+          "totalSize": {
+            "type": "integer"
+          },
+          "offset": {
+            "type": "integer"
+          },
+          "identifier": {
+            "type": "string"
+          },
+          "librarySectionID": {
+            "type": "integer"
+          },
+          "librarySectionTitle": {
+            "type": "string"
+          },
+          "librarySectionUUID": {
+            "type": "string"
+          },
+          "mediaTagPrefix": {
+            "type": "string"
+          },
+          "mediaTagVersion": {
+            "type": "integer"
+          },
+          "title1": {
+            "type": "string"
+          },
+          "title2": {
+            "type": "string"
+          },
+          "viewGroup": {
+            "type": "string"
+          },
+          "Metadata": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MediaItem"
+            }
+          }
+        }
+      },
+      "MediaContainerPlaylists": {
+        "type": "object",
+        "description": "Root wrapper for playlist listings.",
+        "properties": {
+          "MediaContainer": {
+            "$ref": "#/components/schemas/Playlists"
+          }
+        }
+      },
+      "Playlists": {
+        "type": "object",
+        "description": "Collection of playlists.",
+        "properties": {
+          "size": {
+            "type": "integer"
+          },
+          "identifier": {
+            "type": "string"
+          },
+          "mediaTagPrefix": {
+            "type": "string"
+          },
+          "mediaTagVersion": {
+            "type": "integer"
+          },
+          "title1": {
+            "type": "string"
+          },
+          "title2": {
+            "type": "string"
+          },
+          "Metadata": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Playlist"
+            }
+          }
+        }
+      },
+      "Playlist": {
+        "type": "object",
+        "description": "A single playlist.",
+        "properties": {
+          "ratingKey": {
+            "type": "string"
+          },
+          "key": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "playlist"
+            ]
+          },
+          "playlistType": {
+            "type": "string",
+            "enum": [
+              "video",
+              "audio",
+              "photo"
+            ]
+          },
+          "summary": {
+            "type": "string"
+          },
+          "smart": {
+            "type": "boolean"
+          },
+          "leafCount": {
+            "type": "integer"
+          },
+          "addedAt": {
+            "type": "integer"
+          },
+          "updatedAt": {
+            "type": "integer"
+          }
+        }
+      },
+      "MediaContainerPlaylistItems": {
+        "type": "object",
+        "description": "Root wrapper for playlist item listings.",
+        "properties": {
+          "MediaContainer": {
+            "$ref": "#/components/schemas/PlaylistItems"
+          }
+        }
+      },
+      "PlaylistItems": {
+        "type": "object",
+        "description": "Collection of items in a playlist.",
+        "properties": {
+          "size": {
+            "type": "integer"
+          },
+          "totalSize": {
+            "type": "integer"
+          },
+          "offset": {
+            "type": "integer"
+          },
+          "identifier": {
+            "type": "string"
+          },
+          "mediaTagPrefix": {
+            "type": "string"
+          },
+          "mediaTagVersion": {
+            "type": "integer"
+          },
+          "title1": {
+            "type": "string"
+          },
+          "title2": {
+            "type": "string"
+          },
+          "Metadata": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MediaItem"
+            }
+          }
+        }
+      },
+      "MediaContainerHub": {
+        "type": "object",
+        "description": "Root wrapper for hub/search results.",
+        "properties": {
+          "MediaContainer": {
+            "$ref": "#/components/schemas/Hub"
+          }
+        }
+      },
+      "Hub": {
+        "type": "object",
+        "description": "Collection of search hubs.",
+        "properties": {
+          "size": {
+            "type": "integer"
+          },
+          "identifier": {
+            "type": "string"
+          },
+          "title1": {
+            "type": "string"
+          },
+          "title2": {
+            "type": "string"
+          },
+          "Hub": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/HubEntry"
+            }
+          }
+        }
+      },
+      "HubEntry": {
+        "type": "object",
+        "description": "A single hub grouping within a search response.",
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "hubIdentifier": {
+            "type": "string"
+          },
+          "context": {
+            "type": "string"
+          },
+          "size": {
+            "type": "integer"
+          },
+          "Metadata": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MediaItem"
+            }
+          }
+        }
+      },
+      "MediaContainerSessions": {
+        "type": "object",
+        "description": "Root wrapper for active session listings.",
+        "properties": {
+          "MediaContainer": {
+            "$ref": "#/components/schemas/Sessions"
+          }
+        }
+      },
+      "Sessions": {
+        "type": "object",
+        "description": "Collection of active playback sessions.",
+        "properties": {
+          "size": {
+            "type": "integer"
+          },
+          "Metadata": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Session"
+            }
+          }
+        }
+      },
+      "Session": {
+        "type": "object",
+        "description": "An active playback session, extending a media item with player and session details.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/MediaItem"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "Session": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "bandwidth": {
+                    "type": "integer"
+                  },
+                  "location": {
+                    "type": "string"
+                  },
+                  "data": {
+                    "type": "string"
+                  }
+                }
+              },
+              "Player": {
+                "type": "object",
+                "properties": {
+                  "address": {
+                    "type": "string"
+                  },
+                  "device": {
+                    "type": "string"
+                  },
+                  "machineIdentifier": {
+                    "type": "string"
+                  },
+                  "model": {
+                    "type": "string"
+                  },
+                  "platform": {
+                    "type": "string"
+                  },
+                  "platformVersion": {
+                    "type": "string"
+                  },
+                  "product": {
+                    "type": "string"
+                  },
+                  "profile": {
+                    "type": "string"
+                  },
+                  "remotePublicAddress": {
+                    "type": "string"
+                  },
+                  "state": {
+                    "type": "string",
+                    "enum": [
+                      "playing",
+                      "paused",
+                      "buffering",
+                      "stopped"
+                    ]
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "userID": {
+                    "type": "string"
+                  },
+                  "vendor": {
+                    "type": "string"
+                  },
+                  "version": {
+                    "type": "string"
+                  },
+                  "local": {
+                    "type": "boolean"
+                  },
+                  "relayed": {
+                    "type": "boolean"
+                  },
+                  "secure": {
+                    "type": "boolean"
+                  },
+                  "throttled": {
+                    "type": "boolean"
+                  }
+                }
+              },
+              "User": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "thumb": {
+                    "type": "string"
+                  }
+                }
+              },
+              "TranscodeSession": {
+                "type": "object",
+                "properties": {
+                  "key": {
+                    "type": "string"
+                  },
+                  "throttled": {
+                    "type": "boolean"
+                  },
+                  "complete": {
+                    "type": "boolean"
+                  },
+                  "progress": {
+                    "type": "number"
+                  },
+                  "size": {
+                    "type": "integer"
+                  },
+                  "speed": {
+                    "type": "number"
+                  },
+                  "error": {
+                    "type": "boolean"
+                  },
+                  "duration": {
+                    "type": "integer"
+                  },
+                  "context": {
+                    "type": "string"
+                  },
+                  "sourceVideoCodec": {
+                    "type": "string"
+                  },
+                  "sourceAudioCodec": {
+                    "type": "string"
+                  },
+                  "videoDecision": {
+                    "type": "string"
+                  },
+                  "audioDecision": {
+                    "type": "string"
+                  },
+                  "protocol": {
+                    "type": "string"
+                  },
+                  "container": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "MediaContainerAccount": {
+        "type": "object",
+        "description": "Root wrapper for Plex account response.",
+        "properties": {
+          "MediaContainer": {
+            "$ref": "#/components/schemas/PlexAccount"
+          }
+        }
+      },
+      "PlexAccount": {
+        "type": "object",
+        "description": "Plex.tv account details.",
+        "properties": {
+          "size": {
+            "type": "integer"
+          },
+          "email": {
+            "type": "string"
+          },
+          "username": {
+            "type": "string"
+          },
+          "thumb": {
+            "type": "string"
+          },
+          "home": {
+            "type": "boolean"
+          },
+          "guest": {
+            "type": "boolean"
+          },
+          "queueEmail": {
+            "type": "string"
+          }
+        }
+      },
+      "MediaContainerAccounts": {
+        "type": "object",
+        "description": "Root wrapper for managed accounts response.",
+        "properties": {
+          "MediaContainer": {
+            "$ref": "#/components/schemas/Accounts"
+          }
+        }
+      },
+      "Accounts": {
+        "type": "object",
+        "description": "Collection of managed accounts.",
+        "properties": {
+          "size": {
+            "type": "integer"
+          },
+          "Account": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Account"
+            }
+          }
+        }
+      },
+      "Account": {
+        "type": "object",
+        "description": "A managed account.",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "key": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "defaultAudioLanguage": {
+            "type": "string"
+          },
+          "defaultSubtitleLanguage": {
+            "type": "string"
+          }
+        }
+      },
+      "MediaContainerPreferences": {
+        "type": "object",
+        "description": "Root wrapper for preferences response.",
+        "properties": {
+          "MediaContainer": {
+            "$ref": "#/components/schemas/Preferences"
+          }
+        }
+      },
+      "Preferences": {
+        "type": "object",
+        "description": "Collection of server or section preferences.",
+        "properties": {
+          "size": {
+            "type": "integer"
+          },
+          "Setting": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Setting"
+            }
+          }
+        }
+      },
+      "Setting": {
+        "type": "object",
+        "description": "A single preference setting.",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "default": {},
+          "value": {},
+          "hidden": {
+            "type": "boolean"
+          },
+          "advanced": {
+            "type": "boolean"
+          }
+        }
+      },
+      "MediaContainerStatistics": {
+        "type": "object",
+        "description": "Root wrapper for server statistics.",
+        "properties": {
+          "MediaContainer": {
+            "$ref": "#/components/schemas/Statistics"
+          }
+        }
+      },
+      "Statistics": {
+        "type": "object",
+        "description": "Server statistics container.",
+        "properties": {
+          "size": {
+            "type": "integer"
+          },
+          "Account": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StatisticsAccount"
+            }
+          }
+        }
+      },
+      "StatisticsAccount": {
+        "type": "object",
+        "description": "Per-account playback statistics.",
+        "properties": {
+          "accountID": {
+            "type": "integer"
+          },
+          "Device": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StatisticsDevice"
+            }
+          }
+        }
+      },
+      "StatisticsDevice": {
+        "type": "object",
+        "description": "Per-device playback statistics.",
+        "properties": {
+          "deviceName": {
+            "type": "string"
+          },
+          "lastPlayedAt": {
+            "type": "integer"
+          },
+          "totalPlays": {
+            "type": "integer"
+          }
+        }
+      },
+      "MediaContainerSessionHistory": {
+        "type": "object",
+        "description": "Root wrapper for session history.",
+        "properties": {
+          "MediaContainer": {
+            "$ref": "#/components/schemas/SessionHistory"
+          }
+        }
+      },
+      "SessionHistory": {
+        "type": "object",
+        "description": "Collection of historical playback sessions.",
+        "properties": {
+          "size": {
+            "type": "integer"
+          },
+          "totalSize": {
+            "type": "integer"
+          },
+          "offset": {
+            "type": "integer"
+          },
+          "Metadata": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SessionHistoryEntry"
+            }
+          }
+        }
+      },
+      "SessionHistoryEntry": {
+        "type": "object",
+        "description": "A single historical playback session.",
+        "properties": {
+          "ratingKey": {
+            "type": "string"
+          },
+          "key": {
+            "type": "string"
+          },
+          "parentRatingKey": {
+            "type": "string"
+          },
+          "grandparentRatingKey": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "thumb": {
+            "type": "string"
+          },
+          "viewedAt": {
+            "type": "integer"
+          },
+          "accountID": {
+            "type": "integer"
+          },
+          "deviceID": {
+            "type": "integer"
+          }
+        }
+      },
+      "MediaContainerImages": {
+        "type": "object",
+        "description": "Root wrapper for available images.",
+        "properties": {
+          "MediaContainer": {
+            "$ref": "#/components/schemas/Images"
+          }
+        }
+      },
+      "Images": {
+        "type": "object",
+        "description": "Collection of available images.",
+        "properties": {
+          "size": {
+            "type": "integer"
+          },
+          "Photo": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Image"
+            }
+          }
+        }
+      },
+      "Image": {
+        "type": "object",
+        "description": "An image asset.",
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "ratingKey": {
+            "type": "string"
+          },
+          "selected": {
+            "type": "boolean"
+          },
+          "thumb": {
+            "type": "string"
+          }
+        }
+      },
+      "MediaContainerParts": {
+        "type": "object",
+        "description": "Root wrapper for media parts.",
+        "properties": {
+          "MediaContainer": {
+            "$ref": "#/components/schemas/Parts"
+          }
+        }
+      },
+      "Parts": {
+        "type": "object",
+        "description": "Collection of media parts.",
+        "properties": {
+          "size": {
+            "type": "integer"
+          },
+          "Metadata": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Part"
+            }
+          }
+        }
+      },
+      "MediaContainerTranscodeDecision": {
+        "type": "object",
+        "description": "Root wrapper for a transcode decision.",
+        "properties": {
+          "MediaContainer": {
+            "$ref": "#/components/schemas/TranscodeDecision"
+          }
+        }
+      },
+      "TranscodeDecision": {
+        "type": "object",
+        "description": "Playback transcode decision.",
+        "properties": {
+          "size": {
+            "type": "integer"
+          },
+          "canDirectPlay": {
+            "type": "boolean"
+          },
+          "canDirectStream": {
+            "type": "boolean"
+          },
+          "canTranscode": {
+            "type": "boolean"
+          },
+          "transcodeContainer": {
+            "type": "string"
+          },
+          "transcodeVideoCodec": {
+            "type": "string"
+          },
+          "transcodeAudioCodec": {
+            "type": "string"
+          },
+          "transcodeProtocol": {
+            "type": "string"
+          }
+        }
+      },
+      "MediaContainerTranscodeSession": {
+        "type": "object",
+        "description": "Root wrapper for transcode session details.",
+        "properties": {
+          "MediaContainer": {
+            "$ref": "#/components/schemas/TranscodeSession"
+          }
+        }
+      },
+      "TranscodeSession": {
+        "type": "object",
+        "description": "Details of an active transcode session.",
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "throttled": {
+            "type": "boolean"
+          },
+          "complete": {
+            "type": "boolean"
+          },
+          "progress": {
+            "type": "number"
+          },
+          "size": {
+            "type": "integer"
+          },
+          "speed": {
+            "type": "number"
+          },
+          "error": {
+            "type": "boolean"
+          },
+          "duration": {
+            "type": "integer"
+          },
+          "context": {
+            "type": "string"
+          },
+          "sourceVideoCodec": {
+            "type": "string"
+          },
+          "sourceAudioCodec": {
+            "type": "string"
+          },
+          "videoDecision": {
+            "type": "string"
+          },
+          "audioDecision": {
+            "type": "string"
+          },
+          "protocol": {
+            "type": "string"
+          },
+          "container": {
+            "type": "string"
+          }
+        }
+      },
+      "MediaContainerSyncItems": {
+        "type": "object",
+        "description": "Root wrapper for sync items.",
+        "properties": {
+          "MediaContainer": {
+            "$ref": "#/components/schemas/SyncItems"
+          }
+        }
+      },
+      "SyncItems": {
+        "type": "object",
+        "description": "Collection of sync items.",
+        "properties": {
+          "size": {
+            "type": "integer"
+          },
+          "SyncItem": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SyncItem"
+            }
+          }
+        }
+      },
+      "SyncItem": {
+        "type": "object",
+        "description": "A sync item.",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "version": {
+            "type": "integer"
+          },
+          "rootTitle": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "downloadState": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}

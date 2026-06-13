@@ -1,0 +1,199 @@
+---
+title: "Quick Start"
+description: "Make your first authenticated Plex Media Server API request in under five minutes"
+---
+
+This guide walks you through your first authenticated request to a Plex Media Server. It includes copy-pasteable examples for `curl`, Node.js, and Python.
+
+## Before you begin
+
+You will need:
+
+1. The address of your Plex server, for example `http://192.168.1.10:32400` or `https://plex.example.com`.
+2. A valid Plex token. See the [Authentication guide](/authentication) if you do not have one yet.
+3. `curl`, Node.js, or Python installed.
+
+## Set environment variables
+
+To keep the examples copy-pasteable, store your server URL and token in environment variables:
+
+<CodeGroup>
+```bash title="macOS / Linux"
+export PLEX_SERVER_URL="http://<your-server-ip>:32400"
+export PLEX_TOKEN="<your-token>"
+```
+
+```powershell title="Windows PowerShell"
+$env:PLEX_SERVER_URL="http://<your-server-ip>:32400"
+$env:PLEX_TOKEN="<your-token>"
+```
+</CodeGroup>
+
+<Warning>
+Never commit tokens to source control. Use environment variables or a secrets manager in production.
+</Warning>
+
+## Verify the server is reachable
+
+Plex Media Server exposes server identity and capabilities at the root path. This endpoint does not require a token on most local networks:
+
+<CodeGroup>
+```bash title="curl"
+curl "$PLEX_SERVER_URL/"
+```
+
+```js title="Node.js"
+const res = await fetch(`${process.env.PLEX_SERVER_URL}/`);
+console.log(await res.text());
+```
+
+```py title="Python"
+import os, urllib.request
+
+url = f"{os.environ['PLEX_SERVER_URL']}/"
+with urllib.request.urlopen(url) as res:
+    print(res.read().decode())
+```
+</CodeGroup>
+
+You should receive an XML `MediaContainer` response with the server name, version, and other metadata. If the request fails, confirm the server address and that the server is running.
+
+## List your libraries
+
+List the libraries on your server:
+
+<CodeGroup>
+```bash title="curl"
+curl -H "X-Plex-Token: $PLEX_TOKEN" \
+  -H "Accept: application/json" \
+  "$PLEX_SERVER_URL/library/sections"
+```
+
+```js title="Node.js"
+const res = await fetch(`${process.env.PLEX_SERVER_URL}/library/sections`, {
+  headers: {
+    "X-Plex-Token": process.env.PLEX_TOKEN,
+    "Accept": "application/json",
+  },
+});
+console.log(await res.json());
+```
+
+```py title="Python"
+import os, urllib.request
+
+url = f"{os.environ['PLEX_SERVER_URL']}/library/sections"
+req = urllib.request.Request(
+    url,
+    headers={
+        "X-Plex-Token": os.environ["PLEX_TOKEN"],
+        "Accept": "application/json",
+    },
+)
+with urllib.request.urlopen(req) as res:
+    print(res.read().decode())
+```
+</CodeGroup>
+
+You should receive a response containing one or more `Directory` entries representing your libraries.
+
+## Request JSON responses
+
+Plex returns XML by default. Add an `Accept` header to get JSON:
+
+```bash
+curl -H "X-Plex-Token: $PLEX_TOKEN" \
+  -H "Accept: application/json" \
+  "$PLEX_SERVER_URL/library/sections"
+```
+
+Many integrations prefer JSON, but some response fields and nested arrays are easier to read in XML. Use whichever format your tooling handles best.
+
+## List items in a library
+
+Use the library key from the previous response to list its contents. Replace `<library-key>` with the value of the `key` field, for example `1`:
+
+<CodeGroup>
+```bash title="curl"
+curl -H "X-Plex-Token: $PLEX_TOKEN" \
+  -H "Accept: application/json" \
+  "$PLEX_SERVER_URL/library/sections/<library-key>/all"
+```
+
+```js title="Node.js"
+const libraryKey = "<library-key>";
+const res = await fetch(
+  `${process.env.PLEX_SERVER_URL}/library/sections/${libraryKey}/all`,
+  {
+    headers: {
+      "X-Plex-Token": process.env.PLEX_TOKEN,
+      "Accept": "application/json",
+    },
+  }
+);
+console.log(await res.json());
+```
+
+```py title="Python"
+import os, urllib.request
+
+library_key = "<library-key>"
+url = f"{os.environ['PLEX_SERVER_URL']}/library/sections/{library_key}/all"
+req = urllib.request.Request(
+    url,
+    headers={
+        "X-Plex-Token": os.environ["PLEX_TOKEN"],
+        "Accept": "application/json",
+    },
+)
+with urllib.request.urlopen(req) as res:
+    print(res.read().decode())
+```
+</CodeGroup>
+
+## Check active sessions
+
+See what is currently playing on the server:
+
+<CodeGroup>
+```bash title="curl"
+curl -H "X-Plex-Token: $PLEX_TOKEN" \
+  -H "Accept: application/json" \
+  "$PLEX_SERVER_URL/status/sessions"
+```
+
+```js title="Node.js"
+const res = await fetch(`${process.env.PLEX_SERVER_URL}/status/sessions`, {
+  headers: {
+    "X-Plex-Token": process.env.PLEX_TOKEN,
+    "Accept": "application/json",
+  },
+});
+console.log(await res.json());
+```
+
+```py title="Python"
+import os, urllib.request
+
+url = f"{os.environ['PLEX_SERVER_URL']}/status/sessions"
+req = urllib.request.Request(
+    url,
+    headers={
+        "X-Plex-Token": os.environ["PLEX_TOKEN"],
+        "Accept": "application/json",
+    },
+)
+with urllib.request.urlopen(req) as res:
+    print(res.read().decode())
+```
+</CodeGroup>
+
+## Identify your client
+
+When you move beyond experiments, add `X-Plex-*` headers so the server knows which client is calling. See the [Authentication guide](/authentication) for the full list.
+
+## Next steps
+
+- Read the [Authentication guide](/authentication) for token management best practices and how to obtain a token.
+- Explore the [API Reference](/api-reference) for available endpoints and parameters.
+- Learn how to request `Accept: application/json` and interpret Plex XML responses.

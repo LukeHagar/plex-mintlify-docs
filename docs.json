@@ -22,12 +22,19 @@
               "other-resources",
               "contributing"
             ]
+          },
+          {
+            "group": "Guides",
+            "pages": [
+              "quick-start",
+              "authentication"
+            ]
           }
         ]
       },
       {
-        "tab": "Plex API Reference",
-        "openapi": "/openapi-with-code-samples.yaml",
+        "tab": "API Reference",
+        "openapi": "/plex-media-server.openapi.json",
         "url": "api-reference"
       }
     ],
