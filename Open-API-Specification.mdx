@@ -1,12 +1,22 @@
 ---
 title: "OpenAPI Specification"
-description: "Learn about the Plex OpenAPI specification and how it powers the documentation and SDKs"
+description: "The canonical API contract that powers PlexAPI.dev"
 ---
 
-All of the [API documentation](/api-reference) on this site as well as all of the [SDKs](/SDKs) listed here are fully generated from the [main Plex OpenAPI specification here](https://github.com/LukeHagar/plex-api-spec), and I invite anyone in the community to contribute!
+The [Plex Media Server OpenAPI specification](https://github.com/LukasParke/plexapi-dev-docs/blob/main/spec/plex-media-server.openapi.json) is the canonical API contract for PlexAPI.dev. The [API reference](/api-reference) on this site and the [SDKs](/SDKs) are generated from this specification.
 
-If you want to learn more about OpenAPI how to utilize it to document APIs, [OpenAPI.Info](https://openapi.info/) is the most comprehensive OpenAPI reference I have seen out there.
+## What is OpenAPI?
 
-The Plex OpenAPI specification, and all the SDKs by extension are managed from the [Plex GitHub project](https://github.com/users/LukeHagar/projects/3).
+OpenAPI is a standard format for describing REST APIs. It lets tools generate interactive documentation, client SDKs, server stubs, and tests from a single source of truth. If you are new to OpenAPI, [OpenAPI.Info](https://openapi.info/) is a comprehensive reference.
 
-Currently the project is primarily being maintained by [Luke Parke](https://github.com/LukasParke), and the community has made a few amazing contributions!
+## The PlexAPI.dev specification
+
+The canonical specification is maintained in the [PlexAPI.dev monorepo](https://github.com/LukasParke/plexapi-dev-docs) at `spec/plex-media-server.openapi.json`. It describes the Plex Media Server endpoints, request parameters, response shapes, authentication, and error handling that the docs and SDKs rely on.
+
+## How this site uses the specification
+
+This documentation site consumes a rendered version of the specification that includes generated code samples. The sample-rich spec is produced by the [Speakeasy](https://www.speakeasyapi.dev/) workflow defined in the [plex-mintlify-docs](https://github.com/LukasParke/plex-mintlify-docs) repository.
+
+## Contributing
+
+Contributions to the specification are welcome. See the [Contributing](/contributing) page for the workflow, style rules, and how to validate changes.

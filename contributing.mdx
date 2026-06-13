@@ -1,0 +1,65 @@
+---
+title: "Contributing"
+description: "How to contribute to the PlexAPI.dev documentation and OpenAPI specification"
+---
+
+The PlexAPI.dev documentation and SDKs are open source, and contributions are welcome. This page covers how to suggest edits, report issues, and validate changes.
+
+## Repositories
+
+| Project | Repository | What it contains |
+| ------- | ---------- | ---------------- |
+| Docs site | [plex-mintlify-docs](https://github.com/LukasParke/plex-mintlify-docs) | This Mintlify documentation site. |
+| Monorepo | [plexapi-dev-docs](https://github.com/LukasParke/plexapi-dev-docs) | Canonical OpenAPI specification, SDKs, VitePress docs, and tooling. |
+
+## Editing this site
+
+This site is built with [Mintlify](https://mintlify.com/). Content is written in MDX and configured in `docs.json`.
+
+1. Clone the [plex-mintlify-docs](https://github.com/LukasParke/plex-mintlify-docs) repository.
+2. Install the Mintlify CLI:
+   ```bash
+   npm i -g mintlify
+   ```
+3. Start the local preview server:
+   ```bash
+   mintlify dev
+   ```
+4. Edit the relevant `.mdx` files and verify your changes in the browser.
+
+## Contributing to the OpenAPI specification
+
+The canonical specification lives in the [PlexAPI.dev monorepo](https://github.com/LukasParke/plexapi-dev-docs) at `spec/plex-media-server.openapi.json`.
+
+Before submitting changes:
+
+1. Validate the spec:
+   ```bash
+   pnpm spec:validate
+   ```
+2. Lint the spec:
+   ```bash
+   pnpm spec:lint
+   ```
+3. Regenerate the reference docs and SDKs if endpoints changed:
+   ```bash
+   pnpm spec:generate-reference
+   pnpm sdk:generate
+   ```
+
+## Content style rules
+
+- Use sentence case for headings: "Quick start", not "Quick Start".
+- Write for the reader: start each guide with what they will accomplish and what they need first.
+- Keep examples copy-pasteable, with placeholders such as `<your-token>` for sensitive data.
+- Never include real Plex tokens, server addresses, or user metadata in examples or screenshots.
+- Prefer the `X-Plex-Token` header over query parameters in examples.
+- Use American English spelling and avoid jargon where possible.
+
+## Review process
+
+1. Open a pull request with a clear summary of the change.
+2. Ensure any Mintlify or monorepo build checks pass.
+3. Address reviewer feedback and keep the scope focused.
+
+For questions or quick discussion, join the [Plex API Discord](https://discord.gg/CYuDKV9uK3).

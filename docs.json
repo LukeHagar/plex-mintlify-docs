@@ -1,7 +1,7 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "Plex API Documentation",
+  "name": "PlexAPI.dev Documentation",
   "colors": {
     "primary": "#219ebc",
     "light": "#8ecae6",
@@ -19,7 +19,8 @@
               "Intro",
               "Open-API-Specification",
               "SDKs",
-              "other-resources"
+              "other-resources",
+              "contributing"
             ]
           }
         ]
@@ -42,7 +43,7 @@
     "primary": {
       "type": "button",
       "label": "Suggest an edit",
-      "href": "https://github.com/LukasParke/plex-api-spec"
+      "href": "https://github.com/LukasParke/plex-mintlify-docs"
     }
   },
   "footer": {
